@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Ceci est le CDN pour utiliser la librairie Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+        <!-- Ceci est le CDN CSS pour utiliser les clusters -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css">
+
+    <style>
+        #mymap {
+            height: 400px;
+            width: 500px;
+        }
+        h1{
+            color: red;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <div id="mymap"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+        <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <script>
+
+          var icone = L.icon({
+        iconUrl:"courts-favicon-color.svg",
+        iconSize:[25,25],
+        iconAnchor:[25,25],
+        popupAnchor:[-12,-30]
+       })
+       
+        //On// Ici on met en place une fonction pour utiliser des clusters dans lesquels on va mettre nos marqueurs
+        var marqueurs = L.markerClusterGroup() 
+        var carte = L.map('mymap').setView([48.76113, 2.31514], 13);
+        //On charge les "tuiles"
+
+        L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+            attribution: 'donn&eacute;es &copy; <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+            minZoom: 1,
+            maxZoom: 20
+        }).addTo(carte);
+
+   var tableaumarqueurs= []     
+// AVec cette boucle for , on parcourt le tableau villes , 
+// pour afficher des marqueurs sur la carte en fonction des villes qui se situent dans la base"
+        function afficher(villes){
+            
+            villes.forEach(ville => {
+               
+                var marker=L.marker([ville.latitude, ville.longitude],{icon:icone})
+            
+                 marker.bindPopup(ville.nom) ;
+                 marqueurs.addLayer(marker);
+                 tableaumarqueurs.push(marker)
+ 
+            })
+            console.log(tableaumarqueurs)    // On regroupe les marqueurs dans un groupe
+        var groupe = new L.featureGroup(tableaumarqueurs)
+        // // On adapte le zoom au groupe
+        carte.fitBounds(groupe.getBounds().pad(0.5))
+        // Ensuite on ajoute les clusteurs avec les marqueurs sur la carte 
+        carte.addLayer(marqueurs)
+        } 
+
+        
+    
+            
+            ;
+//    
+
+
+
+
+
+fetch("http://localhost/Formation/Int%c3%a9grationMap/EssaipourInt%c3%a9grationMap(APIREST).php")
+.then(response=> response.json())
+.then(data => {
+        console.log(data);
+        afficher(data.villes); // Assurez-vous que les données contiennent un tableau appelé "villes"
+    })
+.catch(error=>console.error("Erreur dans le fetch",error))
+   
+    
+
+
+;
+
+        
+        
+// On crée une icone pour nos marqueurs avec une image choisie
+    
+
+//         
+
+            
+//         // }
+//        
+//         // var groupe = new L.featureGroup(tableauMarqueurs)
+
+//         
+//         // carte.fitBounds(groupe.getBounds().pad(0.5));
+
+//         
+//         // carte.addLayer(marqueurs)
+
+    </script>
+</body>
+
+</html>
