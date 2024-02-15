@@ -4,21 +4,15 @@ import { StyleSheet, Text, View } from 'react-native';
  import { createNativeStackNavigator } from '@react-navigation/native-stack';
  import Login from './components/screens/Login';
  import { useEffect,useState } from 'react';
- import { GoogleSignin } from '@react-native-google-signin/google-signin';
- import { User, onAuthStateChanged, setPersistence,browserLocalPersistence} from 'firebase/auth';
- import { FIREBASE_AUTH } from './ConfigFirebase';
- import { FirebaseApp } from 'firebase/app';
+ import { User, onAuthStateChanged,getAuth,initializeAuth,browserLocalPersistence,} from 'firebase/auth';
+ import { FIREBASE_AUTH ,FIREBASE_APP} from './ConfigFirebase';
+ import { ReactNativeAsyncStorage, setPersistence} from 'firebase/auth';
  import MotdepasseOublie from './components/screens/MotdepasseOublie';
 import Inscription from './components/screens/Inscription';
   import DrawerNavigator from './components/navigation/DrawerNavigator';
 
 const Stack = createNativeStackNavigator();
-const auth = FIREBASE_AUTH || getAuth()
- setPersistence(auth,browserLocalPersistence)
-  .then(()=>{
-    return signInWithEmailAndPassword(auth, email, password)
-  })
-  .catch((error) => {console.error('Session déconnectée',error)})
+const auth =  getAuth()
 
 export default function App() {
 

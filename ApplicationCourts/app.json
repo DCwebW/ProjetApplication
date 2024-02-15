@@ -10,7 +10,9 @@
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff",
-      "plugins": ["@react-native-google-signin/google-signin"]
+      "plugins": [
+        "@react-native-google-signin/google-signin"
+      ]
     },
     "assetBundlePatterns": [
       "**/*"
@@ -23,9 +25,9 @@
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff",
-        
-      }
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.dcwebw.essai"
     },
     "web": {
       "favicon": "./assets/favicon.png"
