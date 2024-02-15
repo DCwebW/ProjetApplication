@@ -1,0 +1,21 @@
+
+body{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+div{
+    width: 200px;
+    height: 200px;
+    background-color: lime;
+    transition:  height 1s ease, background-color 2s ease;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 5px 8px 10px black;
+    
+}
+
+div:hover{
+    height:400px;
+    background-color: lightblue;
+}
