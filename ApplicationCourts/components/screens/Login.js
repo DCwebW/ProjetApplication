@@ -1,39 +1,59 @@
 import { ActivityIndicator, SafeAreaView, View, Text, StyleSheet, TextInput, Button, KeyboardAvoidingView,Image,Pressable } from 'react-native'
 import React from 'react'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { FIREBASE_AUTH } from '../../ConfigFirebase'
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth,GoogleAuthProvider,signInWithCredential,signInWithPopup, browserSessionPersistence} from 'firebase/auth'
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth, getIdTokenResult, getIdToken, signInWithCustomToken, browserLocalPersistence,} from 'firebase/auth'
 import { useFonts } from 'expo-font'
 import {Kanit_100Thin} from '@expo-google-fonts/kanit'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import MotdepasseOublie from './MotdepasseOublie'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { NavigationContainer } from '@react-navigation/native'
-import { setPersistence } from 'firebase/auth'
+
+
 const auth = FIREBASE_AUTH || getAuth()
  
 
+ 
 
-
-const Login = ({navigation}) => {
-  const [fontsLoaded] = useFonts({
-    'PolicePrincipale': Kanit_100Thin
-  });
+const Login = ({navigation}) => {  
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
+    const [user, setUser] = useState(null)
     
 
+
+const [fontsLoaded] = useFonts({
+    'PolicePrincipale': Kanit_100Thin
+  });
+  
+
+  
    
 
-    
+     const saveUser=async(token)=>{
+    try{
+      
+      await AsyncStorage.setItem('userToken',token );
+      console.log('Utilisateur sauvegardé')
+ 
+    }
+    catch (error){
+      console.error('Utilisateur non sauvegardé',error)
+    }
+   }
 
     const SignIn= async()=>{
       setLoading(true);
       try{
         const response = await signInWithEmailAndPassword(auth,email,password);
-        console.log(response);
+        
+        userToken='nouveautoken'
+        console.log(response.user.getIdToken());
         alert('Check your emails !')
+        
+        await saveUser(userToken)
+        setUser({ email })
       } 
       catch (error){
         console.log(error)
@@ -43,27 +63,9 @@ const Login = ({navigation}) => {
         setLoading(false)
       }
     }
-    const provider = new GoogleAuthProvider()
-    const SignInwithprovider=async ()=>{
-      
-      setLoading(true);
-      try{
-        const result = await signInWithPopup(auth, provider);
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const user = result.user;
+   
     
-        // Utilisez les informations d'identification pour vous connecter
-        
-       }
-      catch(error){
-        console.log(error);
-        alert('Sign in failed :' +error.message)
-      }
-      finally{
-        setLoading(false)
-      }
-    }
-
+{
     
     return (
         <SafeAreaView style={styles.container}>
@@ -93,13 +95,13 @@ const Login = ({navigation}) => {
    <Pressable   onPress={SignIn} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:"20" ,marginTop:20}}><Text style={{color:'white',fontSize:25,fontFamily:'PolicePrincipale'}}>Connexion</Text></Pressable>
    <Pressable  onPress={()=>navigation.navigate('Inscription')} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:"20",marginTop:10}}><Text style={{color:'white',fontSize:25,fontFamily:'PolicePrincipale'}}>S'inscrire</Text></Pressable>
    <Pressable  onPress={()=>navigation.navigate('Motdepasse',{userId:'X001'} )} style={{ alignItems:"center", borderRadius:"20" ,marginTop:10}}><Text style={{color:'rgba(197, 44, 35,1)', fontSize:20, fontFamily:"PolicePrincipale"}}>Mot de passe oublié</Text></Pressable>
-   <Pressable  onPress={SignInwithprovider} style={{ alignItems:"center", borderRadius:"20" ,marginTop:10}}><Text style={{color:'rgba(197, 44, 35,1)', fontSize:20, fontFamily:"PolicePrincipale"}}>Se connecter avec Google</Text></Pressable>
+   
           </> )} 
             </View> 
             </KeyboardAvoidingView>
             </SafeAreaView>
     )
-}
+}}
 
 export default Login
 

@@ -1,51 +1,56 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
- import { NavigationContainer } from '@react-navigation/native';
- import { createNativeStackNavigator } from '@react-navigation/native-stack';
- import Login from './components/screens/Login';
- import { useEffect,useState } from 'react';
- import { User, onAuthStateChanged,getAuth,initializeAuth,browserLocalPersistence,} from 'firebase/auth';
- import { FIREBASE_AUTH ,FIREBASE_APP} from './ConfigFirebase';
- import { ReactNativeAsyncStorage, setPersistence} from 'firebase/auth';
- import MotdepasseOublie from './components/screens/MotdepasseOublie';
+import { useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Login from './components/screens/Login';
+import MotdepasseOublie from './components/screens/MotdepasseOublie';
 import Inscription from './components/screens/Inscription';
-  import DrawerNavigator from './components/navigation/DrawerNavigator';
-
+import DrawerNavigator from './components/navigation/DrawerNavigator';
+import Connexionauto from './components/Connexionauto';
+import { StyleSheet } from 'react-native';
 const Stack = createNativeStackNavigator();
-const auth =  getAuth()
+const auth = getAuth();
 
 export default function App() {
-
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log('user', user);
       setUser(user);
     });
+
+    return () => {
+      // Nettoyer l'écouteur lorsque le composant est démonté
+      unsubscribe();
+    };
   }, []);
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={user ? 'Home':'Login'} 
-      screenOptions={{
-        headerStyle:{backgroundColor:'rgba(197, 44, 35,1)'},
-        headerTintColor:'white'
-      }} >
+      <Stack.Navigator initialRouteName={user ? 'Home' : 'Login'} 
+        screenOptions={{
+          headerStyle: { backgroundColor: 'rgba(197, 44, 35,1)' },
+          headerTintColor: 'white'
+        }}
+      >
         {user ? (
-        <>
-        <Stack.Screen name='Home' component={DrawerNavigator} options={{ headerShown: false }}/>
-        
-       </> 
+          <>
+            <Stack.Screen name='Home' component={DrawerNavigator} options={{ headerShown: false }}/>
+          </>
         ) : (
-        <><Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
-        <Stack.Screen name='Motdepasse' component={MotdepasseOublie} options={({route})=>({title: route.params.userId})} />
-        <Stack.Screen name= 'Inscription' component={Inscription}/>
-        </>
+          <>
+            <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
+            <Stack.Screen name='Motdepasse' component={MotdepasseOublie} options={({ route }) => ({ title: route.params.userId })} />
+            <Stack.Screen name='Inscription' component={Inscription} />
+            
+          </>
         )}
-
       </Stack.Navigator>
 
-
+      {/* Ajout du composant Connexionauto */}
+      {/* <Connexionauto /> */}
     </NavigationContainer>
   );
 }
