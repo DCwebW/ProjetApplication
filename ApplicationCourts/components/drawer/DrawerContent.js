@@ -8,13 +8,16 @@ import {
   import { FIREBASE_AUTH } from '../../ConfigFirebase'
   import MonCompte from './MonCompteInfos';
   import AsyncStorage from '@react-native-async-storage/async-storage';
+  import { useNavigation } from '@react-navigation/native'
 
 const CustomDrawerContent = (props,) => {
-const SignOut =async({navigation})=>{
+  const navigation = useNavigation()
+const SignOut =async()=>{
   try{
   await AsyncStorage.removeItem('userToken')
   FIREBASE_AUTH.signOut()
   console.log("Déconnexion")
+  
   
 }catch(error){
   console.error('Déconnexion échouée')
@@ -28,11 +31,7 @@ const SignOut =async({navigation})=>{
       <DrawerItem
         label= {Deconnexion}
         
-        onPress={
-           SignOut 
-
-        
-        }
+        onPress={ () => SignOut() }
       />
      
     </DrawerContentScrollView>

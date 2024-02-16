@@ -7,6 +7,7 @@ import { useFonts } from 'expo-font'
 import {Kanit_100Thin} from '@expo-google-fonts/kanit'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import MotdepasseOublie from './MotdepasseOublie'
+import { useNavigation } from '@react-navigation/native'
 
 
 const auth = FIREBASE_AUTH || getAuth()
@@ -14,13 +15,13 @@ const auth = FIREBASE_AUTH || getAuth()
 
  
 
-const Login = ({navigation}) => {  
+const Login = ({}) => {  
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
     const [user, setUser] = useState(null)
-    
+    const navigation= useNavigation()
 
 
 const [fontsLoaded] = useFonts({
@@ -34,7 +35,7 @@ const [fontsLoaded] = useFonts({
      const saveUser=async(key,value)=>{
     try{
       
-      await AsyncStorage.setItem('userToken',token );
+      await AsyncStorage.setItem('userToken','11111' );
       console.log('Utilisateur sauvegardé')
  
     }
@@ -48,12 +49,12 @@ const [fontsLoaded] = useFonts({
       try{
         const response = await signInWithEmailAndPassword(auth,email,password);
         
-        userToken='nouveautoken'
-        console.log(response.user.getIdToken());
+        
+       
         alert('Check your emails !')
         
-        await saveUser(userToken)
-        setUser({ email })
+        await saveUser()
+        
       } 
       catch (error){
         console.log(error)
@@ -62,9 +63,9 @@ const [fontsLoaded] = useFonts({
       finally{
         setLoading(false)
       }
+      
     }
    
-    
 {
     
     return (

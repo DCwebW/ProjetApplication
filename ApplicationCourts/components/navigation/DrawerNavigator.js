@@ -10,6 +10,7 @@ import MonCompteInfos from '../drawer/MonCompteInfos';
 import { Image,Pressable } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import Login from '../screens/Login';
 
 
 const Drawer = createDrawerNavigator();
@@ -29,7 +30,7 @@ function DrawerNavigator() {
           borderBottomWidth:2},
         headerTintColor:'white',
         }}>  
-        <Drawer.Screen name="Accueil" component={BottomTabNavigator}
+        <Drawer.Screen name="Home" component={BottomTabNavigator}
         options={{
           // headerTitle:()=>(
           //   <Image style={{width:55,height:40}}source={require('/xampp/htdocs/Formation/ProjetApplication2/applicationcourts/assets/png/logo-no-background')}/>
@@ -38,6 +39,7 @@ function DrawerNavigator() {
         }}
         />
       <Drawer.Screen name="MonCompte" component={MonCompteInfos}  />
+     
     
  
     </Drawer.Navigator>

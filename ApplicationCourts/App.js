@@ -15,27 +15,41 @@ const auth = getAuth();
 export default function App() {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
+  
+
+ 
+
+    useEffect(() => {
+      const checkLoginStatus = async () => {
+        const value = await AsyncStorage.getItem('token');
+        if (value !== null) {
+          setUser(true); // L'utilisateur est connecté
+        } else {
+          setUser(null); // L'utilisateur n'est pas connecté
+        }
+      };
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log('user', user);
       setUser(user);
     });
-
+    checkLoginStatus();
     return () => {
       // Nettoyer l'écouteur lorsque le composant est démonté
       unsubscribe();
     };
   }, []);
 
+ 
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={user ? 'Home' : 'Login'} 
+      <Stack.Navigator 
         screenOptions={{
           headerStyle: { backgroundColor: 'rgba(197, 44, 35,1)' },
           headerTintColor: 'white'
         }}
       >
-        {user ? (
+        {user  ? (
           <>
             <Stack.Screen name='Home' component={DrawerNavigator} options={{ headerShown: false }}/>
           </>

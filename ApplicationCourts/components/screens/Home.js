@@ -1,7 +1,7 @@
 import { View, Text, Button,ScrollView,StyleSheet,StatusBar } from 'react-native'
 import React from 'react'
 import { FIREBASE_AUTH } from '../../ConfigFirebase'
-import BottomTabNavigator from '../navigation/BottomTabNavigation'
+
 
 
 
