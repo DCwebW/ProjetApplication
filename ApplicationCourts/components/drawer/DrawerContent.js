@@ -12,7 +12,7 @@ import {
 const CustomDrawerContent = (props,) => {
 const SignOut =async({navigation})=>{
   try{
-  await AsyncStorage.removeItem('userToken')
+  
   FIREBASE_AUTH.signOut()
   console.log("Déconnexion")
   

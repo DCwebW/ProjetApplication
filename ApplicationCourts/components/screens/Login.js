@@ -31,29 +31,18 @@ const [fontsLoaded] = useFonts({
   
    
 
-     const saveUser=async(key,value)=>{
-    try{
-      
-      await AsyncStorage.setItem('userToken',token );
-      console.log('Utilisateur sauvegardé')
- 
-    }
-    catch (error){
-      console.error('Utilisateur non sauvegardé',error)
-    }
-   }
-
+    
     const SignIn= async()=>{
       setLoading(true);
       try{
         const response = await signInWithEmailAndPassword(auth,email,password);
         
-        userToken='nouveautoken'
+        
         console.log(response.user.getIdToken());
         alert('Check your emails !')
         
-        await saveUser(userToken)
-        setUser({ email })
+        
+        
       } 
       catch (error){
         console.log(error)
