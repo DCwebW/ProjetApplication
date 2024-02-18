@@ -8,11 +8,9 @@ const PageDebutAction = () => {
   const navigation = useNavigation()
   return (
     <ScrollView>
-    <View style={styles.logotitre}>
-    <Image style={styles.logo}source={require('../../assets/png/logo-no-background.png')}/> 
-    </View>
+    
     <View style={styles.actions}>
-<Pressable onPress={()=>{}} style={({ pressed }) => (pressed ? styles.actionpressin : styles.action)}><Text style={styles.actiontext}>Ajout Match</Text></Pressable>
+<Pressable onPress={()=>{navigation.navigate('AjoutMatch')}} style={({ pressed }) => (pressed ? styles.actionpressin : styles.action)}><Text style={styles.actiontext}>Ajout Match</Text></Pressable>
 <Pressable onPress={()=>{ navigation.navigate('AjoutTerrain')}} style={({ pressed }) => (pressed ? styles.actionpressin : styles.action)} ><Text style={styles.actiontext}>Ajout Terrain</Text></Pressable>
     </View>
     </ScrollView>
@@ -39,7 +37,7 @@ marginTop:30
     height:150,
     justifyContent:'center',
     borderRadius:20,
-    margin: 20,
+    margin: 30,
     borderBottomColor:'rgba(0, 0, 0,0.5)',
     borderBottomWidth:2,
     borderRightColor:'rgba(0, 0, 0,0.5)',
