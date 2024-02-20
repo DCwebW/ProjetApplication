@@ -10,6 +10,7 @@ import MonCompteInfos from '../drawer/MonCompteInfos';
 import { Image,Pressable } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import LogoHeader from '../Logo/LogoHeader';
 
 
 const Drawer = createDrawerNavigator();
@@ -31,9 +32,7 @@ function DrawerNavigator() {
         }}>  
         <Drawer.Screen name="Accueil" component={BottomTabNavigator}
         options={{
-          // headerTitle:()=>(
-          //   <Image style={{width:55,height:40}}source={require('/xampp/htdocs/Formation/ProjetApplication2/applicationcourts/assets/png/logo-no-background')}/>
-          // ),
+           headerTitle: ()=>(<LogoHeader/>),
           headerRight:()=>(<Pressable style={{marginRight:10}}><FontAwesome5 name='cogs' size={24} color='white'/></Pressable>)
         }}
         />

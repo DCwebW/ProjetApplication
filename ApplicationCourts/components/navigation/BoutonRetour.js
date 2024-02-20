@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View,Pressable } from 'react-native'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 
-const BoutonRetour = ({navigation}) => {
+const BoutonRetour = () => {
+  const navigation = useNavigation()
   return (
-    <View style={{flex:1 , alignItems:'center',justifyContent:'center'}}>
-      <Pressable style={styles.boutonretour} ><Text>Retour</Text></Pressable>
+    <View style={{flex:1 }}>
+      <Pressable style={styles.boutonretour} onPress={navigation.goBack}><Text style={styles.textboutonretour}> Retour</Text></Pressable>
     </View>
   )
 }
@@ -14,13 +16,15 @@ const styles = StyleSheet.create(
   
         backgroundColor:'rgba(197, 44, 35,1)',
         width:100,
-        height:50,
+        height:40,
         alignItems:'center',
         justifyContent:'center',
-        borderRadius:20
+        borderRadius:10,
+        marginTop:30,
+        marginLeft:10
       },
       textboutonretour:{
-        
+        color:'white'
       }
     
     }
