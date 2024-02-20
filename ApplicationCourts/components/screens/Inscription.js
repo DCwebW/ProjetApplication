@@ -39,7 +39,7 @@ const Inscription = () => {
           console.log(response);
           alert('Check your emails !')
           const userUid = response.user.uid
-          await setDoc(doc(db, 'clients','client 1'),{
+          await setDoc(doc(db, 'clients'),{
             uid:userUid,
             name:name,
             firstname:firstname,
@@ -58,7 +58,7 @@ const Inscription = () => {
 
       
 return(
-        <SafeAreaView style={styles.container}>
+        
           <ScrollView>
             <View style={styles.viewlogo}>
                <Image style={styles.logo}source={require('../../assets/png/logo-no-background.png')}/> 
@@ -69,7 +69,7 @@ return(
             style={styles.inputinformations} 
             placeholder='Nom' 
             autoCapitalize='none' 
-            onChangeText={(text) => setName(text)}></TextInput>
+            onChangeText={(text) => setName(text)}> </TextInput>
 
             <TextInput 
             value={firstname} style={styles.inputinformations} 
@@ -104,12 +104,12 @@ return(
             </View>
             <View style={styles.boutonInscription}>
             <Pressable  onPress={
-            SignUp} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", width:100, alignContent:'center', borderRadius:20,marginTop:10}}><Text style={{color:'white',fontSize:25,fontFamily:'PolicePrincipale'}}>Valider</Text></Pressable>
+            SignUp} style={styles.boutonvalider}><Text style={{color:'white',fontFamily:'PolicePrincipale'}}>Valider</Text></Pressable>
             <Pressable  onPress={
-            Envoi} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", width:100, alignContent:'center', borderRadius:20,marginTop:10}}><Text style={{color:'white',fontSize:25,fontFamily:'PolicePrincipale'}}>Envoi</Text></Pressable>
+            Envoi} style={styles.boutonvalider}><Text style={{color:'white',fontFamily:'PolicePrincipale'}}>Envoi</Text></Pressable>
             </View>
             </ScrollView>
-            </SafeAreaView>
+            
 
     
     
@@ -134,9 +134,10 @@ const styles = StyleSheet.create({
     inscription:{
       flex:3,
       backgroundColor:'rgba(197, 44, 35,1)',
-      margin:20 ,
+     alignSelf:'center',
       borderRadius:15,
-      width:400
+      width:400,
+      marginTop:10
     },
     input: {
         padding: 20,
@@ -186,6 +187,14 @@ const styles = StyleSheet.create({
     },
     informationsconnexion:{
       flex:3
-    }
+    },
+    boutonvalider:{backgroundColor:'rgba(197, 44, 35,1)',
+    width:100,
+    height:40,
+    alignItems:'center',
+    justifyContent:'center',
+    borderRadius:10,
+    marginTop:10,
+    marginLeft:10}
 
 })
