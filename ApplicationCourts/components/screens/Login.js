@@ -4,7 +4,7 @@ import { useState,useEffect } from 'react'
 import { FIREBASE_AUTH } from '../../ConfigFirebase'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth, getIdTokenResult, getIdToken, signInWithCustomToken, browserLocalPersistence,} from 'firebase/auth'
 import { useFonts } from 'expo-font'
-import {Kanit_100Thin} from '@expo-google-fonts/kanit'
+
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import MotdepasseOublie from './MotdepasseOublie'
 
@@ -23,9 +23,9 @@ const Login = ({navigation}) => {
     
 
 
-const [fontsLoaded] = useFonts({
-    'PolicePrincipale': Kanit_100Thin
-  });
+// const [fontsLoaded] = useFonts({
+//     'PolicePrincipale'
+//   });
   
 
   
@@ -81,9 +81,9 @@ const [fontsLoaded] = useFonts({
    
    <>
    <View style={{height:20}}></View>
-   <Pressable   onPress={SignIn} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:"20" ,marginTop:20}}><Text style={{color:'white',fontSize:25,fontFamily:'PolicePrincipale'}}>Connexion</Text></Pressable>
-   <Pressable  onPress={()=>navigation.navigate('Inscription')} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:"20",marginTop:10}}><Text style={{color:'white',fontSize:25,fontFamily:'PolicePrincipale'}}>S'inscrire</Text></Pressable>
-   <Pressable  onPress={()=>navigation.navigate('Motdepasse',{userId:'X001'} )} style={{ alignItems:"center", borderRadius:"20" ,marginTop:10}}><Text style={{color:'rgba(197, 44, 35,1)', fontSize:20, fontFamily:"PolicePrincipale"}}>Mot de passe oublié</Text></Pressable>
+   <Pressable   onPress={SignIn} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:"20" ,marginTop:20}}><Text style={{color:'white',fontSize:25}}>Connexion</Text></Pressable>
+   <Pressable  onPress={()=>navigation.navigate('Inscription')} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:"20",marginTop:10}}><Text style={{color:'white',fontSize:25}}>S'inscrire</Text></Pressable>
+   <Pressable  onPress={()=>navigation.navigate('Motdepasse',{userId:'X001'} )} style={{ alignItems:"center", borderRadius:"20" ,marginTop:10}}><Text style={{color:'rgba(197, 44, 35,1)', fontSize:20,}}>Mot de passe oublié</Text></Pressable>
    
           </> )} 
             </View> 
