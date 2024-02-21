@@ -42,7 +42,7 @@ export default function App() {
         ) : (
           <>
             <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
-            <Stack.Screen name='Motdepasse' component={MotdepasseOublie} options={({ route }) => ({ title: route.params.userId })} />
+            <Stack.Screen name='Reinitialisation Mot de passe' component={MotdepasseOublie}  />
             <Stack.Screen name='Inscription' component={Inscription} />
             
           </>
