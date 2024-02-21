@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text,SafeAreaView } from 'react-native';
+import { StyleSheet, View, Text,SafeAreaView,Button } from 'react-native';
 import MapView, { Marker, Circle, Callout } from 'react-native-maps';
 import * as Location from 'expo-location';
+import Geocoder from 'react-native-geocoding';
 
 export default function Map() {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [markerPosition, setMarkerPosition] = useState({ latitude: 0, longitude: 0 });
   const [isMarkerSelected, setMarkerSelected] = useState(false);
-
+  const [address, setAddress]= useState('')
+ const geolocation = Geocoder.init()
   const handleMarkerPress = () => {
     setMarkerSelected(true);
   };
 
-  const handleMapPress = (event) => {
-    if (isMarkerSelected) {
-      setMarkerPosition({
-        latitude: event.nativeEvent.coordinate.latitude,
-        longitude: event.nativeEvent.coordinate.longitude,
-      });
-      setMarkerSelected(false);
-    }
-  };
+  
   useEffect(() => {
     const getCurrentLocation = async () => {
       try {
@@ -33,6 +27,8 @@ export default function Map() {
         let location = await Location.getCurrentPositionAsync({});
         setCurrentLocation(location.coords); // Mise à jour de l'état avec les coordonnées actuelles
         console.log('Current location:', location);
+         
+         
       } catch (error) {
         console.error('Error getting location:', error);
       }
@@ -41,7 +37,26 @@ export default function Map() {
     getCurrentLocation(); // Appel de la fonction au montage du composant
 
     // Le tableau vide en second argument signifie que ce hook s'exécute uniquement lors du montage du composant.
-  }, []);
+  }, [markerPosition]);
+  const reversegeocode = async (position) => {
+    try {
+      const reversegeocodedLocation = await Location.reverseGeocodeAsync({
+        longitude: position.longitude,
+        latitude: position.latitude,
+      });
+
+      if (reversegeocodedLocation.length > 0) {
+        setAddress(`${reversegeocodedLocation[0].name}, ${reversegeocodedLocation[0].city}`);
+        console.log('Adresse trouvée :', `${reversegeocodedLocation[0].name}, ${reversegeocodedLocation[0].city}`);
+      } else {
+        setAddress('Adresse non trouvée');
+        console.log('Adresse non trouvée');
+      }
+    } catch (error) {
+      console.error('Erreur géocodage de la position', error);
+      setAddress('Erreur lors de la géocodification');
+    }
+  };
 
   return (
     
@@ -58,7 +73,16 @@ export default function Map() {
           }}
           mapType='standard'
           userInterfaceStyle='dark'
-          onLongPress={handleMapPress}>
+          onLongPress={(event) => {
+            const newMarkerPosition = {
+              latitude: event.nativeEvent.coordinate.latitude,
+              longitude: event.nativeEvent.coordinate.longitude,
+            };
+            setMarkerPosition(newMarkerPosition);
+            setMarkerSelected(true);
+            reversegeocode(newMarkerPosition); // Appeler la fonction reversegeocode avec la nouvelle position du marqueur
+          }}
+          >
           {currentLocation && (
             <Marker
               coordinate={{
@@ -66,8 +90,13 @@ export default function Map() {
                 longitude: currentLocation.longitude,
               }}
               draggable
-              onDragEnd={(e) => setMarkerPosition(e.nativeEvent.coordinate)}
-              onLongPress={handleMarkerPress}>
+              onDragEnd={(e) => {
+                const newMarkerPosition = e.nativeEvent.coordinate;
+                setMarkerPosition(newMarkerPosition);
+                reversegeocode(newMarkerPosition); // Appeler la fonction reversegeocode avec la nouvelle position du marqueur
+              }}
+              onLongPress={() => setMarkerSelected(true)}
+              >
              
             </Marker>
           )}
@@ -80,6 +109,8 @@ export default function Map() {
             fillColor="rgba(27, 237, 105,0.5)"
           />
         </MapView>
+        <Text>Adresse localisée : {address}</Text>
+        {/* <Button title='Localiser adresse'onPress={reversegeocode(markerPosition)}></Button> */}
       </View>
     </SafeAreaView>
   );
