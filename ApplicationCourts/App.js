@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { onAuthStateChanged, getAuth } from 'firebase/auth';
+import { onAuthStateChanged, getAuth,setPersistence,browserSessionPersistence } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Login from './components/screens/Login';
 import MotdepasseOublie from './components/screens/MotdepasseOublie';
@@ -14,8 +14,9 @@ const auth = getAuth();
 
 export default function App() {
   const [user, setUser] = useState(null);
-
+  
   useEffect(() => {
+   
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log('user', user);
       setUser(user);
@@ -25,7 +26,10 @@ export default function App() {
       // Nettoyer l'écouteur lorsque le composant est démonté
       unsubscribe();
     };
-  }, []);
+  },[])
+  
+    
+
 
   return (
     <NavigationContainer>
