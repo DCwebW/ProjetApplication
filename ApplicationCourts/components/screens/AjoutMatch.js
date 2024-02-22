@@ -7,7 +7,7 @@ import DatePicker from 'react-native-modern-datepicker'
 import {getToday, getFormatedDate} from 'react-native-modern-datepicker'
 import BoutonValider from '../BoutonValider'
 import { TimerPickerModal } from "react-native-timer-picker";
-import RadioButtons from '../RadioButtons'
+import RadioButtons from '../RadioButtonsGroup/RadioButtons'
 
 
 

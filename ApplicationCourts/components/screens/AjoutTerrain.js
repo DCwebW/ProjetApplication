@@ -1,8 +1,12 @@
-import { StyleSheet, Text, View,ScrollView } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View,ScrollView,TextInput,Pressable } from 'react-native'
+import React ,{useState} from 'react'
 import BoutonRetour from '../navigation/BoutonRetour'
+import Map from '../Maps/ChoixAdresse'
+import RadioButtons2 from '../RadioButtonsGroup/RadioButtons2'
+
 
 const AjoutTerrain = () => {
+  const [nomTerrain, setnomTerrain]= useState('')
   return (
     <ScrollView>
     <View>
@@ -10,12 +14,28 @@ const AjoutTerrain = () => {
       
     </View>
     <View style={styles.formulaireterrain}>
-
+    
     <View style={{marginTop:20,marginLeft:15,flexDirection:'row'}}>
-      <Text>Nom du terrain</Text>
-    </View>
+      <Text style={{marginLeft:10,marginBottom:20 ,color:'white'}}>Nom du terrain :</Text>
 
     </View>
+    <View style={{width:300, alignItems:'center'}}>
+      <TextInput placeholder='Mettez le nom du terrain 'onChangeText={(text)=>setnomTerrain(text)} value={nomTerrain} style={{backgroundColor:'white', minWidth:340,minHeight:40,borderRadius:10,marginTop:20, marginLeft:70}}></TextInput>
+    </View>
+    <View style={{marginTop:20,marginLeft:15,flexDirection:'row'}}>
+      <Text style={{marginLeft:10,marginBottom:20 ,color:'white'}}>Type de filet :</Text>
+
+    </View>
+    <RadioButtons2 /> 
+    <View style={{height:400, backgroundColor:'rgba(197, 44, 35,1)', marginTop:50}}>
+      <Text style={{marginLeft:20,marginBottom:20 ,color:'white'}}>Localisation du terrain :</Text>
+      <Map/></View>
+      <View style={styles.boutonvalider}>
+      
+      <Pressable><Text style={{color:'white'}}>Valider </Text></Pressable></View>
+    </View>
+    
+    
     </ScrollView>
   )
 }
@@ -24,13 +44,27 @@ export default AjoutTerrain
 
 const styles = StyleSheet.create({
 
-  formulaireterrain:{
-    flex:1,
-    backgroundColor:'rgba(197, 44, 35,1)',
-    width:380,
-   height:500,
-   alignSelf:'center',
-    marginTop:20,
-    borderRadius: 20
-  }
+  formulaireterrain: {
+    flex: 1,
+    backgroundColor: 'rgba(197, 44, 35,1)',
+    width: '95%', // Utilisez '100%' pour occuper la largeur complète de l'écran
+    alignSelf: 'center',
+    marginTop: 20,
+    borderRadius: 20,
+    padding: 20, // Ajoutez une marge uniforme de tous les côtés
+    marginBottom: 100, // Ajoutez une marge en bas pour inclure le bouton Valider
+  },
+  boutonvalider:{
+
+    backgroundColor:'rgba(156,29,21,1)',
+    width:100,
+    height:40,
+    alignItems:'center',
+    justifyContent:'center',
+    borderRadius:10,
+    marginTop:30,
+    marginLeft:10,
+    alignSelf:'center',
+    
+  },
 })

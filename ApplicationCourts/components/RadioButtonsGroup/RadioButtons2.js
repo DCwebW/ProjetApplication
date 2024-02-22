@@ -8,26 +8,30 @@ import { RadioGroup } from 'react-native-radio-buttons-group';
 
 
 
-const RadioButtons=()=>{
+const RadioButtons2=()=>{
     const radioButtons = useMemo(() => ([
     
     
     {
     
         id: '1', // acts as primary key, should be unique and non-empty string
-        label: '2vs2',
+        label: 'filet',
         value: 'option1'
         
     },
     {
         id: '2',
-        label: '3vs3',
+        label: 'chaines',
         value: 'option2'
     },
     {id: '3',
-    label: '5vs5',
+    label: 'sans filet',
     value: 'option3'
-}]),[])
+    },
+
+    
+
+]),[])
     const [selectedId, setSelectedId] = useState();
 return(
     <RadioGroup 
@@ -40,6 +44,6 @@ return(
         /> 
 )
 }
-export default RadioButtons
+export default RadioButtons2
 
 const styles = StyleSheet.create({})
