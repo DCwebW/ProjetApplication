@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View,FlatList } from 'react-native'
+import { StyleSheet, Text, View,FlatList,ScrollView } from 'react-native'
 import React from 'react'
 import { QueryDocumentSnapshot, doc, getDocs } from "firebase/firestore"
 import { db, } from '../../ConfigFirebase'
 import { collection } from 'firebase/firestore'
 import { useState,useEffect } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import Avatar from './ImagePicker'
 
 const auth = getAuth();
   
@@ -43,12 +44,19 @@ const renderItem=({item})=>{ if (currentUser.uid === item.uid)return(
 )}
 
   return (
+    
     <View>
       
       <View><Text style={{fontSize:25}}>Informations:</Text></View>
 
  {currentUser &&(
+  <View style={{flex:1}}>
+   <View style={{height:200}}>
+
+    <Avatar/>
+   </View>
   <View style={styles.affichageInformations}>
+    
     <FlatList
  data={donnees}
  renderItem={renderItem}
@@ -59,6 +67,7 @@ const renderItem=({item})=>{ if (currentUser.uid === item.uid)return(
      <Text style={styles.infosconnexion}>Email: {currentUser.email}</Text>
     <Text>UID: {currentUser.uid}</Text>
 </View>
+  </View>
   </View>
  )}
     </View>
