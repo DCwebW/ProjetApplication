@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -33,8 +33,12 @@ export default function Avatar() {
       console.error("Erreur lors du téléchargement sur Cloud Storage:", error);
     }
   };
+
+
+
   const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
+    try{
+      let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
@@ -43,19 +47,18 @@ export default function Avatar() {
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      
+    }}catch(error){
+      console.error("Erreur lors de la sélection de l'image:", error)
     }
- 
-  };
+    };
 
   const takePhoto = async () => {
-
-   
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-
     if (!result.canceled) {
       
       // setImage(result.assets[0].uri);
@@ -141,9 +144,7 @@ const showImagePickerOptions = () => {
       )}
 
       {image && (
-        
         <View>
-        
           <View style={{ borderRadius: 300, overflow: 'hidden', position:'absolute',alignItems:'center' }}>
           <Image source={{ uri: image }} style={styles.image} />
           </View>
@@ -152,11 +153,9 @@ const showImagePickerOptions = () => {
           <Entypo name="edit" size={24} color="rgba(197, 44, 35,1)" />
           </View>
         </TouchableOpacity>
-        
         </View>
-        
       )}
-      <Pressable><Text style={{marginTop:100}} onPress={uploadToCloudStorage} >Envoyer sur Cloud Storage </Text></Pressable>
+      {/* <Pressable><Text style={{marginTop:100}} onPress={uploadToCloudStorage} >Envoyer sur Cloud Storage </Text></Pressable> */}
     </View>
   );
 }

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,FlatList,ScrollView } from 'react-native'
+import { StyleSheet, Text, View,FlatList,ScrollView, Pressable } from 'react-native'
 import React from 'react'
 import { QueryDocumentSnapshot, doc, getDocs } from "firebase/firestore"
 import { db, } from '../../ConfigFirebase'
@@ -6,12 +6,14 @@ import { collection } from 'firebase/firestore'
 import { useState,useEffect } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import Avatar from './ImagePicker'
-
+import { useNavigation } from '@react-navigation/native'
 const auth = getAuth();
   
 
 
 const MonCompte = () => {
+  
+const navigation = useNavigation()
 const [currentUser, setCurrentUser] = useState(null);
 useEffect(() => {
   const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -67,10 +69,15 @@ const renderItem=({item})=>{ if (currentUser.uid === item.uid)return(
      <Text style={styles.infosconnexion}>Email: {currentUser.email}</Text>
     <Text>UID: {currentUser.uid}</Text>
 </View>
+
   </View>
+  <View style={{height:200,marginTop:50, alignItems:'center'}}><Pressable onPress={()=> navigation.navigate("ChangerInfos")}><Text>Changer infos </Text></Pressable></View>
   </View>
  )}
+ 
+ 
     </View>
+    
     
   )
 }
