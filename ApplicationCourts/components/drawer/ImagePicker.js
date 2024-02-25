@@ -26,21 +26,39 @@ export default function Avatar() {
 
 
 
-  const uploadToCloudStorage = async () => {
-    try {
-      if (image) {
-        const downloadURL = await uploadImageAsync(image);
-        console.log("Image uploaded to Cloud Storage. Download URL:", downloadURL);
-        // Vous pouvez ajouter d'autres actions ici, comme la mise à jour de votre base de données avec l'URL de téléchargement.
-      } else {
-        console.warn("Aucune image à télécharger.");
+  // const uploadToCloudStorage = async () => {
+  //   try {
+  //     if (image) {
+  //       const downloadURL = await uploadImageAsync(image);
+  //       console.log("Image uploaded to Cloud Storage. Download URL:", downloadURL);
+  //       // Vous pouvez ajouter d'autres actions ici, comme la mise à jour de votre base de données avec l'URL de téléchargement.
+  //     } else {
+  //       console.warn("Aucune image à télécharger.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Erreur lors du téléchargement sur Cloud Storage:", error);
+  //   }
+  // };
+
+const UpdateFirestoreDatabase = async(imageUrl)=>{
+  try{
+const Reference= collection(db, 'clients')
+      const querySnapshot = await getDocs(query(Reference, where ('uid', '==', currentUser.uid)))
+      if(!querySnapshot.empty){
+        const docID = querySnapshot.docs[0].id
+        const NewData={
+
+          imageprofil:imageUrl
+        }
+        const specificDocRef = doc(db, 'clients',docID)
+        await updateDoc(specificDocRef,NewData)
+        console.log('Profil mis à jour avec ID =' ,currentUser.uid)
       }
-    } catch (error) {
-      console.error("Erreur lors du téléchargement sur Cloud Storage:", error);
-    }
-  };
 
-
+  }catch(error){
+    console.error("Erreur lors de la mise à jour de la base de données:", error)
+  }
+}
 
   const pickImage = async () => {
     try{
@@ -54,8 +72,12 @@ export default function Avatar() {
     if (!result.canceled) {
       const uploadURL= await uploadImageAsync(result.assets[0].uri)
       setImage(uploadURL);
+      await UpdateFirestoreDatabase(uploadURL)
       
-    }}catch(error){
+    }
+  
+  
+  }catch(error){
       console.error("Erreur lors de la sélection de l'image:", error)
     }
     };
@@ -71,6 +93,7 @@ export default function Avatar() {
       // setImage(result.assets[0].uri);
      const uploadURL= await uploadImageAsync(result.assets[0].uri)
      setImage(uploadURL)
+     await UpdateFirestoreDatabase(uploadURL)
     }
   };
   const uploadImageAsync = async (uri) => {

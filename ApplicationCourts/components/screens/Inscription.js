@@ -2,8 +2,8 @@ import { View, Text,StyleSheet,SafeAreaView,ScrollView,TextInput,Image,Pressable
 import React, { useState }from 'react'
 import { createUserWithEmailAndPassword, getAuth} from 'firebase/auth'
 import { Picker } from '@react-native-picker/picker'
-import { GoogleAuthProvider,FacebookAuthProvider,TwitterAuthProvider,linkWithRedirect } from 'firebase/auth'
-import { collection,addDoc,setDoc, doc, DocumentReference } from 'firebase/firestore'
+import { GoogleAuthProvider,FacebookAuthProvider,TwitterAuthProvider,linkWithRedirect, } from 'firebase/auth'
+import { collection,addDoc,setDoc, doc, DocumentReference, } from 'firebase/firestore'
 import { db } from '../../ConfigFirebase'
 
 const auth = getAuth();
@@ -45,7 +45,7 @@ const Inscription = () => {
             firstname:firstname,
             email:email
           })
-          console.log("Document written with ID: ", docRef.id)
+          console.log("Document written with ID: ", userUid)
           
         }
         catch(error){

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,FlatList,ScrollView, Pressable } from 'react-native'
+import { StyleSheet, Text, View,FlatList,ScrollView, Pressable,Image } from 'react-native'
 import React from 'react'
 import { QueryDocumentSnapshot, doc, getDocs } from "firebase/firestore"
 import { db, } from '../../ConfigFirebase'
@@ -42,11 +42,19 @@ getDocs(docRef) // ceci est une fonction qui récupère les documents de la coll
 
 const renderItem=({item})=>{ if (currentUser.uid === item.uid)return( 
   // Très important !! , pour afficher les données précisément , j'ai besoin de préciser cette condition pour afficher les données de l'utilisateur connecté !!
+ <View>
+  <View style={{alignItems:'center'}}>
+    <Image source={{ uri: item.imageprofil }} style={styles.imageprofil} />
+  </View>
+  
   <View style={styles.affichageInfoPerso}>
     <Text style={styles.infoPerso}>{item.name}</Text>  
     <Text style={styles.infoPerso}>{item.firstname}</Text>
+    <Text> {item.email}</Text>
+    <Text> UID: {item.uid}</Text>
      
   </View>
+ </View>
 )}
 
   return (
@@ -56,11 +64,13 @@ const renderItem=({item})=>{ if (currentUser.uid === item.uid)return(
       <View><Text style={{fontSize:25}}>Informations:</Text></View>
 
  {currentUser &&(
-  <View style={{flex:1}}>
-   <View style={{height:200}}>
 
-    <Avatar/>
-   </View>
+  
+  <View style={{flex:1}}>
+   {/* <View style={{height:200}}> */}
+
+    {/* <Avatar/> */}
+   {/* </View> */}
   <View style={styles.affichageInformations}>
     
     <FlatList
@@ -69,10 +79,7 @@ const renderItem=({item})=>{ if (currentUser.uid === item.uid)return(
  keyExtractor={item=>item.id.toString()}>
  </FlatList>
 
- <View>
-     <Text style={styles.infosconnexion}>Email: {currentUser.email}</Text>
-    <Text>UID: {currentUser.uid}</Text>
-</View>
+ 
 
   </View>
   <View style={{height:200,marginTop:50, alignItems:'center'}}><Pressable onPress={()=> navigation.navigate("ChangerInfos")}><Text>Changer infos </Text></Pressable></View>
@@ -96,11 +103,11 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
     backgroundColor:'rgba(197, 44, 35,1)',
-    marginTop:100,
+    marginTop:50,
     marginLeft:20,
     marginRight:20,
     borderRadius:20,
-    height:200
+    height:500
     
   },
   affichageInfoPerso:{
@@ -113,11 +120,14 @@ const styles = StyleSheet.create({
     textAlign:'center',
     margin:10,
     backgroundColor:'white',
-    width:100,
-    
-    
+    width:200,
+  
   },
   infosconnexion :{
 fontSize:20
+  },
+  imageprofil:{
+    borderRadius:'100%',
+    width: 200, height: 200,
   }
 })
