@@ -1,9 +1,9 @@
-import { View, Text,StyleSheet,SafeAreaView,ScrollView,TextInput,Image,Pressable,} from 'react-native'
+import { View, Text,StyleSheet,SafeAreaView,ScrollView,TextInput,Image,Pressable,Alert} from 'react-native'
 import React, { useState }from 'react'
 import { createUserWithEmailAndPassword, getAuth} from 'firebase/auth'
 import { Picker } from '@react-native-picker/picker'
-import { GoogleAuthProvider,FacebookAuthProvider,TwitterAuthProvider,linkWithRedirect } from 'firebase/auth'
-import { collection,addDoc,setDoc, doc } from 'firebase/firestore'
+import { GoogleAuthProvider,FacebookAuthProvider,TwitterAuthProvider,linkWithRedirect, } from 'firebase/auth'
+import { collection,addDoc,setDoc, doc, DocumentReference, } from 'firebase/firestore'
 import { db } from '../../ConfigFirebase'
 
 const auth = getAuth();
@@ -33,18 +33,19 @@ const Inscription = () => {
 
   const SignUp= async ()=>{
         setLoading(true);
-        try{
+        if( password === cpassword){try{
           const response = await createUserWithEmailAndPassword(auth,email,password)
           
           console.log(response);
           alert('Check your emails !')
           const userUid = response.user.uid
-          await setDoc(doc(db, 'clients'),{
+          await addDoc(collection(db, 'clients'),{
             uid:userUid,
             name:name,
             firstname:firstname,
             email:email
           })
+          console.log("Document written with ID: ", userUid)
           
         }
         catch(error){
@@ -55,6 +56,11 @@ const Inscription = () => {
           setLoading(false)
         }
       }
+    
+    else{
+      Alert.alert("Le mot de passe n'est pas confirmé")
+    }}
+        
 
       
 return(
@@ -65,18 +71,22 @@ return(
               </View>
            <View style={styles.inscription}>
             <View style={styles.informations}>
+
+              <TextInput value={firstname} 
+            style={styles.inputinformations} 
+            placeholder='Prénom' 
+            autoCapitalize='none' 
+            onChangeText={(text) => setFirstName(text)}> </TextInput>
+
+
               <TextInput value={name} 
             style={styles.inputinformations} 
             placeholder='Nom' 
             autoCapitalize='none' 
             onChangeText={(text) => setName(text)}> </TextInput>
+              
 
-            <TextInput 
-            value={firstname} style={styles.inputinformations} 
-            placeholder='Prénom' 
-            autoCapitalize='none' 
-            onChangeText={(text) => setFirstName(text)}>
-            </TextInput>
+            
             </View>
 
             <View style={styles.informationsconnexion}>

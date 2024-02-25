@@ -11,6 +11,7 @@ import { Image,Pressable } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import LogoHeader from '../Logo/LogoHeader';
+import CompteNavigation from './CompteNavigation';
 
 
 const Drawer = createDrawerNavigator();
@@ -36,7 +37,7 @@ function DrawerNavigator() {
           headerRight:()=>(<Pressable style={{marginRight:10}}><FontAwesome5 name='cogs' size={24} color='white'/></Pressable>)
         }}
         />
-      <Drawer.Screen name="MonCompte" component={MonCompteInfos}  />
+      <Drawer.Screen name="MonCompte" component={CompteNavigation}  />
     
  
     </Drawer.Navigator>
