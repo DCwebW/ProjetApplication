@@ -32,15 +32,16 @@ const ChangerInfos = () => {
 
       if(!querySnapshot.empty){
         const docID = querySnapshot.docs[0].id
-
+        // On récupère l'id du document 
         const NewData={
 
           firstname : firstname,
           name: name 
-        }
+        }// Ceci sont les nouvelles données, ou les données mises à jour 
         const specificDocRef = doc(db, 'clients',docID)
-
+      // on fait une référence au document qui sera mis à jour avec son ID
         await updateDoc(specificDocRef,NewData)
+        // On fait finalement la mise à jour avec la référence et les nouvelles données 
         console.log('Données mises à jour pour le document spécifique avec l\'ID :', docID)
       }
       else{

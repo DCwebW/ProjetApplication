@@ -1,25 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Text,
-  Alert,
-  Pressable
-} from 'react-native';
+import {View,StyleSheet,Image,TouchableOpacity,Text,Alert,Pressable} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { Entypo } from '@expo/vector-icons';
 import { getStorage, ref, uploadBytes,getDownloadURL } from "firebase/storage";
 import { storage } from '../../ConfigFirebase';
+import { updateDoc, query,where,doc,collection, getDocs} from 'firebase/firestore'
+import { onAuthStateChanged,getAuth } from 'firebase/auth';
+import { db } from '../../ConfigFirebase'
 
-
+const auth = getAuth()
 
 export default function Avatar() {
-  const [image, setImage] = useState(null);
 
-  
+
+  const [image, setImage] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+    });
+    return () => unsubscribe();
+  }, [])
+
+
+
   const uploadToCloudStorage = async () => {
     try {
       if (image) {
@@ -46,7 +52,8 @@ export default function Avatar() {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      const uploadURL= await uploadImageAsync(result.assets[0].uri)
+      setImage(uploadURL);
       
     }}catch(error){
       console.error("Erreur lors de la sélection de l'image:", error)
@@ -94,13 +101,7 @@ export default function Avatar() {
       xhr.open("GET", uri, true);
       xhr.send(null);
     });
-  };
-
-  
-
-  
-
-  
+  }; 
 
 const showImagePickerOptions = () => {
   Alert.alert(
