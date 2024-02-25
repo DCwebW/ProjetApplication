@@ -40,7 +40,8 @@ getDocs(docRef) // ceci est une fonction qui récupère les documents de la coll
 })
 
 
-const renderItem=({item})=>{ if (currentUser.uid === item.uid)return( // Très important !! , pour afficher les données précisément , j'ai besoin de préciser cette condition pour afficher les données de l'utilisateur connecté 
+const renderItem=({item})=>{ if (currentUser.uid === item.uid)return( 
+  // Très important !! , pour afficher les données précisément , j'ai besoin de préciser cette condition pour afficher les données de l'utilisateur connecté !!
   <View style={styles.affichageInfoPerso}>
     <Text style={styles.infoPerso}>{item.name}</Text>  
     <Text style={styles.infoPerso}>{item.firstname}</Text>

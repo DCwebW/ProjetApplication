@@ -1,9 +1,62 @@
-import { StyleSheet, Text, View, ScrollView,TextInput } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, ScrollView,TextInput,Pressable } from 'react-native'
+import React, {useEffect,useState}from 'react'
 import BoutonRetour from '../navigation/BoutonRetour'
 import Avatar from '../drawer/ImagePicker'
+import { updateDoc, query,where,doc,collection, getDocs} from 'firebase/firestore'
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { db } from '../../ConfigFirebase'
+
+const auth = getAuth()
 
 const ChangerInfos = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [firstname, setFirstName]=useState('')
+  const [name, setName]= useState('')
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+    });
+    return () => unsubscribe();
+  }, [])
+
+
+  // fonction pour mettre à jour les données dans un document précis correspondant à l'utilisateur 
+  const updateData= async()=>{
+    try{
+      
+      const Reference= collection(db, 'clients')
+
+      const querySnapshot = await getDocs(query(Reference, where ('uid', '==', currentUser.uid)))
+      // Ici on récupère le document spécifique à l'utilisateur connecté 
+
+      if(!querySnapshot.empty){
+        const docID = querySnapshot.docs[0].id
+
+        const NewData={
+
+          firstname : firstname,
+          name: name 
+        }
+        const specificDocRef = doc(db, 'clients',docID)
+
+        await updateDoc(specificDocRef,NewData)
+        console.log('Données mises à jour pour le document spécifique avec l\'ID :', docID)
+      }
+      else{
+        console.error('Document spécifique introuvable pour l\'utilisateur avec l\'ID :', currentUser.uid)
+      }
+    
+    }catch(error){
+
+      console.error('Erreur lors de la mise à jour des données :', error.message);
+    }
+    
+
+  }
+  
+
+
   return (
     <ScrollView >
      <View ><BoutonRetour/></View> 
@@ -12,12 +65,12 @@ const ChangerInfos = () => {
      <View style={styles.changeinfos}>
         <View>
         <Text style={{margin:20}}>Prénom</Text>
-        <TextInput placeholder='Changer Prénom' style={{backgroundColor:'white', width: 220,height:30,marginLeft:50}}></TextInput>
+        <TextInput placeholder='Changer Prénom' style={{backgroundColor:'white', width: 220,height:30,marginLeft:50}}onChangeText={(text)=>setFirstName(text)}></TextInput>
         </View>
         <Text style={{margin:20}}>Nom</Text>
-        <TextInput placeholder='Changer Nom' style={{backgroundColor:'white', width: 220,height:30,marginLeft:50}}></TextInput>
+        <TextInput placeholder='Changer Nom' style={{backgroundColor:'white', width: 220,height:30,marginLeft:50}}onChangeText={(text)=>setName(text)}></TextInput>
      </View>
-      
+      <Pressable onPress={()=> updateData()}><View style={styles.boutonvalider} ><Text style={{color:'white'}}>Valider</Text></View></Pressable>
     </ScrollView>
   )
 }
@@ -37,6 +90,19 @@ const styles = StyleSheet.create({
         backgroundColor:"rgba(197, 44, 35,1)",
         minHeight:200,
         minWidth:200,
-        margin:20
+        margin:20,
+        borderRadius:20
+    },
+    boutonvalider:{
+
+      backgroundColor:'rgba(197, 44, 35,1)',
+      width:100,
+      height:40,
+      alignItems:'center',
+      justifyContent:'center',
+      borderRadius:10,
+      marginTop:30,
+      marginLeft:140,
+      
     }
 })
