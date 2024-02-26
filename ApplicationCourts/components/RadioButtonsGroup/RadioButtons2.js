@@ -8,16 +8,14 @@ import { RadioGroup } from 'react-native-radio-buttons-group';
 
 
 
-const RadioButtons2=()=>{
+const RadioButtons2=(props)=>{
     const radioButtons = useMemo(() => ([
     
     
     {
-    
         id: '1', // acts as primary key, should be unique and non-empty string
         label: 'filet',
-        value: 'option1'
-        
+        value: 'option1'    
     },
     {
         id: '2',

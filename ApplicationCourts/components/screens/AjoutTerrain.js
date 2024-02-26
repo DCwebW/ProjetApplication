@@ -3,10 +3,15 @@ import React ,{useState} from 'react'
 import BoutonRetour from '../navigation/BoutonRetour'
 import Map from '../Maps/ChoixAdresse'
 import RadioButtons2 from '../RadioButtonsGroup/RadioButtons2'
+import { AntDesign } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker'
+
+
 
 
 const AjoutTerrain = () => {
   const [nomTerrain, setnomTerrain]= useState('')
+  
   return (
     <ScrollView>
     <View>
@@ -30,6 +35,20 @@ const AjoutTerrain = () => {
     <View style={{height:400, backgroundColor:'rgba(197, 44, 35,1)', marginTop:50}}>
       <Text style={{marginLeft:20,marginBottom:20 ,color:'white'}}>Localisation du terrain :</Text>
       <Map/></View>
+
+      <View style={{flexDirection:'row'}}>
+        <View style={{justifyContent:'center',}}>
+          <Text>Photos :</Text>
+        </View>
+        <View style={{backgroundColor:'white',height:150,width:200, marginLeft:30,alignItems:'center',justifyContent:'center'}}>
+          <View>
+            <Pressable>
+            <AntDesign name="pluscircle" size={40} color="grey" />
+            </Pressable>
+            </View>
+        
+        </View>
+      </View>
       <View style={styles.boutonvalider}>
       
       <Pressable><Text style={{color:'white'}}>Valider </Text></Pressable></View>
@@ -53,6 +72,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20, // Ajoutez une marge uniforme de tous les côtés
     marginBottom: 100, // Ajoutez une marge en bas pour inclure le bouton Valider
+    shadowColor:'black',
+shadowOffset:{height:0, width:10},
+shadowOpacity:0.5,
+shadowRadius:20,
   },
   boutonvalider:{
 

@@ -42,18 +42,18 @@ getDocs(docRef) // ceci est une fonction qui récupère les documents de la coll
 
 const renderItem=({item})=>{ if (currentUser.uid === item.uid)return( 
   // Très important !! , pour afficher les données précisément , j'ai besoin de préciser cette condition pour afficher les données de l'utilisateur connecté !!
- <View>
-  <View style={{alignItems:'center'}}>
+<View>
+  <View style={styles.affichageInfoPerso}>
+  <View style={{alignItems:'center',}}>
     <Image source={{ uri: item.imageprofil }} style={styles.imageprofil} />
   </View>
-  
-  <View style={styles.affichageInfoPerso}>
     <Text style={styles.infoPerso}>{item.name}</Text>  
-    <Text style={styles.infoPerso}>{item.firstname}</Text>
-    <Text> {item.email}</Text>
-    <Text> UID: {item.uid}</Text>
-     
+    <Text style={styles.infoPerso}>{item.firstname}</Text>   
   </View>
+   <View style={{alignItems:'center'}}>
+  <Text> {item.email}</Text>
+    <Text> UID: {item.uid}</Text>
+    </View>
  </View>
 )}
 
@@ -67,10 +67,7 @@ const renderItem=({item})=>{ if (currentUser.uid === item.uid)return(
 
   
   <View style={{flex:1}}>
-   {/* <View style={{height:200}}> */}
-
-    {/* <Avatar/> */}
-   {/* </View> */}
+   
   <View style={styles.affichageInformations}>
     
     <FlatList
@@ -82,7 +79,11 @@ const renderItem=({item})=>{ if (currentUser.uid === item.uid)return(
  
 
   </View>
-  <View style={{height:200,marginTop:50, alignItems:'center'}}><Pressable onPress={()=> navigation.navigate("ChangerInfos")}><Text>Changer infos </Text></Pressable></View>
+  <View style={{height:200,marginTop:50, alignItems:'center'}}>
+    <Pressable onPress={()=> navigation.navigate("ChangerInfos")}>
+      <Text style={{color:'rgba(197, 44, 35,1)',fontSize:20}}>Changer infos </Text>
+      </Pressable>
+      </View>
   </View>
  )}
  
@@ -103,16 +104,24 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
     backgroundColor:'rgba(197, 44, 35,1)',
-    marginTop:50,
+    marginTop:60,
     marginLeft:20,
     marginRight:20,
     borderRadius:20,
-    height:500
+    height:300,
+    shadowColor:'black',
+shadowOffset:{height:0, width:10},
+shadowOpacity:0.5,
+shadowRadius:20,
+
+    
     
   },
   affichageInfoPerso:{
 
-
+flexDirection:'row'
+,marginTop:20,
+justifyContent:'center'
 
   },
   infoPerso:{
@@ -120,14 +129,15 @@ const styles = StyleSheet.create({
     textAlign:'center',
     margin:10,
     backgroundColor:'white',
-    width:200,
+    width:120,
+    height:30
   
   },
   infosconnexion :{
 fontSize:20
   },
   imageprofil:{
-    borderRadius:'100%',
-    width: 200, height: 200,
+    borderRadius:100,
+    width: 80, height: 80,
   }
 })

@@ -3,7 +3,7 @@ import React, {useEffect,useState}from 'react'
 import BoutonRetour from '../navigation/BoutonRetour'
 import Avatar from '../drawer/ImagePicker'
 import { updateDoc, query,where,doc,collection, getDocs} from 'firebase/firestore'
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged,deleteUser } from 'firebase/auth';
 import { db } from '../../ConfigFirebase'
 
 const auth = getAuth()
@@ -55,6 +55,8 @@ const ChangerInfos = () => {
     
 
   }
+
+  
   
 
 
@@ -72,6 +74,7 @@ const ChangerInfos = () => {
         <TextInput placeholder='Changer Nom' style={{backgroundColor:'white', width: 220,height:30,marginLeft:50}}onChangeText={(text)=>setName(text)}></TextInput>
      </View>
       <Pressable onPress={()=> updateData()}><View style={styles.boutonvalider} ><Text style={{color:'white'}}>Valider</Text></View></Pressable>
+      <Pressable><View style={styles.suppression}><Text style={{color:'white'}}>Supprimer le Compte </Text></View></Pressable>
     </ScrollView>
   )
 }
@@ -105,5 +108,15 @@ const styles = StyleSheet.create({
       marginTop:30,
       marginLeft:140,
       
+    },
+    suppression:{
+      backgroundColor:'rgba(197, 44, 35,1)',
+      width:150,
+      height:40,
+      alignItems:'center',
+      justifyContent:'center',
+      borderRadius:10,
+      marginTop:30,
+      marginLeft:120,
     }
 })
