@@ -2,15 +2,42 @@ import { StyleSheet, Text, View,ScrollView,TextInput,Pressable } from 'react-nat
 import React ,{useState} from 'react'
 import BoutonRetour from '../navigation/BoutonRetour'
 import Map from '../Maps/ChoixAdresse'
-import RadioButtons2 from '../RadioButtonsGroup/RadioButtons2'
+
 import { AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker'
+import { db } from '../../ConfigFirebase'
+import { addDoc, query,where,doc,collection, getDocs} from 'firebase/firestore'
+import { RadioButton } from 'react-native-paper';
 
 
 
 
 const AjoutTerrain = () => {
   const [nomTerrain, setnomTerrain]= useState('')
+  
+  const [checked, setChecked] = useState('first');
+  const [address, setAddress] = useState('');
+
+
+  const handleAdresseLocaliseeChange = (nouvelleAdresse) => {
+    setAddress(nouvelleAdresse);
+  };
+
+  const EnvoiTerrain= async()=>{
+    try{
+      await addDoc(collection(db,'terrains'),{
+
+        name:nomTerrain,
+        typefilet : checked,
+        adresse : address
+      })
+ console.log('Terrain Enregistré')
+    }catch(error){
+
+      console.error('Erreur enregistrement du terrain', error)
+    }
+    
+  }
   
   return (
     <ScrollView>
@@ -31,10 +58,40 @@ const AjoutTerrain = () => {
       <Text style={{marginLeft:10,marginBottom:20 ,color:'white'}}>Type de filet :</Text>
 
     </View>
-    <RadioButtons2 /> 
+
+
+
+    <View style={{flexDirection:'row', alignItems:'center', justifyContent:'space-evenly'}}>
+      <View style={{backgroundColor:'white',borderRadius:20}}>
+      <RadioButton
+        value="filet"
+        status={ checked === 'filet' ? 'checked' : 'unchecked' }
+        onPress={() => setChecked('filet')}
+        
+      /></View>
+      <Text>filet</Text>
+      <View style={{backgroundColor:'white',borderRadius:20}}>
+      <RadioButton
+        value="chaines"
+        status={ checked === 'chaines' ? 'checked' : 'unchecked' }
+        onPress={() => setChecked('chaines')}
+        
+      /></View>
+      <Text>chaines</Text>
+      <View style={{backgroundColor:'white',borderRadius:20,}}>
+      <RadioButton
+        value="sans filet"
+        status={ checked === 'sans filet' ? 'checked' : 'unchecked' }
+        onPress={() => setChecked('sans filet')}
+        
+      /></View>
+      <Text>sans filet</Text>
+      </View>
+     
+      
     <View style={{height:400, backgroundColor:'rgba(197, 44, 35,1)', marginTop:50}}>
       <Text style={{marginLeft:20,marginBottom:20 ,color:'white'}}>Localisation du terrain :</Text>
-      <Map/></View>
+      <Map onAdresseLocaliseeChange={handleAdresseLocaliseeChange} adresse={address}/></View>
 
       <View style={{flexDirection:'row'}}>
         <View style={{justifyContent:'center',}}>
@@ -51,7 +108,7 @@ const AjoutTerrain = () => {
       </View>
       <View style={styles.boutonvalider}>
       
-      <Pressable><Text style={{color:'white'}}>Valider </Text></Pressable></View>
+      <Pressable onPress={()=> EnvoiTerrain()}><Text style={{color:'white'}}>Valider </Text></Pressable></View>
     </View>
     
     

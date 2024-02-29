@@ -4,11 +4,16 @@ import MapView, { Marker, Circle, Callout } from 'react-native-maps';
 import * as Location from 'expo-location';
 
 
-export default function Map() {
+export default function Map({ onAdresseLocaliseeChange, adresse }) {
+  // En prop de la fonction Map , nous avons mis une fonction de rappel (callback function) qui permettra au composant enfant 
+  // de communiquer avec le composant parent pour indiquer des changements  
   const [currentLocation, setCurrentLocation] = useState(null);
   const [markerPosition, setMarkerPosition] = useState({ latitude: 0, longitude: 0 });
   const [isMarkerSelected, setMarkerSelected] = useState(false);
   const [address, setAddress]= useState('')
+
+ 
+
 
 
   const reversegeocode = async (position) => {
@@ -20,9 +25,14 @@ export default function Map() {
 
       if (reversegeocodedLocation.length > 0) {
         setAddress(`${reversegeocodedLocation[0].name}, ${reversegeocodedLocation[0].city}`);
+        // Ici dans le setAddress, on utilise la syntaxe d'interpolation ${} pour afficher 
+        // la valeur obtenue dans reversegeocodedLocation[0]
+        onAdresseLocaliseeChange(address) // Ici il s'agit de la fonction de rappel mise en props du composant Map
         console.log('Adresse trouvée :', `${reversegeocodedLocation[0].name}, ${reversegeocodedLocation[0].city}`);
+        // 
       } else {
         setAddress('Adresse non trouvée');
+        onAdresseLocaliseeChange('Adresse non trouvée')
         console.log('Adresse non trouvée');
       }
     } catch (error) {
@@ -31,6 +41,7 @@ export default function Map() {
     }
   };
   useEffect(() => {
+    onAdresseLocaliseeChange(address)
     const watchLocation = async () => {
       try {
         let { status } = await Location.requestForegroundPermissionsAsync();
@@ -43,6 +54,7 @@ export default function Map() {
           { distanceInterval: 10 }, // Mettez à jour la position seulement si le déplacement est supérieur à 10 mètres
           (location) => {
             setCurrentLocation(location.coords);
+            console.log(currentLocation.latitude)
             if (!isMarkerSelected) {
               reversegeocode(location.coords);
             }
@@ -52,6 +64,7 @@ export default function Map() {
         return () => {
           if (locationListener) {
             locationListener.remove();
+            setLocationTracking(false)
           }
         };
       } catch (error) {
@@ -60,7 +73,7 @@ export default function Map() {
     };
   
     watchLocation(); // Appel de la fonction au montage du composant
-  }, [isMarkerSelected]);
+  }, [isMarkerSelected ]);
   ;
   
 
@@ -120,7 +133,10 @@ export default function Map() {
       </View>
       <View><Text style={{color:'white',fontSize:25}}>Adresse localisée : </Text>
       
-      <Text style={{backgroundColor:'white',fontSize:20}}>{address}</Text></View>
+      <Text style={{backgroundColor:'white',fontSize:20}}>{address}</Text>
+      
+      
+      </View>
     </SafeAreaView>
   );
 }
