@@ -18,6 +18,7 @@ const AjoutTerrain = () => {
   const [checked, setChecked] = useState('first');
   const [address, setAddress] = useState('');
   const [position, setPosition] = useState()
+  const [imagesTerrains,setImagesTerrains]=useState([])
 
 
   const handleAdresseLocaliseeChange = (nouvelleAdresse) => {
@@ -26,16 +27,20 @@ const AjoutTerrain = () => {
   const handlePosition = (nouvellePosition) =>{
     setPosition(nouvellePosition)
   }
+  const handleImageTerrain =(nouvellesImages)=>{
+       setImagesTerrains(nouvellesImages)
+  }
 
   const EnvoiTerrain= async()=>{
     try{
       await addDoc(collection(db,'terrains'),{
 
-        name:nomTerrain,
+        name: nomTerrain,
         typefilet : checked,
         adresse : address,
-         latitude:position.latitude,
-         longitude:position.longitude
+        latitude: position.latitude,
+        longitude: position.longitude,
+        images:imagesTerrains
       })
  console.log('Terrain Enregistré')
     }catch(error){
@@ -51,6 +56,7 @@ const AjoutTerrain = () => {
       <BoutonRetour/>
       
     </View>
+    <View><Text style={{color: 'rgba(197, 44, 35,1)', fontSize:25, textAlign:'center'}}> Ajouter un terrain</Text></View>
     <View style={styles.formulaireterrain}>
     
     <View style={{marginTop:20,marginLeft:15,flexDirection:'row'}}>
@@ -104,9 +110,9 @@ const AjoutTerrain = () => {
           <Text>Photos :</Text>   
         </View>
        {/* <Imagesterrain/> */}
-       <View style={{backgroundColor:'white',height:150,width:200, marginLeft:30,alignItems:'center',justifyContent:'center',marginTop:30}}>
+       <View style={{backgroundColor:'white',height:300,width:290, marginLeft:15,marginTop:30}}>
         
-          <Imagesterrain/>
+          <Imagesterrain imagesterrains={handleImageTerrain}/>
         
         </View>
       </View>

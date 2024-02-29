@@ -2,17 +2,15 @@ import React, { useState, useEffect } from 'react';
 import {View,StyleSheet,Image,TouchableOpacity,Text,Alert,Pressable,FlatList} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { ImagePickerOptions } from 'expo-image-picker';
-import { Entypo } from '@expo/vector-icons';
 import { getStorage, ref, uploadBytes,getDownloadURL } from "firebase/storage";
 import { storage } from '../../ConfigFirebase';
-import { updateDoc, query,where,doc,collection, getDocs} from 'firebase/firestore'
 import { onAuthStateChanged,getAuth } from 'firebase/auth';
-import { db } from '../../ConfigFirebase'
+import md5 from 'md5';
+
 
 const auth = getAuth()
 
-export default function Imagesterrain() {
+export default function Imagesterrain({imagesterrains}) {
 
 
   const [images, setImages] = useState([]);
@@ -51,12 +49,13 @@ export default function Imagesterrain() {
       quality: 1,
       allowsMultipleSelection:true
     });
-
+    console.log(result);
     if (!result.canceled) {
-      const uploadURL= await uploadImageAsync(result.assets[0].uri)
-      setImages((prevImages)=>[...prevImages,uploadURL]);
+      // const uploadURL= await uploadImageAsync(result.assets[0].uri)
+      const selectedImages = result.assets.map((asset) => asset.uri)
+      setImages((prevImages)=>[...prevImages,...result.assets]);
       
-      
+      imagesterrains((prevImages) => [...prevImages, ...selectedImages]);
     }
   
   
@@ -74,16 +73,16 @@ export default function Imagesterrain() {
     });
     if (!result.canceled) {
       
-      // setImage(result.assets[0].uri);
-     const uploadURL= await uploadImageAsync(result.assets[0].uri)
-     setImages((prevImages) => [...prevImages, uploadURL]);
+      
+    //  const uploadURL= await uploadImageAsync(result.assets[0].uri)
+     setImages((prevImages) => [...prevImages, ...result.assets]);
      
     }
   };
   const uploadImageAsync = async (uri) => {
     try {
       const blob = await createBlobFromUri(uri);
-      const storageRef = ref(storage, `images/image-${Date.now()}`);
+      const storageRef = ref(storage, `imagesterrains/image-${Date.now()}`);
       await uploadBytes(storageRef, blob);
       const downloadURL = await getDownloadURL(storageRef);
       blob.close();
@@ -135,7 +134,7 @@ const showImagePickerOptions = () => {
 const renderItem = ({ item }) => {
   if (item.uri) {
     return (
-      <Image source={{ uri: item }} style={{ width: 60, height: 40 }} />
+      <Image source={{ uri: item.uri }} style={{ width: 200, height: 250,marginHorizontal:10 }} />
     );
   } else {
     return (
@@ -146,6 +145,7 @@ const renderItem = ({ item }) => {
   }
 };
 
+const keyExtractor = (item) => (item.uri ? md5(item.uri) : Math.random().toString(36).substring(7)); // Utilisez md5 ou une autre méthode de hachage
   return (
     <View style={styles.container}>
       
@@ -159,14 +159,14 @@ const renderItem = ({ item }) => {
             </View>
       )}
 
-      {images && (
+      {images.length > 0 && (
         <View>
          <FlatList
-         data={images ? [images]:[]} // utilisation d'un tableau pour les données qui sont composées de plusieurs images 
+         data={images} 
          renderItem={
           renderItem
          }
-         keyExtractor={(_,index)=>index.toString()} // Utilisation de l'index de chaque image comme clé pour chaque élément
+         keyExtractor={keyExtractor} // Utilisation de l'index de chaque image comme clé pour chaque élément
          horizontal={true} 
          >
 
@@ -184,9 +184,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     backgroundColor: '#f2f2f2',
-    paddingTop: 50,
+    marginTop:10
+    
   },
   introText: {
     fontSize: 18,
