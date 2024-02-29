@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import {View,StyleSheet,Image,TouchableOpacity,Text,Alert,Pressable} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import {View,StyleSheet,Image,TouchableOpacity,Text,Alert,Pressable,FlatList} from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import { ImagePickerOptions } from 'expo-image-picker';
 import { Entypo } from '@expo/vector-icons';
 import { getStorage, ref, uploadBytes,getDownloadURL } from "firebase/storage";
 import { storage } from '../../ConfigFirebase';
@@ -11,10 +12,10 @@ import { db } from '../../ConfigFirebase'
 
 const auth = getAuth()
 
-export default function Avatar() {
+export default function Imagesterrain() {
 
 
-  const [image, setImage] = useState(null);
+  const [images, setImages] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
@@ -40,39 +41,21 @@ export default function Avatar() {
   //   }
   // };
 
-const UpdateFirestoreDatabase = async(imageUrl)=>{
-  try{
-const Reference= collection(db, 'terrains')
-      const querySnapshot = await getDocs(query(Reference, where ('uid', '==', currentUser.uid)))
-      if(!querySnapshot.empty){
-        const docID = querySnapshot.docs[0].id
-        const NewData={
 
-          imageprofil:imageUrl
-        }
-        const specificDocRef = doc(db, 'terrains',docID)
-        await updateDoc(specificDocRef,NewData)
-        console.log('Profil mis à jour avec ID =' ,currentUser.uid)
-      }
-
-  }catch(error){
-    console.error("Erreur lors de la mise à jour de la base de données:", error)
-  }
-}
 
   const pickImage = async () => {
     try{
       let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      allowsMultipleSelection:true
     });
 
     if (!result.canceled) {
       const uploadURL= await uploadImageAsync(result.assets[0].uri)
-      setImage(uploadURL);
-      await UpdateFirestoreDatabase(uploadURL)
+      setImages((prevImages)=>[...prevImages,uploadURL]);
+      
       
     }
   
@@ -84,16 +67,17 @@ const Reference= collection(db, 'terrains')
 
   const takePhoto = async () => {
     let result = await ImagePicker.launchCameraAsync({
-      allowsEditing: true,
+      
       aspect: [4, 3],
       quality: 1,
+      allowsMultipleSelection : true
     });
     if (!result.canceled) {
       
       // setImage(result.assets[0].uri);
      const uploadURL= await uploadImageAsync(result.assets[0].uri)
-     setImage(uploadURL)
-     await UpdateFirestoreDatabase(uploadURL)
+     setImages((prevImages) => [...prevImages, uploadURL]);
+     
     }
   };
   const uploadImageAsync = async (uri) => {
@@ -148,35 +132,47 @@ const showImagePickerOptions = () => {
   );
 };
 
+const renderItem = ({ item }) => {
+  if (item.uri) {
+    return (
+      <Image source={{ uri: item }} style={{ width: 60, height: 40 }} />
+    );
+  } else {
+    return (
+      <View style={{ width: 60, height: 40, justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ color: 'white' }}>Chargement...</Text>
+      </View>
+    );
+  }
+};
 
   return (
     <View style={styles.container}>
       
 
-      {!image && (<View>
-        
-          <View style={{ borderRadius: 300, overflow: 'hidden', position:'absolute',alignItems:'center' }}>
-            <Ionicons name="image" size={150} color="grey" />
-          </View>
-        <TouchableOpacity onPress={showImagePickerOptions}>
-          <View style={{position:'relative',marginLeft:120,marginTop:15}}>
-          <Entypo name="edit" size={24} color="rgba(197, 44, 35,1)" />
-          </View>
-        </TouchableOpacity>
-        
-        </View>
+      {!images.length && (<View style={{}}>
+            <TouchableOpacity
+            
+            onPress={()=>showImagePickerOptions()}>
+            <AntDesign name="pluscircle" size={40} color="grey" />
+            </TouchableOpacity>
+            </View>
       )}
 
-      {image && (
+      {images && (
         <View>
-          <View style={{ borderRadius: 300, overflow: 'hidden', position:'absolute',alignItems:'center' }}>
-          <Image source={{ uri: image }} style={styles.image} />
-          </View>
-        <TouchableOpacity onPress={showImagePickerOptions}>
-          <View style={{position:'relative',marginLeft:120,marginTop:15}}>
-          <Entypo name="edit" size={24} color="rgba(197, 44, 35,1)" />
-          </View>
-        </TouchableOpacity>
+         <FlatList
+         data={images ? [images]:[]} // utilisation d'un tableau pour les données qui sont composées de plusieurs images 
+         renderItem={
+          renderItem
+         }
+         keyExtractor={(_,index)=>index.toString()} // Utilisation de l'index de chaque image comme clé pour chaque élément
+         horizontal={true} 
+         >
+
+
+         </FlatList>
+        
         </View>
       )}
       {/* <Pressable><Text style={{marginTop:100}} onPress={uploadToCloudStorage} >Envoyer sur Cloud Storage </Text></Pressable> */}

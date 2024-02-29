@@ -2,12 +2,12 @@ import { StyleSheet, Text, View,ScrollView,TextInput,Pressable } from 'react-nat
 import React ,{useState} from 'react'
 import BoutonRetour from '../navigation/BoutonRetour'
 import Map from '../Maps/ChoixAdresse'
-
 import { AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker'
 import { db } from '../../ConfigFirebase'
 import { addDoc, query,where,doc,collection, getDocs} from 'firebase/firestore'
 import { RadioButton } from 'react-native-paper';
+import Imagesterrain from '../ManipulationImages/ImagePicker2';
 
 
 
@@ -17,11 +17,15 @@ const AjoutTerrain = () => {
   
   const [checked, setChecked] = useState('first');
   const [address, setAddress] = useState('');
+  const [position, setPosition] = useState()
 
 
   const handleAdresseLocaliseeChange = (nouvelleAdresse) => {
     setAddress(nouvelleAdresse);
   };
+  const handlePosition = (nouvellePosition) =>{
+    setPosition(nouvellePosition)
+  }
 
   const EnvoiTerrain= async()=>{
     try{
@@ -29,7 +33,9 @@ const AjoutTerrain = () => {
 
         name:nomTerrain,
         typefilet : checked,
-        adresse : address
+        adresse : address,
+         latitude:position.latitude,
+         longitude:position.longitude
       })
  console.log('Terrain Enregistré')
     }catch(error){
@@ -91,18 +97,16 @@ const AjoutTerrain = () => {
       
     <View style={{height:400, backgroundColor:'rgba(197, 44, 35,1)', marginTop:50}}>
       <Text style={{marginLeft:20,marginBottom:20 ,color:'white'}}>Localisation du terrain :</Text>
-      <Map onAdresseLocaliseeChange={handleAdresseLocaliseeChange} adresse={address}/></View>
-
-      <View style={{flexDirection:'row'}}>
+      <Map onAdresseLocaliseeChange={handleAdresseLocaliseeChange} adresse={address} onPositionChange={handlePosition}/></View>
+      {/* Ici est rappelé la fonction de rappel mise en prop dans le composant Map */}
+      <View style={{flexDirection:'row', marginTop:30,width:250, }}>
         <View style={{justifyContent:'center',}}>
-          <Text>Photos :</Text>
+          <Text>Photos :</Text>   
         </View>
-        <View style={{backgroundColor:'white',height:150,width:200, marginLeft:30,alignItems:'center',justifyContent:'center'}}>
-          <View>
-            <Pressable>
-            <AntDesign name="pluscircle" size={40} color="grey" />
-            </Pressable>
-            </View>
+       {/* <Imagesterrain/> */}
+       <View style={{backgroundColor:'white',height:150,width:200, marginLeft:30,alignItems:'center',justifyContent:'center',marginTop:30}}>
+        
+          <Imagesterrain/>
         
         </View>
       </View>

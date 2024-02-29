@@ -4,7 +4,7 @@ import MapView, { Marker, Circle, Callout } from 'react-native-maps';
 import * as Location from 'expo-location';
 
 
-export default function Map({ onAdresseLocaliseeChange, adresse }) {
+export default function Map({ onAdresseLocaliseeChange, adresse,onPositionChange }) {
   // En prop de la fonction Map , nous avons mis une fonction de rappel (callback function) qui permettra au composant enfant 
   // de communiquer avec le composant parent pour indiquer des changements  
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -28,7 +28,8 @@ export default function Map({ onAdresseLocaliseeChange, adresse }) {
         // Ici dans le setAddress, on utilise la syntaxe d'interpolation ${} pour afficher 
         // la valeur obtenue dans reversegeocodedLocation[0]
         onAdresseLocaliseeChange(address) // Ici il s'agit de la fonction de rappel mise en props du composant Map
-        console.log('Adresse trouvée :', `${reversegeocodedLocation[0].name}, ${reversegeocodedLocation[0].city}`);
+        console.log('Adresse trouvée :', `${reversegeocodedLocation[0].name}, ${reversegeocodedLocation[0].city}`)
+        console.log(reversegeocodedLocation);
         // 
       } else {
         setAddress('Adresse non trouvée');
@@ -54,7 +55,8 @@ export default function Map({ onAdresseLocaliseeChange, adresse }) {
           { distanceInterval: 10 }, // Mettez à jour la position seulement si le déplacement est supérieur à 10 mètres
           (location) => {
             setCurrentLocation(location.coords);
-            console.log(currentLocation.latitude)
+            // console.log(currentLocation.latitude)
+            
             if (!isMarkerSelected) {
               reversegeocode(location.coords);
             }
@@ -83,10 +85,11 @@ export default function Map({ onAdresseLocaliseeChange, adresse }) {
       
       <View style={styles.card}>
         <MapView
+        
           style={styles.map}
           initialRegion={{
-            latitude: currentLocation ? currentLocation.latitude : 48.85679108910881,
-            longitude: currentLocation ? currentLocation.longitude : 2.392559360270229,
+            latitude: currentLocation?.latitude ?? 48.85679108910881,
+            longitude: currentLocation?.longitude ?? 2.392559360270229,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.05,
           }}
@@ -99,20 +102,24 @@ export default function Map({ onAdresseLocaliseeChange, adresse }) {
             };
             setMarkerPosition(newMarkerPosition);
             setMarkerSelected(true);
-            reversegeocode(newMarkerPosition); // Appeler la fonction reversegeocode avec la nouvelle position du marqueur
+            reversegeocode(newMarkerPosition)
+            ; // Appeler la fonction reversegeocode avec la nouvelle position du marqueur
           }}
           >
           {currentLocation && (
             <Marker
               coordinate={{
-                latitude: currentLocation.latitude,
-                longitude: currentLocation.longitude,
+                latitude: markerPosition.latitude || currentLocation.latitude,
+              longitude: markerPosition.longitude || currentLocation.longitude,
               }}
               draggable
               onDragEnd={(e) => {
                 const newMarkerPosition = e.nativeEvent.coordinate;
                 setMarkerPosition(newMarkerPosition);
-                reversegeocode(newMarkerPosition); // Appeler la fonction reversegeocode avec la nouvelle position du marqueur
+                reversegeocode(newMarkerPosition)
+                console.log(markerPosition)
+                onPositionChange(newMarkerPosition)
+                ; // Appeler la fonction reversegeocode avec la nouvelle position du marqueur
               }}
               onLongPress={() => setMarkerSelected(true)}
               >
@@ -121,8 +128,8 @@ export default function Map({ onAdresseLocaliseeChange, adresse }) {
           )}
           <Circle
             center={{
-              latitude: currentLocation ? currentLocation.latitude : 48.85679108910881,
-              longitude: currentLocation ? currentLocation.longitude : 2.392559360270229,
+              latitude: currentLocation?.latitude ?? 48.85679108910881,
+            longitude: currentLocation?.longitude ?? 2.392559360270229,
             }}
             radius={1000} // en mètres
             fillColor="rgba(27, 237, 105,0.5)"
@@ -134,6 +141,13 @@ export default function Map({ onAdresseLocaliseeChange, adresse }) {
       <View><Text style={{color:'white',fontSize:25}}>Adresse localisée : </Text>
       
       <Text style={{backgroundColor:'white',fontSize:20}}>{address}</Text>
+
+      { markerPosition.latitude ?
+       <Text style={{backgroundColor:'white',fontSize:20}}>{markerPosition.latitude} </Text>
+      : <Text style={{backgroundColor:'white',fontSize:20}}>{currentLocation?.latitude} </Text>
+      }
+      
+      
       
       
       </View>
