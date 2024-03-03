@@ -72,19 +72,14 @@ return(
            <View style={styles.inscription}>
             <View style={styles.informations}>
 
-              <TextInput value={firstname} 
-            style={styles.inputinformations} 
-            placeholder='Prénom' 
-            autoCapitalize='none' 
-            onChangeText={(text) => setFirstName(text)}> </TextInput>
-
-
-              <TextInput value={name} 
-            style={styles.inputinformations} 
-            placeholder='Nom' 
-            autoCapitalize='none' 
-            onChangeText={(text) => setName(text)}> </TextInput>
-              
+          <TextInput 
+          placeholder='Nom' 
+          style={styles.inputinformations}
+          onChangeText={(text)=>setName(text)}></TextInput>    
+          <TextInput 
+          placeholder='Prénom' 
+          style={styles.inputinformations}
+          onChangeText={(text)=>setFirstName(text)}></TextInput>    
 
             
             </View>
@@ -150,27 +145,26 @@ const styles = StyleSheet.create({
       marginTop:10
     },
     input: {
-        padding: 20,
+        
         borderStyle: 'solid',
         borderColor: 'black',
         borderWidth: 2,
         backgroundColor: 'white',
         minWidth: 300,
-        maxHeight:20,
+        minHeight:40,
         color:'black',
         margin:10
       },  
     inputinformations: {
-        padding: 20,
-        borderStyle: 'solid',
-        borderColor: 'black',
-        borderWidth: 2,
-        backgroundColor: 'white',
-        minWidth: 160,
-        height:20,
         
-        color:'black',
-        margin:10
+      borderStyle: 'solid',
+      borderColor: 'black',
+      borderWidth: 2,
+      backgroundColor: 'white',
+      minWidth: 160,
+      minHeight:40,
+      color:'black',
+      margin:10
       },  
 
 

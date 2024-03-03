@@ -22,7 +22,7 @@ function BottomTabNavigator() {
         tabBarIcon:({focused,color,size})=>{
             let iconName
             let iconcolor
-            if(route.name==='Accueil'){
+            if(route.name==='PageAccueil'){
                 iconName='home'
                 iconcolor='white' 
             }
@@ -69,7 +69,7 @@ function BottomTabNavigator() {
     })}
     
     >
-      <Tab.Screen name="Accueil" component={Home} options={{title:'Accueil'}}/>
+      <Tab.Screen name="PageAccueil" component={Home} options={{title:'Accueil'}}/>
       <Tab.Screen name="Details" component={Details} options={{title:'Details'}} />
       <Tab.Screen name="Actions" component={Actions} options={{title:'Actions'}}/>
       <Tab.Screen name="Recherche" component={RechercheTerrainMap} options={{title:'Recherche'}}/>

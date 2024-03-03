@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import MapView, { Marker, Circle, Polyline, Callout } from 'react-native-maps';
 import * as Location from 'expo-location';
 
 
 export default function Map() {
+
+  useEffect(()=>{
   const getCurrentLocation = async () => {
   try {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -18,7 +20,11 @@ export default function Map() {
   } catch (error) {
     console.error('Error getting location:', error);
   }
-};
+};  
+
+getCurrentLocation()
+  },[])
+  
 
   return (
     <View style={styles.container}>

@@ -107,14 +107,14 @@ const styles = StyleSheet.create({
 
     },
     input: {
-        padding: 20,
+        
         borderStyle: 'solid',
         borderColor: 'black',
         borderWidth: 2,
-        backgroundColor: 'white',
+        
         minWidth: 300,
-        maxHeight:20,
-        color:'black'
+        minHeight:40,
+        
         
 
 
