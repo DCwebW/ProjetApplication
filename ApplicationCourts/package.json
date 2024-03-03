@@ -37,6 +37,7 @@
     "react-native-paper": "^5.12.3",
     "react-native-radio-buttons-group": "^3.0.7",
     "react-native-reanimated": "~3.6.2",
+    "react-native-svg": "^15.0.0",
     "react-native-timer-picker": "^1.5.3"
   },
   "devDependencies": {

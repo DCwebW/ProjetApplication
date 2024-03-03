@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { QueryDocumentSnapshot, doc, getDocs,collection, QuerySnapshot } from "firebase/firestore"
 import { db, } from '../../ConfigFirebase'
 import { Marker,Callout } from 'react-native-maps'
+import { SvgUri,SvgXml } from 'react-native-svg'
 
 
 
@@ -35,12 +36,16 @@ getDocs(docRef)
  fetchMarqueurs()
     },[])
 
-    const CustomMarker = () =>{
-        return(<View>
-            <Image style={{width:50, height:50}} source={require('/xampp/htdocs/Formation/ProjetApplication2/ApplicationCourts/assets/splash.png')} />
-        </View>)
+    const CustomMarker = () => {
         
-    }
+      
+        return <View>
+            <Image style={{width:30,height:30}}source={require('../../assets/png/icons8-basketball-48.png')}/>
+    
+        </View>
+        ;
+        //Icone issu du site https://icones8.fr
+      };
   return (
     marqueurs.map(marqueur=>(
         <Marker
@@ -53,9 +58,10 @@ getDocs(docRef)
         }
         
         >
-       
-       <Callout>
+       <CustomMarker/>
+       <Callout style={{width:100,height:80}}>
         <Text>{marqueur.name}</Text>
+        <Image source={{uri : marqueur.images[0]}} style={{width:50,height:50}}/>
        </Callout>
         </Marker>
     ))
