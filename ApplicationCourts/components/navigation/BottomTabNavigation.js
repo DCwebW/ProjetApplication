@@ -7,6 +7,7 @@ import RechercheTerrainMap from '../Maps/RechercheTerrainMap';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { StyleSheet } from 'react-native';
+import RechTerrainNavigator from './RechTerrainNavigator';
 
 
 const Tab = createBottomTabNavigator();
@@ -72,7 +73,7 @@ function BottomTabNavigator() {
       <Tab.Screen name="PageAccueil" component={Home} options={{title:'Accueil'}}/>
       <Tab.Screen name="Details" component={Details} options={{title:'Details'}} />
       <Tab.Screen name="Actions" component={Actions} options={{title:'Actions'}}/>
-      <Tab.Screen name="Recherche" component={RechercheTerrainMap} options={{title:'Recherche'}}/>
+      <Tab.Screen name="Recherche" component={RechTerrainNavigator} options={{title:'Recherche'}}/>
     </Tab.Navigator>
   );
 }

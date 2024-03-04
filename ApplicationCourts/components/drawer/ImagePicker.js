@@ -3,15 +3,14 @@ import {View,StyleSheet,Image,TouchableOpacity,Text,Alert,Pressable} from 'react
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { Entypo } from '@expo/vector-icons';
-import { getStorage, ref, uploadBytes,getDownloadURL } from "firebase/storage";
-import { storage } from '../../ConfigFirebase';
+
 import { updateDoc, query,where,doc,collection, getDocs} from 'firebase/firestore'
 import { onAuthStateChanged,getAuth } from 'firebase/auth';
 import { db } from '../../ConfigFirebase'
 
 const auth = getAuth()
 
-export default function Avatar() {
+export default function Avatar({results}) {
 
 
   const [image, setImage] = useState(null);
@@ -24,6 +23,63 @@ export default function Avatar() {
     return () => unsubscribe();
   }, [])
 
+
+const showImagePickerOptions = () => {
+  Alert.alert(
+    'Choisissez une option 📸',
+    'Voulez-vous choisir une image de votre bibliothèque ou prendre une nouvelle photo?',
+    [
+      {
+        text: 'Choisir de la bibliothèque',
+        onPress: pickImage,
+      },
+      {
+        text: 'Prendre une photo',
+        onPress: takePhoto,
+      },
+      {
+        text: 'Annuler',
+        onPress: () => {}, // Ne fait rien, ferme simplement l'alerte
+        style: 'cancel', // Style iOS pour indiquer une action d'annulation
+      },
+    ]
+  );
+};
+
+const pickImage = async () => {
+    try{
+      let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+     
+      setImage(result.assets[0].uri);
+     results(result.assets[0].uri)
+    }
+  
+  
+  }catch(error){
+      console.error("Erreur lors de la sélection de l'image:", error)
+    }
+    };
+
+   const takePhoto = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.canceled) {
+      
+      setImage(result.assets[0].uri);
+      results(result.assets[0].uri)
+    
+    }
+  };
 
 
   // const uploadToCloudStorage = async () => {
@@ -59,94 +115,6 @@ const Reference= collection(db, 'clients')
     console.error("Erreur lors de la mise à jour de la base de données:", error)
   }
 }
-
-  const pickImage = async () => {
-    try{
-      let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      const uploadURL= await uploadImageAsync(result.assets[0].uri)
-      setImage(uploadURL);
-      await UpdateFirestoreDatabase(uploadURL)
-      
-    }
-  
-  
-  }catch(error){
-      console.error("Erreur lors de la sélection de l'image:", error)
-    }
-    };
-
-  const takePhoto = async () => {
-    let result = await ImagePicker.launchCameraAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!result.canceled) {
-      
-      // setImage(result.assets[0].uri);
-     const uploadURL= await uploadImageAsync(result.assets[0].uri)
-     setImage(uploadURL)
-     await UpdateFirestoreDatabase(uploadURL)
-    }
-  };
-  const uploadImageAsync = async (uri) => {
-    try {
-      const blob = await createBlobFromUri(uri);
-      const storageRef = ref(storage, `images/image-${Date.now()}`);
-      await uploadBytes(storageRef, blob);
-      const downloadURL = await getDownloadURL(storageRef);
-      blob.close();
-      return downloadURL;
-    } catch (error) {
-      console.error(error);
-      throw error; // Rethrow the error to handle it elsewhere if needed
-    }
-  };
-
-  const createBlobFromUri = async (uri) => {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function (e) {
-        console.error(e);
-        reject(new TypeError("Network request failed"));
-      };
-      xhr.responseType = "blob";
-      xhr.open("GET", uri, true);
-      xhr.send(null);
-    });
-  }; 
-
-const showImagePickerOptions = () => {
-  Alert.alert(
-    'Choisissez une option 📸',
-    'Voulez-vous choisir une image de votre bibliothèque ou prendre une nouvelle photo?',
-    [
-      {
-        text: 'Choisir de la bibliothèque',
-        onPress: pickImage,
-      },
-      {
-        text: 'Prendre une photo',
-        onPress: takePhoto,
-      },
-      {
-        text: 'Annuler',
-        onPress: () => {}, // Ne fait rien, ferme simplement l'alerte
-        style: 'cancel', // Style iOS pour indiquer une action d'annulation
-      },
-    ]
-  );
-};
 
 
   return (

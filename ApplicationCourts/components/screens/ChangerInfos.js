@@ -7,12 +7,15 @@ import { getAuth, onAuthStateChanged,deleteUser, reauthenticateWithCredential, A
 import { db } from '../../ConfigFirebase'
 import { useNavigation,CommonActions } from '@react-navigation/native'
 import { FIREBASE_AUTH } from '../../ConfigFirebase'
+import { getStorage, ref, uploadBytes,getDownloadURL } from "firebase/storage";
+import { storage } from '../../ConfigFirebase';
 
 
 
 const auth = getAuth()
 
-const ChangerInfos = () => {
+const ChangerInfos = ({route}) => {
+  const {nom , prénom,image}= route.params
   const [currentUser, setCurrentUser] = useState(null);
   const [firstname, setFirstName]=useState('')
   const [name, setName]= useState('')
@@ -20,8 +23,14 @@ const ChangerInfos = () => {
   const [openDelete, setOpenDelete]= useState(false)
   const [password,setPassword]= useState('') 
   const navigation = useNavigation()
+  const [imageprofil , setImageProfil]= useState(null)
 
+  const nomProfil = JSON.stringify(nom)
+  const prénomProfil = JSON.stringify(prénom)
 
+ const handleImageProfil=(nouvelleImage)=>{
+  setImageProfil(nouvelleImage)
+ }
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
@@ -31,8 +40,52 @@ const ChangerInfos = () => {
 // Ceci est utilisé pour définir currentUser en tant que utilisateur authentifié , pour ensuite agir dessus avec nos fonctions 
 
   // fonction pour mettre à jour les données dans un document précis correspondant à l'utilisateur 
+
+
+  
+
+  const createBlobFromUri = async (uri) => {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        console.error(e);
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
+  }; 
+
+const uploadImageAsync = async (uri) => {
+    try {
+      const blob = await createBlobFromUri(uri);
+      const storageRef = ref(storage, `images/image-${Date.now()}`);
+      await uploadBytes(storageRef, blob);
+      const downloadURL = await getDownloadURL(storageRef);
+      blob.close();
+      return downloadURL;
+    } catch (error) {
+      console.error(error);
+      throw error; // Rethrow the error to handle it elsewhere if needed
+    }
+  };
+
   const updateData= async()=>{
     try{
+      
+      if (!firstname && !name && !imageprofil) {
+        console.log('Aucune nouvelle information fournie.');
+        return;
+      } // Cette condition vérifie que l'au moins un des champs a été fourni en nouvelles informations 
+      // Si elle n'est pas respectée la mise à jour des données située dans le code en bas n'est pas effectuée
+
+      if (imageprofil){
+      await uploadImageAsync(imageprofil)  
+      }
       
       const Reference= collection(db, 'clients')
       // Référence à la base de données , et la collection clients
@@ -43,11 +96,20 @@ const ChangerInfos = () => {
       if(!querySnapshot.empty){
         const docID = querySnapshot.docs[0].id
         // On récupère l'id du document 
-        const NewData={
+        const NewData={}
+        if(firstname!== undefined && firstname !== ''){
 
-          firstname : firstname,
-          name: name 
-        }// Ceci sont les nouvelles données, ou les données mises à jour 
+          NewData.firstname = firstname
+        }
+        if(name!== undefined && name !== ''){
+
+          NewData.name = name
+        }
+        if(imageprofil!== undefined && imageprofil !== ''){
+
+          NewData.imageprofil = imageprofil
+        } 
+        // Ici une vérification est faite pour qu'une donnée ne soit mise à jour que si le champ est fourni   
         const specificDocRef = doc(db, 'clients',docID)
       // on fait une référence au document qui sera mis à jour avec son ID
         await updateDoc(specificDocRef,NewData)
@@ -94,17 +156,15 @@ const ChangerInfos = () => {
       }
 //  La fonction ci dessus permet de supprimer l'utilisateur de la base de données , comme pour la mise à jour plus haut j'ai du utiliser
 //  Une requete avec where pour bien spécifier le document que je veux supprimer 
-
-
-      await deleteUser(currentUser);
-
-      
+      await deleteUser(currentUser); 
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
           routes: [{ name: 'Login' }] // Assurez-vous d'ajuster le nom de votre écran de connexion
         }) // Cette fonction réinitialise la pile de navigation , l'index ici avec 0 , indique que la pile sera réduite à une page 
       )
+      setOpen(false)
+      setOpenDelete(false)
       
       console.log('Compte supprimé avec succès.');
     } catch (error) {
@@ -127,14 +187,15 @@ const ChangerInfos = () => {
   return (
     <ScrollView >
      <View ><BoutonRetour/></View> 
-     <View style={styles.avatar}><Avatar/></View>
+
+     <View style={styles.avatar}><Avatar results={handleImageProfil}/></View>
 
      <View style={styles.changeinfos}>
         <View>
-        <Text style={{margin:20}}>Prénom</Text>
+        <Text style={{margin:20}}>Prénom : {prénomProfil}</Text>
         <TextInput placeholder='Changer Prénom' style={{backgroundColor:'white', width: 220,height:30,marginLeft:50}}onChangeText={(text)=>setFirstName(text)}></TextInput>
         </View>
-        <Text style={{margin:20}}>Nom</Text>
+        <Text style={{margin:20}}>Nom :{nomProfil}</Text>
         <TextInput placeholder='Changer Nom' style={{backgroundColor:'white', width: 220,height:30,marginLeft:50}}onChangeText={(text)=>setName(text)}></TextInput>
      </View>
       <Pressable onPress={()=> updateData()}><View style={styles.boutonvalider} ><Text style={{color:'white'}}>Valider</Text></View></Pressable>

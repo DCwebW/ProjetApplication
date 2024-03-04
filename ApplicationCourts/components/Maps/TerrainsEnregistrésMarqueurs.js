@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View,Image } from 'react-native'
+import { StyleSheet, Text, View,Image, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { QueryDocumentSnapshot, doc, getDocs,collection, QuerySnapshot } from "firebase/firestore"
 import { db, } from '../../ConfigFirebase'
 import { Marker,Callout } from 'react-native-maps'
-import { SvgUri,SvgXml } from 'react-native-svg'
+import { useNavigation } from '@react-navigation/native'
+
 
 
 
@@ -15,7 +16,7 @@ import { SvgUri,SvgXml } from 'react-native-svg'
 const TerrainsEnregistrésMarqueurs = () => {
 
     const [marqueurs, setMarqueurs] = useState([])
-
+const navigation = useNavigation()
     useEffect(()=>{ 
  const fetchMarqueurs = async()=>{
 
@@ -39,8 +40,8 @@ getDocs(docRef)
     const CustomMarker = () => {
         
       
-        return <View>
-            <Image style={{width:30,height:30}}source={require('../../assets/png/icons8-basketball-48.png')}/>
+        return <View style={{backgroundColor:'rgba(197, 44, 35,1)',borderRadius:40,width:35,height:35,alignItems:'center',justifyContent:'center'}}>
+            <Image style={{width:30,height:30,}}source={require('../../assets/png/icons8-basketball-48.png')}/>
     
         </View>
         ;
@@ -59,9 +60,17 @@ getDocs(docRef)
         
         >
        <CustomMarker/>
-       <Callout style={{width:100,height:80}}>
-        <Text>{marqueur.name}</Text>
-        <Image source={{uri : marqueur.images[0]}} style={{width:50,height:50}}/>
+       <Callout style={{width:300,height:200}}>
+        <Text style={{fontSize:20}}>{marqueur.name} :</Text>
+        <Image source={{uri : marqueur.images[0]}} style={{width:200,height:100,marginLeft:20,marginTop:20}}/>
+        <View style={{alignItems:'center'}}>
+            <TouchableOpacity onPress={()=> navigation.navigate('Fiche',{
+                
+                name : marqueur.name
+             })}>
+            <View style={{backgroundColor:'rgba(197, 44, 35,1)',width:150, marginTop:20, alignItems:'center',height:35,justifyContent:'center',borderRadius:10}}><Text style={{color:'white'}}>Voir fiche du terrain </Text></View>
+        </TouchableOpacity></View>
+        
        </Callout>
         </Marker>
     ))

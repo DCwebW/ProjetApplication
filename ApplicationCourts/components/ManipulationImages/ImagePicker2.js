@@ -25,19 +25,6 @@ export default function Imagesterrain({imagesterrains}) {
 
 
 
-  // const uploadToCloudStorage = async () => {
-  //   try {
-  //     if (image) {
-  //       const downloadURL = await uploadImageAsync(image);
-  //       console.log("Image uploaded to Cloud Storage. Download URL:", downloadURL);
-  //       // Vous pouvez ajouter d'autres actions ici, comme la mise à jour de votre base de données avec l'URL de téléchargement.
-  //     } else {
-  //       console.warn("Aucune image à télécharger.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Erreur lors du téléchargement sur Cloud Storage:", error);
-  //   }
-  // };
 
 
 
@@ -55,7 +42,7 @@ export default function Imagesterrain({imagesterrains}) {
       const selectedImages = result.assets.map((asset) => asset.uri)
       setImages((prevImages)=>[...prevImages,...result.assets]);
       
-      imagesterrains((prevImages) => [...prevImages, ...selectedImages]);
+      imagesterrains((prevImages) => [...prevImages, ...result.assets]);
     }
   
   
@@ -76,38 +63,11 @@ export default function Imagesterrain({imagesterrains}) {
       
     //  const uploadURL= await uploadImageAsync(result.assets[0].uri)
      setImages((prevImages) => [...prevImages, ...result.assets]);
+     imagesterrains((prevImages) => [...prevImages, ...selectedImages]);
      
     }
   };
-  const uploadImageAsync = async (uri) => {
-    try {
-      const blob = await createBlobFromUri(uri);
-      const storageRef = ref(storage, `imagesterrains/image-${Date.now()}`);
-      await uploadBytes(storageRef, blob);
-      const downloadURL = await getDownloadURL(storageRef);
-      blob.close();
-      return downloadURL;
-    } catch (error) {
-      console.error(error);
-      throw error; // Rethrow the error to handle it elsewhere if needed
-    }
-  };
 
-  const createBlobFromUri = async (uri) => {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function (e) {
-        console.error(e);
-        reject(new TypeError("Network request failed"));
-      };
-      xhr.responseType = "blob";
-      xhr.open("GET", uri, true);
-      xhr.send(null);
-    });
-  }; 
 
 const showImagePickerOptions = () => {
   Alert.alert(
@@ -160,7 +120,7 @@ const keyExtractor = (item) => (item.uri ? md5(item.uri) : Math.random().toStrin
       )}
 
       {images.length > 0 && (
-        <View>
+        <View style={{flexDirection:'row', justifyContent:'center'}}>
          <FlatList
          data={images} 
          renderItem={
@@ -172,7 +132,13 @@ const keyExtractor = (item) => (item.uri ? md5(item.uri) : Math.random().toStrin
 
 
          </FlatList>
-        
+         <View style={{justifyContent:'center'}}>
+            <TouchableOpacity
+            
+            onPress={()=>showImagePickerOptions()}>
+            <AntDesign name="pluscircle" size={40} color="grey" />
+            </TouchableOpacity>
+            </View>
         </View>
       )}
       {/* <Pressable><Text style={{marginTop:100}} onPress={uploadToCloudStorage} >Envoyer sur Cloud Storage </Text></Pressable> */}

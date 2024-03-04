@@ -4,10 +4,11 @@ import BoutonRetour from '../navigation/BoutonRetour'
 import Map from '../Maps/ChoixAdresse'
 import { AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker'
-import { db } from '../../ConfigFirebase'
+import { db,storage } from '../../ConfigFirebase'
 import { addDoc, query,where,doc,collection, getDocs} from 'firebase/firestore'
 import { RadioButton } from 'react-native-paper';
 import Imagesterrain from '../ManipulationImages/ImagePicker2';
+import { getStorage, ref, uploadBytes,getDownloadURL } from "firebase/storage";
 
 
 
@@ -18,7 +19,7 @@ const AjoutTerrain = () => {
   const [checked, setChecked] = useState('first');
   const [address, setAddress] = useState('');
   const [position, setPosition] = useState()
-  const [imagesTerrains,setImagesTerrains]=useState([])
+  const [imagesTerrains,setImagesTerrains]=useState('')
 
 
   const handleAdresseLocaliseeChange = (nouvelleAdresse) => {
@@ -29,10 +30,58 @@ const AjoutTerrain = () => {
   }
   const handleImageTerrain =(nouvellesImages)=>{
        setImagesTerrains(nouvellesImages)
+       console.log(nouvellesImages)
   }
 
+
+  const createBlobFromUri = async (uri) => {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        console.error(e);
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
+  };  
+  
+  const uploadImageAsync = async (uri) => {
+    try {
+      const blob = await createBlobFromUri(uri);
+      const storageRef = ref(storage, `imagesterrains/image-${Date.now()}`);
+      await uploadBytes(storageRef, blob);
+      const downloadURL = await getDownloadURL(storageRef);
+      if(downloadURL){
+blob.close();
+console.log('Envoi réussi sur CloudStorage')
+      return downloadURL;
+      
+      }
+      
+    } catch (error) {
+      console.error(error);
+      throw new Error("L'URL de téléchargement est nulle"); // Rethrow the error to handle it elsewhere if needed
+    }
+  }
+  
+
+
+;
+
+
   const EnvoiTerrain= async()=>{
+
     try{
+      if(imagesTerrains.length > 0){
+
+        const downloadURLs = await Promise.all(imagesTerrains.map(uploadImageAsync));
+      
+      
       await addDoc(collection(db,'terrains'),{
 
         name: nomTerrain,
@@ -40,8 +89,10 @@ const AjoutTerrain = () => {
         adresse : address,
         latitude: position.latitude,
         longitude: position.longitude,
-        images:imagesTerrains
+        images:downloadURLs
       })
+
+      }
  console.log('Terrain Enregistré')
     }catch(error){
 

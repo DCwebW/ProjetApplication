@@ -126,7 +126,11 @@ const styles = StyleSheet.create({
         height:400,
         alignSelf:'center',
         marginTop:20,
-        borderRadius: 20
+        borderRadius: 20,
+        shadowColor:'black',
+shadowOffset:{height:0, width:10},
+shadowOpacity:0.5,
+shadowRadius:20,
      }  ,
      boutonradio : {
       backgroundColor:'white'  

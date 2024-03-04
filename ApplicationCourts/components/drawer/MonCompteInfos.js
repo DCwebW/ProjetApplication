@@ -54,6 +54,12 @@ const renderItem=({item})=>{ if (currentUser.uid === item.uid)return(
   <Text> {item.email}</Text>
     <Text> UID: {item.uid}</Text>
     </View>
+   <View style={{height:200,marginTop:100, alignItems:'center',}}>
+    <Pressable style={{backgroundColor:'rgba(141,16,8,1)',width:150,height:35,justifyContent:'center',borderRadius:15}} 
+    onPress={()=> navigation.navigate("ChangerInfos", {nom: item.name, prénom: item.firstname, image:item.imageprofil})}>
+      <Text style={{color:'white',fontSize:20,textAlign:'center'}}>Changer infos </Text>
+      </Pressable>
+      </View> 
  </View>
 )}
 
@@ -79,11 +85,7 @@ const renderItem=({item})=>{ if (currentUser.uid === item.uid)return(
  
 
   </View>
-  <View style={{height:200,marginTop:50, alignItems:'center'}}>
-    <Pressable onPress={()=> navigation.navigate("ChangerInfos")}>
-      <Text style={{color:'rgba(197, 44, 35,1)',fontSize:20}}>Changer infos </Text>
-      </Pressable>
-      </View>
+  
   </View>
  )}
  
