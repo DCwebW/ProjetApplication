@@ -62,7 +62,7 @@ getDocs(docRef)
        <CustomMarker/>
        <Callout style={{width:300,height:200}}>
         <Text style={{fontSize:20}}>{marqueur.name} :</Text>
-        <Image source={{uri : marqueur.images[0]}} style={{width:200,height:100,marginLeft:20,marginTop:20}}/>
+        <Image source={{uri : marqueur.images}} style={{width:200,height:100,marginLeft:20,marginTop:20}}/>
         <View style={{alignItems:'center'}}>
             <TouchableOpacity onPress={()=> navigation.navigate('Fiche',{
                 

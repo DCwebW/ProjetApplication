@@ -13,7 +13,7 @@ const auth = getAuth()
 export default function Imagesterrain({imagesterrains}) {
 
 
-  const [images, setImages] = useState('');
+  const [image, setImage] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function Imagesterrain({imagesterrains}) {
      
       // const selectedImages = result.assets.map((asset) => asset.uri)
       // setImages((prevImages)=>[...prevImages,...result.assets]); Ceci est à utiliser si la sélection est multiple 
-      setImages(result.assets[0].uri)
+      setImage(result.assets[0].uri)
       // imagesterrains((prevImages) => [...prevImages, ...result.assets]);
       imagesterrains(result.assets[0].uri)
     }
@@ -65,7 +65,7 @@ export default function Imagesterrain({imagesterrains}) {
     //  const uploadURL= await uploadImageAsync(result.assets[0].uri)
     //  setImages((prevImages) => [...prevImages, ...result.assets]);
     //  imagesterrains((prevImages) => [...prevImages, ...selectedImages]);
-    setImages(result.assets[0].uri)
+    setImage(result.assets[0].uri)
     imagesterrains(result.assets[0].uri)
     }
   };
@@ -107,43 +107,25 @@ const renderItem = ({ item }) => {
   }
 };
 
- const keyExtractor = (item) => (item.uri ? md5(item.uri) : Math.random().toString(36).substring(7)); // Utilisez md5 ou une autre méthode de hachage
+//  const keyExtractor = (item) => (item.uri ? md5(item.uri) : Math.random().toString(36).substring(7)); // Utilisez md5 ou une autre méthode de hachage
   return (
     <View style={styles.container}>
-      
-
-      {!images.length && (<View style={{}}>
-            <TouchableOpacity
-            
-            onPress={()=>showImagePickerOptions()}>
+      {!image && (
+        <View style={{}}>
+          <TouchableOpacity onPress={() => showImagePickerOptions()}>
             <AntDesign name="pluscircle" size={40} color="grey" />
-            </TouchableOpacity>
-            </View>
-      )}
-
-      {images.length > 0 && (
-        <View style={{flexDirection:'row', justifyContent:'center'}}>
-         <FlatList
-         data={images} 
-         renderItem={
-          renderItem
-         }
-         keyExtractor={keyExtractor} // Utilisation de l'index de chaque image comme clé pour chaque élément
-         horizontal={true} 
-         >
-
-
-         </FlatList>
-         <View style={{justifyContent:'center'}}>
-            <TouchableOpacity
-            
-            onPress={()=>showImagePickerOptions()}>
-            <AntDesign name="pluscircle" size={40} color="grey" />
-            </TouchableOpacity>
-            </View>
+          </TouchableOpacity>
         </View>
       )}
-      {/* <Pressable><Text style={{marginTop:100}} onPress={uploadToCloudStorage} >Envoyer sur Cloud Storage </Text></Pressable> */}
+
+      {image && (
+        <View style={{ justifyContent: 'center',flexDirection:'row' }}>
+          <Image source={{ uri: image }} style={{ width: 200, height: 250, marginHorizontal: 10 }} />
+          <TouchableOpacity onPress={() => showImagePickerOptions()}>
+            <AntDesign name="pluscircle" size={40} color="grey" />
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 }

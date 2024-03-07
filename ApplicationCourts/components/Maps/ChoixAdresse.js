@@ -11,7 +11,6 @@ export default function Map({ onAdresseLocaliseeChange, adresse,onPositionChange
   const [markerPosition, setMarkerPosition] = useState({ latitude: 0, longitude: 0 });
   const [isMarkerSelected, setMarkerSelected] = useState(false);
   const [address, setAddress]= useState('')
-  const [locationTracking, setLocationTracking] = useState(screenActive);
 
  
 
@@ -43,48 +42,42 @@ export default function Map({ onAdresseLocaliseeChange, adresse,onPositionChange
     }
   };
   useEffect(() => {
-    onAdresseLocaliseeChange(address);
-
-    // Si l'écran est actif, commencez à suivre la géolocalisation
-    if (screenActive) {
-      const watchLocation = async () => {
-        try {
-          let { status } = await Location.requestForegroundPermissionsAsync();
-          if (status !== 'granted') {
-            console.error('Permission to access location was denied');
-            return;
-          }
-
-          const locationListener = await Location.watchPositionAsync(
-            { distanceInterval: 10 },
-            (location) => {
-              setCurrentLocation(location.coords);
-
-              if (!isMarkerSelected) {
-                reversegeocode(location.coords);
-              }
-            }
-          );
-
-          return () => {
-            if (locationListener) {
-              locationListener.remove();
-              setLocationTracking(false);
-            }
-          };
-        } catch (error) {
-          console.error('Error getting location:', error);
+    onAdresseLocaliseeChange(address)
+    const watchLocation = async () => {
+      try {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          console.error('Permission to access location was denied');
+          return;
         }
-      };
-
-      watchLocation();
-    }})
-
-    // Assurez-vous de stopper le suivi de la géolocalisation lorsque l'écran n'est pas actif
-    
-
-  // ... (le reste du composant)
-
+  
+        const locationListener = await Location.watchPositionAsync(
+          { distanceInterval: 10 }, // Mettez à jour la position seulement si le déplacement est supérieur à 10 mètres
+          (location) => {
+            setCurrentLocation(location.coords);
+            // console.log(currentLocation.latitude)
+            
+            if (!isMarkerSelected) {
+              reversegeocode(location.coords);
+            }
+          }
+        );
+  
+        return () => {
+          if (locationListener) {
+            locationListener.remove();
+            setLocationTracking(false)
+          }
+        };
+      } catch (error) {
+        console.error('Error getting location:', error);
+      }
+    };
+  
+    watchLocation(); // Appel de la fonction au montage du composant
+  }, [isMarkerSelected ]);
+  ;
+  
 
   return (
     

@@ -20,6 +20,7 @@ const AjoutTerrain = () => {
   const [address, setAddress] = useState('');
   const [position, setPosition] = useState()
   const [imagesTerrains,setImagesTerrains]=useState('')
+  
 
 
   const handleAdresseLocaliseeChange = (nouvelleAdresse) => {
@@ -154,7 +155,7 @@ console.log('Envoi réussi sur CloudStorage')
       
     <View style={{height:400, backgroundColor:'rgba(197, 44, 35,1)', marginTop:50}}>
       <Text style={{marginLeft:20,marginBottom:20 ,color:'white'}}>Localisation du terrain :</Text>
-      <Map onAdresseLocaliseeChange={handleAdresseLocaliseeChange} adresse={address} onPositionChange={handlePosition}/></View>
+      <Map onAdresseLocaliseeChange={handleAdresseLocaliseeChange} adresse={address} onPositionChange={handlePosition} /></View>
       {/* Ici est rappelé la fonction de rappel mise en prop dans le composant Map */}
       <View style={{flexDirection:'row', marginTop:30,width:250, }}>
         <View style={{justifyContent:'center',}}>
