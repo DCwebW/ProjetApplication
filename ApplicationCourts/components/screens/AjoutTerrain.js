@@ -79,7 +79,7 @@ console.log('Envoi réussi sur CloudStorage')
     try{
       if(imagesTerrains.length > 0){
 
-        const downloadURLs = await Promise.all(imagesTerrains.map(uploadImageAsync));
+       await uploadImageAsync(imagesTerrains)
       
       
       await addDoc(collection(db,'terrains'),{
@@ -89,7 +89,7 @@ console.log('Envoi réussi sur CloudStorage')
         adresse : address,
         latitude: position.latitude,
         longitude: position.longitude,
-        images:downloadURLs
+        images:imagesTerrains
       })
 
       }

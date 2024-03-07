@@ -75,7 +75,8 @@ const uploadImageAsync = async (uri) => {
   };
 
   const updateData= async()=>{
-    try{
+    if (currentUser){
+ try{
       
       if (!firstname && !name && !imageprofil) {
         console.log('Aucune nouvelle information fournie.');
@@ -125,10 +126,18 @@ const uploadImageAsync = async (uri) => {
       console.error('Erreur lors de la mise à jour des données :', error.message);
     }
   }
+  else{
+    console.error('Utilisateur non défini')
+  }
+
+    }
+   
 
   const verifyPassword = async () => {
-    
-    try {
+
+
+    if (currentUser){
+try {
 
       if (!currentUser) {
         console.error('currentUser is null or undefined.');
@@ -173,6 +182,14 @@ const uploadImageAsync = async (uri) => {
       // Ferme le modal après l'opération (réussie ou non)
       setOpenDelete(false);
     }
+
+
+    } else {
+
+      console.error('Utilisateur non défini')
+    }
+    
+    
   };
   
   function handleOnPress(){

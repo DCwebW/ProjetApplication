@@ -66,7 +66,8 @@ getDocs(docRef)
         <View style={{alignItems:'center'}}>
             <TouchableOpacity onPress={()=> navigation.navigate('Fiche',{
                 
-                name : marqueur.name
+                name : marqueur.name,
+                image : marqueur.images
              })}>
             <View style={{backgroundColor:'rgba(197, 44, 35,1)',width:150, marginTop:20, alignItems:'center',height:35,justifyContent:'center',borderRadius:10}}><Text style={{color:'white'}}>Voir fiche du terrain </Text></View>
         </TouchableOpacity></View>

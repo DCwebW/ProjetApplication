@@ -13,7 +13,7 @@ const auth = getAuth()
 export default function Imagesterrain({imagesterrains}) {
 
 
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState('');
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
@@ -34,15 +34,16 @@ export default function Imagesterrain({imagesterrains}) {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       aspect: [4, 3],
       quality: 1,
-      allowsMultipleSelection:true
+      // allowsMultipleSelection:true
     });
     console.log(result);
     if (!result.canceled) {
-      // const uploadURL= await uploadImageAsync(result.assets[0].uri)
-      const selectedImages = result.assets.map((asset) => asset.uri)
-      setImages((prevImages)=>[...prevImages,...result.assets]);
-      
-      imagesterrains((prevImages) => [...prevImages, ...result.assets]);
+     
+      // const selectedImages = result.assets.map((asset) => asset.uri)
+      // setImages((prevImages)=>[...prevImages,...result.assets]); Ceci est à utiliser si la sélection est multiple 
+      setImages(result.assets[0].uri)
+      // imagesterrains((prevImages) => [...prevImages, ...result.assets]);
+      imagesterrains(result.assets[0].uri)
     }
   
   
@@ -62,9 +63,10 @@ export default function Imagesterrain({imagesterrains}) {
       
       
     //  const uploadURL= await uploadImageAsync(result.assets[0].uri)
-     setImages((prevImages) => [...prevImages, ...result.assets]);
-     imagesterrains((prevImages) => [...prevImages, ...selectedImages]);
-     
+    //  setImages((prevImages) => [...prevImages, ...result.assets]);
+    //  imagesterrains((prevImages) => [...prevImages, ...selectedImages]);
+    setImages(result.assets[0].uri)
+    imagesterrains(result.assets[0].uri)
     }
   };
 
@@ -105,7 +107,7 @@ const renderItem = ({ item }) => {
   }
 };
 
-const keyExtractor = (item) => (item.uri ? md5(item.uri) : Math.random().toString(36).substring(7)); // Utilisez md5 ou une autre méthode de hachage
+ const keyExtractor = (item) => (item.uri ? md5(item.uri) : Math.random().toString(36).substring(7)); // Utilisez md5 ou une autre méthode de hachage
   return (
     <View style={styles.container}>
       

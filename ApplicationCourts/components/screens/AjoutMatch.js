@@ -3,6 +3,7 @@ import React from 'react'
 import { useState,useMemo } from 'react'
 import BoutonRetour from '../navigation/BoutonRetour'
 import RadioGroup, {RadioButtonProps} from 'react-native-radio-buttons-group'
+import { RadioButton } from 'react-native-paper';
 import DatePicker from 'react-native-modern-datepicker'
 import {getToday, getFormatedDate} from 'react-native-modern-datepicker'
 import BoutonValider from '../BoutonValider'
@@ -26,12 +27,17 @@ const AjoutMatch = () => {
     
       const [open, setOpen] = useState(false)
     const [date,setDate]= useState('18/02/2024')
+
+    const [openTerrain,setOpenTerrain]= useState(false)
   
     function handleHour(){
         setOpenHour(!openhour)
     }
     function handleOnPress(){
       setOpen(!open)
+    }
+    function handleOpenTerrain(){
+      setOpenTerrain(!openTerrain)
     }
     function handleChange(PropDate){
       setDate(PropDate);
@@ -52,9 +58,35 @@ const AjoutMatch = () => {
     <View style={styles.formulairematch}>
         
         <Text style={{marginTop:20,marginLeft:20,color:'white'}}>Type de Match:</Text>
-        <View style={{backgroundColor:'white', marginTop:20, width:255,borderRadius:40,alignSelf:'center'}}>
+        <View style={{ marginTop:20, width:255,borderRadius:40,alignSelf:'center'}}>
             
-        <RadioButtons/>
+        
+        <View style={{flexDirection:'row', alignItems:'center', justifyContent:'space-around'}}>
+      <View style={{backgroundColor:'white',borderRadius:20}}>
+      <RadioButton
+        value="2vs2"
+        status={ checked === '2vs2' ? 'checked' : 'unchecked' }
+        onPress={() => setChecked('2vs2')}
+        
+      /></View>
+      <Text>2vs2</Text>
+      <View style={{backgroundColor:'white',borderRadius:20}}>
+      <RadioButton
+        value="3vs3"
+        status={ checked === '3vs3' ? 'checked' : 'unchecked' }
+        onPress={() => setChecked('3vs3')}
+        
+      /></View>
+      <Text>3vs3</Text>
+      <View style={{backgroundColor:'white',borderRadius:20,}}>
+      <RadioButton
+        value="5vs5"
+        status={ checked === '5vs5' ? 'checked' : 'unchecked' }
+        onPress={() => setChecked('5vs5')}
+        
+      /></View>
+      <Text>5vs5</Text>
+      </View>
    </View>
    <Text style={{marginTop:20,marginLeft:20,color:'white'}}>Date:</Text> 
    <TouchableOpacity onPress={handleOnPress} style={{alignItems:'center'}}><Text style={{textAlign:'center', color:'white',backgroundColor:'rgba( 142, 8, 8 ,1)',width:150, height:50,paddingTop:20,}}>Choisir</Text></TouchableOpacity>
@@ -104,6 +136,39 @@ hideSeconds
 
 />
 
+<Text style={{marginTop:20,marginLeft:20,color:'white'}}> Terrain : </Text>
+<TouchableOpacity onPress={handleOpenTerrain} style={{alignItems:'center'}}><Text style={{textAlign:'center', color:'white',backgroundColor:'rgba( 142, 8, 8 ,1)',width:150, height:50,paddingTop:20,}}>Choisir</Text></TouchableOpacity>
+<Modal
+visible={openTerrain}
+transparent={true}
+animationType='slide'
+>
+
+  <View
+  style={styles.centeredView}
+  >
+    <View style={styles.modalView}>
+
+     
+       <TouchableOpacity style={{alignItems:'center'}}>
+        <View style={{backgroundColor:'rgba( 142, 8, 8 ,1)',width:250, height:50,paddingTop:20,borderRadius:15}}>
+        <Text style={{textAlign:'center', color:'white',}}>Choisir Terrain sur la carte</Text>
+        </View> 
+        </TouchableOpacity>
+    
+       <TouchableOpacity style={{alignItems:'center'}}>
+        <View style={{backgroundColor:'rgba( 142, 8, 8 ,1)',width:250, height:50,paddingTop:20,borderRadius:15,marginTop:20}}> 
+        <Text style={{textAlign:'center', color:'white',}}>Terrains Favoris</Text>
+         </View>
+        </TouchableOpacity>
+        <View style={{marginTop:20}}>
+     <TouchableOpacity onPress={handleOpenTerrain}><Text>Fermer</Text></TouchableOpacity> 
+    </View>
+    </View>
+  </View>
+
+
+</Modal>
 </View>
    
     <View style={{alignItems:'center'}}>
@@ -123,7 +188,7 @@ const styles = StyleSheet.create({
         backgroundColor:'rgba(197, 44, 35,1)',
         flex:1,
         width:350,
-        height:400,
+        height:450,
         alignSelf:'center',
         marginTop:20,
         borderRadius: 20,

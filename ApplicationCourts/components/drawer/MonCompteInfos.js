@@ -45,7 +45,7 @@ const renderItem=({item})=>{ if (currentUser.uid === item.uid)return(
 <View>
   <View style={styles.affichageInfoPerso}>
   <View style={{alignItems:'center',}}>
-    <Image source={{ uri: item.imageprofil }} style={styles.imageprofil} />
+    <Image source={{ uri: item.image }} style={styles.imageprofil} />
   </View>
     <Text style={styles.infoPerso}>{item.name}</Text>  
     <Text style={styles.infoPerso}>{item.firstname}</Text>   
