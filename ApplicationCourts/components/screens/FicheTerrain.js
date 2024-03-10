@@ -1,26 +1,49 @@
 import { View, Text ,Image,FlatList,useWindowDimensions, TouchableOpacity,StyleSheet} from 'react-native'
-import React from 'react'
+
 import { AntDesign,Entypo } from '@expo/vector-icons'
 import BoutonRetour from '../navigation/BoutonRetour'
-import { QueryDocumentSnapshot, doc, getDocs,collection, QuerySnapshot } from "firebase/firestore"
-import { db, } from '../../ConfigFirebase'
-import { useState, useEffect} from 'react'
-import { err } from 'react-native-svg'
+import { QueryDocumentSnapshot, doc, getDocs,collection, QuerySnapshot, addDoc, updateDoc,where, query } from "firebase/firestore"
+import { db } from '../../ConfigFirebase'
+import React, { useState, useEffect} from 'react'
+import { onAuthStateChanged,getAuth } from 'firebase/auth'
+
+
+
+const auth = getAuth();
+
+
 const FicheTerrain = ({route}) => {
 
   const [terrain,setTerrain]=useState()
   const [buttonpressed, setButtonPressed]=useState(false)
   const [showMessage, setShowMessage] = useState(false)
-  const { name , image} = route.params;
+  const [user,setUser]= useState(null)
+  const [terrainpresent,setTerrainPresent] = useState()
+
+
+
+  const { name , image,id} = route.params;
   const nomTerrain = JSON.stringify(name)
+
+
 
   const {width} = useWindowDimensions()
 
   const handleButtonPress = () => {
     setButtonPressed(!buttonpressed);
-    setShowMessage(!showMessage);
+
+    if (buttonpressed) {
+      removeFavori(); // Si le bouton est déjà pressé, supprime le favori
+    } else {
+      ajoutFavori(); // Sinon, ajoute le favori
+    }
   };
   useEffect(()=>{
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log('user', user);
+      setUser(user);
+    });
 const docRef=collection(db,'terrains')
 getDocs(docRef)
 .then((QuerySnapshot)=>{
@@ -36,11 +59,97 @@ getDocs(docRef)
 })
 .catch(error=> {console.log('Erreur dans la récolte de données', error)})
 
-
+return () => {
+  unsubscribe();
+};
 
   },[])
+  useEffect(() => {
+    const checkTerrainPresent = async () => {
+      const TerrainPresentQuery = query(collection(db, 'terrainsfavoris'), where('terrains', 'array-contains', id));
+      const snapshotTerrainPresent = await getDocs(TerrainPresentQuery);
+      const isTerrainPresent = !snapshotTerrainPresent.empty;
+      setTerrainPresent(isTerrainPresent);
+      setButtonPressed(isTerrainPresent);
+    };
 
-  const renderItem =({item})=>{
+    checkTerrainPresent();
+  }, [id]);
+
+
+  const ajoutFavori = async () => {
+    const userId = user.uid;
+    const terrainsfavorisRef = collection(db, "terrainsfavoris");
+    const terrainsQuery = query(terrainsfavorisRef, where('idUtilisateur', '==', userId));
+  
+    try {
+      const snapshot = await getDocs(terrainsQuery);
+  
+      if (snapshot.empty) {
+        const nouveauTerrainFavori = {
+          idUtilisateur: userId,
+          terrains:[id] ,
+        };
+        await addDoc(terrainsfavorisRef, nouveauTerrainFavori); // Utiliser terrainsfavorisRef ici
+        console.log('Terrain mis en favori');
+      } else {
+        const docId = snapshot.docs[0].id;
+        const terrainsfavorisData = snapshot.docs[0].data();
+  
+        const updatedTerrains = [...(terrainsfavorisData.terrains || []), id];
+
+        const newterrainsFavorisData = {
+          terrains: updatedTerrains,
+        }
+        const Reference = doc(db, 'terrainsfavoris', docId);
+        await updateDoc(Reference, newterrainsFavorisData);
+        
+        console.log('Terrain mis en favori');
+      }
+  
+      // Mettre à jour l'état pour afficher le message
+      setShowMessage(true);
+    } catch (error) {
+      console.log('Echec : Terrain non ajouté', error);
+    }
+  };
+
+  const removeFavori = async () => {
+    const userId = user.uid;
+    const terrainsfavorisRef = collection(db, "terrainsfavoris");
+    const terrainsQuery = query(terrainsfavorisRef, where('idUtilisateur', '==', userId));
+
+    try {
+      const snapshot = await getDocs(terrainsQuery);
+
+      if (!snapshot.empty) {
+        const docId = snapshot.docs[0].id;
+        const terrainsfavorisData = snapshot.docs[0].data();
+
+        const updatedTerrains = (terrainsfavorisData.terrains || []).filter(t => t !== id);
+         // Ici la méthode filter crée un tableau et la methode renverra true pour tous les éléments n'étant pas égal à l'id
+        const newterrainsFavorisData = {
+          terrains: updatedTerrains,
+        };
+
+        const Reference = doc(db, 'terrainsfavoris', docId);
+        await updateDoc(Reference, newterrainsFavorisData);
+        console.log('Terrain retiré des favoris');
+      }
+
+      // Mettre à jour l'état pour afficher le message
+      setShowMessage(true);
+    } catch (error) {
+      console.log('Échec : Terrain non retiré des favoris', error);
+    }
+  };
+
+  
+  
+
+ 
+
+  const renderItem =  ({item})=>{ 
 
     if(name === item.name) return(
       <View>
@@ -61,6 +170,7 @@ getDocs(docRef)
         
         <Text>{item.adresse}</Text>
         <Text>Type de filet : {item.typefilet}</Text>
+        <Text> {id}</Text>
         
         </View>
 
@@ -70,9 +180,10 @@ getDocs(docRef)
       <TouchableOpacity
       
       onPress={handleButtonPress}>
-        { buttonpressed ? 
+
+       
+        {  buttonpressed ? 
         <AntDesign name='heart' color={'rgba(197, 44, 35,1)'} size={50}/>
-        
         :
          <AntDesign name='hearto' size={50}/> 
       }

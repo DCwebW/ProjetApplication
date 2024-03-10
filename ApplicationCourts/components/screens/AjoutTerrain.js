@@ -9,7 +9,7 @@ import { addDoc, query,where,doc,collection, getDocs} from 'firebase/firestore'
 import { RadioButton } from 'react-native-paper';
 import Imagesterrain from '../ManipulationImages/ImagePicker2';
 import { getStorage, ref, uploadBytes,getDownloadURL } from "firebase/storage";
-
+import { useNavigation,CommonActions } from '@react-navigation/native';
 
 
 
@@ -20,6 +20,7 @@ const AjoutTerrain = () => {
   const [address, setAddress] = useState('');
   const [position, setPosition] = useState()
   const [imagesTerrains,setImagesTerrains]=useState('')
+  const navigation= useNavigation()
   
 
 
@@ -95,6 +96,14 @@ console.log('Envoi réussi sur CloudStorage')
 
       }
  console.log('Terrain Enregistré')
+ navigation.dispatch(
+  CommonActions.reset({
+    index:0,
+    routes:[{name:'Accueil'}]
+  })
+
+ )
+ 
     }catch(error){
 
       console.error('Erreur enregistrement du terrain', error)
