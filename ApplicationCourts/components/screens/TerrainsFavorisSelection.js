@@ -1,7 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const TerrainsFavorisSelection = () => {
+
+    
+
+
+
   return (
     <View>
       <Text>TerrainsFavorisSelection</Text>
