@@ -5,6 +5,7 @@ import {NavigationContainer} from '@react-navigation/native'
 import PageDebutAction from './PageDebutAction'
 import AjoutTerrain from './AjoutTerrain'
 import AjoutMatch from './AjoutMatch'
+import TerrainsFavorisSelection from './TerrainsFavorisSelection'
 
 const Stack = createNativeStackNavigator()
 
@@ -16,6 +17,7 @@ const Actions = () => {
       <Stack.Screen name='PageDebutAction' component={PageDebutAction}/>
       <Stack.Screen name='AjoutTerrain' component={AjoutTerrain}/>
       <Stack.Screen name='AjoutMatch' component={AjoutMatch} options={{headerShown:false}}/>
+      <Stack.Screen name='TerrainsFavorisSelection' component={TerrainsFavorisSelection}/>
       </Stack.Navigator>
     
   )

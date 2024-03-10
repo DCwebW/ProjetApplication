@@ -9,6 +9,7 @@ import {getToday, getFormatedDate} from 'react-native-modern-datepicker'
 import BoutonValider from '../BoutonValider'
 import { TimerPickerModal } from "react-native-timer-picker";
 import RadioButtons from '../RadioButtonsGroup/RadioButtons'
+import { useNavigation } from '@react-navigation/native'
 
 
 
@@ -19,6 +20,8 @@ function formatTime(hours, minutes) {
   
 
 const AjoutMatch = () => {
+
+  const navigation = useNavigation()
     const [hour,setHour]=useState(null)
     const[openhour,setOpenHour]=useState(false)
 
@@ -46,6 +49,13 @@ const AjoutMatch = () => {
     const [checked, setChecked] = React.useState('first');
     const [selectedId, setSelectedId] = useState();
     const labelStyle = { color: 'white' };
+
+
+    function ChoixTerrainFavori(){
+      navigation.navigate('TerrainsFavorisSelection'),
+      handleOpenTerrain()
+
+    }
     
   return (
   
@@ -156,7 +166,7 @@ animationType='slide'
         </View> 
         </TouchableOpacity>
     
-       <TouchableOpacity style={{alignItems:'center'}}>
+       <TouchableOpacity style={{alignItems:'center'}} onPress={ChoixTerrainFavori}>
         <View style={{backgroundColor:'rgba( 142, 8, 8 ,1)',width:250, height:50,paddingTop:20,borderRadius:15,marginTop:20}}> 
         <Text style={{textAlign:'center', color:'white',}}>Terrains Favoris</Text>
          </View>

@@ -67,10 +67,14 @@ return () => {
   useEffect(() => {
     const checkTerrainPresent = async () => {
       const TerrainPresentQuery = query(collection(db, 'terrainsfavoris'), where('terrains', 'array-contains', id));
+      // Ici array-contains est utilisé pour savoir si l'id du terrain est contenu dans le champ terrains de la base de données
+      // Car le champ terrain est un tableau et est géré differemment 
       const snapshotTerrainPresent = await getDocs(TerrainPresentQuery);
       const isTerrainPresent = !snapshotTerrainPresent.empty;
+      // cette constant renvoie un booléen
       setTerrainPresent(isTerrainPresent);
       setButtonPressed(isTerrainPresent);
+      setShowMessage(isTerrainPresent)
     };
 
     checkTerrainPresent();
@@ -97,7 +101,8 @@ return () => {
         const terrainsfavorisData = snapshot.docs[0].data();
   
         const updatedTerrains = [...(terrainsfavorisData.terrains || []), id];
-
+       // Ici un tableau est formé avec le champ terrains du document sur la base de données grace à '...'
+       // Si le champ est vide , il renvoie logique un tableau vide []
         const newterrainsFavorisData = {
           terrains: updatedTerrains,
         }
