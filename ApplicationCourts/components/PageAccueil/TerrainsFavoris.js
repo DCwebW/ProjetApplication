@@ -5,11 +5,12 @@ import { db } from '../../ConfigFirebase'
 import { onAuthStateChanged,getAuth } from 'firebase/auth'
 import BoutonRetour from '../navigation/BoutonRetour'
 import { useNavigation } from '@react-navigation/native'
+import Animated from 'react-native-reanimated'
 
 const auth = getAuth()
 
 
-const TerrainsFavorisSelection = () => {
+const TerrainsFavoris = () => {
  const navigation = useNavigation()
  const [donneesT, setDonneesT]= useState()
   const [donneesTF,setDonneesTF]=useState([])
@@ -77,13 +78,23 @@ const [selectedTerrain, setSelectedTerrain] = useState(null);
  const closeModal = () => {
 SetopenVerification(false);
 };
+
+const ChoixTerrain =()=>{
+
+  navigation.navigate('FicheTerrainHome',[{terrainchoisi : selectedTerrain.name,id : selectedTerrain.id}])
+  closeModal()
+
+}
   const renderItem = ({ item }) => {
     return (
     <View>
     <TouchableOpacity onPress={()=>handleVerification(item)}>
       <View style={styles.itemContainer}>
         
-        <Image source={{ uri: item.images }} style={[styles.image, {width}]}></Image>
+        <Animated.Image source={{ uri: item.images }} style={[styles.image, {width:385}]}
+        
+        
+        />
         
         <View style={styles.textContainer}>
           <Text style={styles.text}>{item.name}</Text>
@@ -105,7 +116,7 @@ SetopenVerification(false);
          </View>
         </TouchableOpacity>
         <View style={{marginTop:20}}>
-      <TouchableOpacity onPress={()=>navigation.navigate('AjoutMatch',[{terrainchoisi : selectedTerrain.name}])}><Text>Confirmer</Text></TouchableOpacity> 
+      <TouchableOpacity onPress={ChoixTerrain}><Text>Confirmer</Text></TouchableOpacity> 
      <TouchableOpacity onPress={closeModal}><Text>Annuler</Text></TouchableOpacity> 
      
     </View>
@@ -119,13 +130,12 @@ SetopenVerification(false);
 
  
   return (
-    <View style={{height:800}}>
-      <View style={{height:80}}><BoutonRetour/></View>
-     
+    <View style={{height:230}}>
       <FlatList
    data={getTerrainsFavorisData()}
    renderItem={renderItem}
    keyExtractor={item=>item.id.toString()}
+   horizontal
    ></FlatList>
    
    </View>
@@ -133,22 +143,25 @@ SetopenVerification(false);
   )
 }
 
-export default TerrainsFavorisSelection
+export default TerrainsFavoris
 
 const styles = StyleSheet.create({
   itemContainer: {
     position: 'relative',
+    marginRight:10
   },
   image: {
     
     height: 200,
     borderRadius: 10,
-    marginBottom:20
+    marginBottom:20,
+    
   },
   textContainer: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor:'rgba(197, 44, 35,0.5)',
     height:60,
+
     borderTopLeftRadius:12,
     borderTopRightRadius:12,
     justifyContent:'center'

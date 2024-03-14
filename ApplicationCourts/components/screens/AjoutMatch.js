@@ -1,8 +1,6 @@
 import { StyleSheet, Text, View,Pressable,ScrollView,TouchableOpacity,Modal } from 'react-native'
-import React from 'react'
-import { useState,useMemo } from 'react'
+import React, { useEffect,useState } from 'react'
 import BoutonRetour from '../navigation/BoutonRetour'
-import RadioGroup, {RadioButtonProps} from 'react-native-radio-buttons-group'
 import { RadioButton } from 'react-native-paper';
 import DatePicker from 'react-native-modern-datepicker'
 import {getToday, getFormatedDate} from 'react-native-modern-datepicker'
@@ -10,6 +8,9 @@ import BoutonValider from '../BoutonValider'
 import { TimerPickerModal } from "react-native-timer-picker";
 import RadioButtons from '../RadioButtonsGroup/RadioButtons'
 import { useNavigation } from '@react-navigation/native'
+import { getAuth,onAuthStateChanged } from 'firebase/auth';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../../ConfigFirebase';
 
 
 
@@ -17,13 +18,16 @@ function formatTime(hours, minutes) {
   return `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
 }
 
+const auth = getAuth()
   
 
-const AjoutMatch = () => {
-
+const AjoutMatch = ({route}) => {
+  const { terrainchoisi } = route.params ? route.params[0] ?? { terrainchoisi: 'Terrain non choisi' } : { terrainchoisi: 'Terrain non choisi' };
+// Ici l'opérateur de coalescence nulle "??" me permet que terrain choisi ne soit jamais undefined et prend la valeur définie après 
   const navigation = useNavigation()
     const [hour,setHour]=useState(null)
     const[openhour,setOpenHour]=useState(false)
+    const [user,setUser] = useState(null)
 
     const today= new Date()
     const startDate = getFormatedDate(today.setDate(today.getDate()),'YYYY/MM/DD')
@@ -32,7 +36,42 @@ const AjoutMatch = () => {
     const [date,setDate]= useState('18/02/2024')
 
     const [openTerrain,setOpenTerrain]= useState(false)
-  
+    
+useEffect(()=>{
+  const unsubscribe = onAuthStateChanged(auth,(user)=>{
+    setUser(user)
+  });
+  return ()=> unsubscribe()
+
+},[])
+    
+
+  const EnvoiMatchDB= async () =>
+{
+if (user){
+
+  try{
+    if(checked && date && terrainchoisi && hour){
+
+      await addDoc(collection(db,'matchs'),{
+    useruid : user.uid,
+    date: date,
+    heure : hour,
+    terrain : terrainchoisi,
+    typematch: checked,
+      }) 
+      console.log('Match mis en place')
+    }
+
+  }catch(error){
+    console.log('Echec envoi du match', error)
+  }
+}
+
+}
+
+
+
     function handleHour(){
         setOpenHour(!openhour)
     }
@@ -47,8 +86,7 @@ const AjoutMatch = () => {
       console.log('Formatted Date:', date)
     }
     const [checked, setChecked] = React.useState('first');
-    const [selectedId, setSelectedId] = useState();
-    const labelStyle = { color: 'white' };
+    
 
 
     function ChoixTerrainFavori(){
@@ -145,9 +183,14 @@ closeOnOverlayPress
 hideSeconds
 
 />
-
+<View>
 <Text style={{marginTop:20,marginLeft:20,color:'white'}}> Terrain : </Text>
-<TouchableOpacity onPress={handleOpenTerrain} style={{alignItems:'center'}}><Text style={{textAlign:'center', color:'white',backgroundColor:'rgba( 142, 8, 8 ,1)',width:150, height:50,paddingTop:20,}}>Choisir</Text></TouchableOpacity>
+
+</View>
+<View style={{height:50, backgroundColor:'white' ,width:200, alignSelf:'center',justifyContent:'center'}}>
+  <Text style={{color:'black', textAlign:'center'}} > {terrainchoisi}</Text>
+</View>
+<TouchableOpacity onPress={handleOpenTerrain} style={{alignItems:'center'}}><Text style={{textAlign:'center', color:'white',backgroundColor:'rgba( 142, 8, 8 ,1)',width:150, height:50,paddingTop:20,marginTop:10}}>Choisir</Text></TouchableOpacity>
 <Modal
 visible={openTerrain}
 transparent={true}
@@ -183,7 +226,7 @@ animationType='slide'
    
     <View style={{alignItems:'center'}}>
 
-        <BoutonValider />
+        <BoutonValider onPress={EnvoiMatchDB}/>
     </View>
     
     </ScrollView>
@@ -198,7 +241,7 @@ const styles = StyleSheet.create({
         backgroundColor:'rgba(197, 44, 35,1)',
         flex:1,
         width:350,
-        height:450,
+        height:500,
         alignSelf:'center',
         marginTop:20,
         borderRadius: 20,

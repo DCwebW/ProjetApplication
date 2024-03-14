@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View,Pressable } from 'react-native'
 import React from 'react'
 
-const BoutonValider = () => {
+const BoutonValider = ({onPress}) => {
   return (
     <View style={{flex:1 }}>
-      <Pressable style={styles.boutonvalider} ><Text style={styles.textboutonvalider}> Valider</Text></Pressable>
+      <Pressable style={styles.boutonvalider} onPress={onPress} ><Text style={styles.textboutonvalider}> Valider</Text></Pressable>
     </View>)
 }
 

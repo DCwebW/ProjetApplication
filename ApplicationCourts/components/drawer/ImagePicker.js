@@ -82,19 +82,7 @@ const pickImage = async () => {
   };
 
 
-  // const uploadToCloudStorage = async () => {
-  //   try {
-  //     if (image) {
-  //       const downloadURL = await uploadImageAsync(image);
-  //       console.log("Image uploaded to Cloud Storage. Download URL:", downloadURL);
-  //       // Vous pouvez ajouter d'autres actions ici, comme la mise à jour de votre base de données avec l'URL de téléchargement.
-  //     } else {
-  //       console.warn("Aucune image à télécharger.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Erreur lors du téléchargement sur Cloud Storage:", error);
-  //   }
-  // };
+
 
 const UpdateFirestoreDatabase = async(imageUrl)=>{
   try{

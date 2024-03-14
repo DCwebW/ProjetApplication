@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import Details from '../screens/Details';
-import Home from '../screens/Home';
+import HomeNavigator from './HomeNavigator';
 import Actions from '../screens/Actions';
 import RechercheTerrainMap from '../Maps/RechercheTerrainMap';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -70,7 +70,7 @@ function BottomTabNavigator() {
     })}
     
     >
-      <Tab.Screen name="PageAccueil" component={Home} options={{title:'Accueil'}}/>
+      <Tab.Screen name="PageAccueil" component={HomeNavigator} options={{title:'Accueil'}}/>
       <Tab.Screen name="Details" component={Details} options={{title:'Details'}} />
       <Tab.Screen name="Actions" component={Actions} options={{title:'Actions'}}/>
       <Tab.Screen name="Recherche" component={RechTerrainNavigator} options={{title:'Recherche'}}/>
