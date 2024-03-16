@@ -1,7 +1,9 @@
-import { StyleSheet, Text, View,ScrollView } from 'react-native'
+import { StyleSheet, Text, View,ScrollView,useWindowDimensions } from 'react-native'
 import React from 'react'
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ConseilsSport = () => {
+    const {width} = useWindowDimensions()
 
     const Conseils = [{
         id: "1",
@@ -22,14 +24,32 @@ const ConseilsSport = () => {
     <ScrollView horizontal>
     <View style={{flexDirection:'row'}}>
 {Conseils.map((item)=>{
+    if(item.id ==="1"){
 return(
+    
+<View id='1' style={styles.conseilView}>
+<LinearGradient
 
-<View style={{width:380, height:200}}>
+ colors={['rgba(197, 44, 35,1)','orange']}
+ start={{x:0.6,y:0}}
+ style={styles.background}/>
 <Text id={item.id}>{item.conseil}</Text>
 </View>
+)}
 
+else{
+return(
+    <View id='1' style={styles.conseilView}>
 
-)
+<LinearGradient
+
+ colors={['rgba(14,130,201,1)','orange']}
+ start={{x:0.6,y:0}}
+ style={styles.background}/>
+<Text id={item.id}>{item.conseil}</Text>
+</View>)
+
+}
 
 })}
 
@@ -43,4 +63,23 @@ return(
 
 export default ConseilsSport
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+
+    conseilView:{
+        width:380,
+        height:200,
+        marginHorizontal:5,
+        borderRadius:20,
+        shadowOffset:5,
+        shadowOpacity:0.8,
+        shadowRadius:4
+    },
+    background:{
+        position:'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        height: 200,
+    },
+
+})

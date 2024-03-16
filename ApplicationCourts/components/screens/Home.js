@@ -12,7 +12,7 @@ import ConseilsSport from './ConseilsSport'
 
 const Home = ({navigation}) => {
   return (
-    <ScrollView style={{ flex:1 , margin: 10,marginTop:0}} >
+    <ScrollView style={{ flex:1 , margin: 10,marginTop:0,height:1200}} >
 
 <View style={{flex:1,marginTop:20}}>
   
@@ -27,7 +27,7 @@ const Home = ({navigation}) => {
         </Text></View>
       <View style={{flex:1, marginTop:20}}><MatchsOrganises/></View>
       
-      <View style={{flex:1, marginTop:50}}><ConseilsSport/></View>
+      <View style={{flex:1, marginTop:50,}}><ConseilsSport/></View>
       
       
       
