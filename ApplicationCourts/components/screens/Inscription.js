@@ -17,18 +17,7 @@ const Inscription = () => {
     const [cpassword, setCPassword]=useState('')
     const [loading,setLoading]=useState(false)
     
- const Envoi = async()=>{
-  try{
-    await addDoc(collection(db, "clients"),{
-      name:name,
-      firstname:firstname,
-      email:email
-    });
-    console.log('Données Envoyées')
-  }
-  catch(e){
-    console.error('Erreur dans envoi',e)
-  }}
+
 
 
   const SignUp= async ()=>{
@@ -39,7 +28,7 @@ const Inscription = () => {
           console.log(response);
           alert('Check your emails !')
           const userUid = response.user.uid
-          await addDoc(collection(db, 'clients'),{
+          await setDoc(doc(db, 'clients',userUid),{
             uid:userUid,
             name:name,
             firstname:firstname,
@@ -110,8 +99,7 @@ return(
             <View style={styles.boutonInscription}>
             <Pressable  onPress={
             SignUp} style={styles.boutonvalider}><Text style={{color:'white',fontFamily:'PolicePrincipale'}}>Valider</Text></Pressable>
-            <Pressable  onPress={
-            Envoi} style={styles.boutonvalider}><Text style={{color:'white',fontFamily:'PolicePrincipale'}}>Envoi</Text></Pressable>
+           
             </View>
             </ScrollView>
             

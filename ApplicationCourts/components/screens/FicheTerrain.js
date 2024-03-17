@@ -20,7 +20,12 @@ const FicheTerrain = ({route}) => {
   const [user,setUser]= useState(null)
   const [terrainpresent,setTerrainPresent] = useState()
 
-
+  const displayMessageForSeconds = (seconds) => {
+    setShowMessage(true);
+    setTimeout(() => {
+      setShowMessage(false);
+    }, seconds * 1000); // Convertit les secondes en millisecondes
+  };
 
   const { name , image,id} = route.params;
   const nomTerrain = JSON.stringify(name)
@@ -38,6 +43,16 @@ const FicheTerrain = ({route}) => {
       ajoutFavori(); // Sinon, ajoute le favori
     }
   };
+
+  useEffect(() => {
+    // Appeler displayMessageForSeconds avec le temps spécifié après l'ajout ou la suppression d'un favori
+    if (showMessage) {
+      displayMessageForSeconds(2); // Afficher le message pendant 3 secondes
+    }
+  }, [showMessage]); // Déclencher cet effet chaque fois que showMessage change
+
+  // Reste de votre code ...
+;
   useEffect(()=>{
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -72,13 +87,20 @@ return () => {
       const snapshotTerrainPresent = await getDocs(TerrainPresentQuery);
       const isTerrainPresent = !snapshotTerrainPresent.empty;
       // cette constant renvoie un booléen
-      setTerrainPresent(isTerrainPresent);
-      setButtonPressed(isTerrainPresent);
-      setShowMessage(isTerrainPresent)
+      setTerrainPresent(terrainpresent);
+     
+      // setButtonPressed(isTerrainPresent)
+      
+      ;
+      
     };
 
     checkTerrainPresent();
   }, [id]);
+
+
+
+
 
 
   const ajoutFavori = async () => {
@@ -94,7 +116,11 @@ return () => {
           idUtilisateur: userId,
           terrains:[id] ,
         };
-        await addDoc(terrainsfavorisRef, nouveauTerrainFavori); // Utiliser terrainsfavorisRef ici
+        await addDoc(terrainsfavorisRef, nouveauTerrainFavori);
+         // Utiliser terrainsfavorisRef ici
+
+         setButtonPressed(!buttonpressed)
+        setShowMessage(!showMessage)
         console.log('Terrain mis en favori');
       } else {
         const docId = snapshot.docs[0].id;
@@ -108,7 +134,8 @@ return () => {
         }
         const Reference = doc(db, 'terrainsfavoris', docId);
         await updateDoc(Reference, newterrainsFavorisData);
-        
+        setButtonPressed(true)
+        setShowMessage(true)
         console.log('Terrain mis en favori');
       }
   
@@ -143,7 +170,7 @@ return () => {
       }
 
       // Mettre à jour l'état pour afficher le message
-      setShowMessage(true);
+      ;
     } catch (error) {
       console.log('Échec : Terrain non retiré des favoris', error);
     }
@@ -212,6 +239,7 @@ return () => {
     <View >
       
      <FlatList
+     
      data={terrain}
      renderItem={renderItem}
      keyExtractor={item=>item.id.toString()}
