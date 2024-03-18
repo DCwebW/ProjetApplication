@@ -20,35 +20,44 @@ const Inscription = () => {
 
 
 
-  const SignUp= async ()=>{
-        setLoading(true);
-        if( password === cpassword){try{
-          const response = await createUserWithEmailAndPassword(auth,email,password)
-          
-          console.log(response);
-          alert('Check your emails !')
-          const userUid = response.user.uid
-          await setDoc(doc(db, 'clients',userUid),{
-            uid:userUid,
-            name:name,
-            firstname:firstname,
-            email:email
-          })
-          console.log("Document written with ID: ", userUid)
-          
-        }
-        catch(error){
-          console.log(error);
-          alert('Sign up failed :' +error.message)
-        }
-        finally{
-          setLoading(false)
-        }
+    const SignUp = async () => {
+      setLoading(true);
+    
+      // Vérification des champs
+      if (!email || !password || !name || !firstname) {
+        Alert.alert("Veuillez remplir tous les champs");
+        setLoading(false);
+        return;
       }
     
-    else{
-      Alert.alert("Le mot de passe n'est pas confirmé")
-    }}
+      if (password !== cpassword) {
+        Alert.alert("Les mots de passe ne correspondent pas");
+        setLoading(false);
+        return;
+      }
+    
+      try {
+        const response = await createUserWithEmailAndPassword(auth, email, password);
+    
+        console.log(response);
+        alert('Check your emails !')
+        const userUid = response.user.uid
+        await setDoc(doc(db, 'clients', userUid), {
+          uid: userUid,
+          name: name,
+          firstname: firstname,
+          email: email
+        })
+        console.log("Document written with ID: ", userUid)
+    
+      } catch (error) {
+        console.log(error);
+        alert('Sign up failed :' + error.message)
+      } finally {
+        setLoading(false);
+      }
+    }
+    
         
 
       

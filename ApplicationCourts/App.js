@@ -39,7 +39,7 @@ export default function App() {
           headerTintColor: 'white'
         }}
       >
-        {user ? (
+        {user !== null ? (
           <>
             <Stack.Screen name='Home' component={DrawerNavigator} options={{ headerShown: false }}/>
           </>

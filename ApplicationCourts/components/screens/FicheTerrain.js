@@ -87,9 +87,8 @@ return () => {
       const snapshotTerrainPresent = await getDocs(TerrainPresentQuery);
       const isTerrainPresent = !snapshotTerrainPresent.empty;
       // cette constant renvoie un booléen
-      setTerrainPresent(terrainpresent);
-     
-      // setButtonPressed(isTerrainPresent)
+      setTerrainPresent(isTerrainPresent);
+       setButtonPressed(terrainpresent)
       
       ;
       

@@ -3,9 +3,9 @@ import React from 'react'
 
 const BoutonValider = ({onPress}) => {
   return (
-    <View style={{flex:1 }}>
+    
       <Pressable style={styles.boutonvalider} onPress={onPress} ><Text style={styles.textboutonvalider}> Valider</Text></Pressable>
-    </View>)
+    )
 }
 
 export default BoutonValider
@@ -19,7 +19,7 @@ const styles = StyleSheet.create(  {
       alignItems:'center',
       justifyContent:'center',
       borderRadius:10,
-      marginTop:30,
+  
       marginLeft:10
     },
     textboutonvalider:{

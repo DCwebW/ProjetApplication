@@ -133,8 +133,10 @@ if (user){
         onPress={() => setChecked('5vs5')}
         
       /></View>
+
       <Text>5vs5</Text>
       </View>
+      <TouchableOpacity onPress={()=> setChecked('first')} style={{alignItems:'center',marginTop:20}}><Text style={{textAlign:'center', color:'white',backgroundColor:'rgba( 142, 8, 8 ,1)',width:150, height:50,paddingTop:20,}}>Annuler</Text></TouchableOpacity>
    </View>
    <Text style={{marginTop:20,marginLeft:20,color:'white'}}>Date:</Text> 
    <TouchableOpacity onPress={handleOnPress} style={{alignItems:'center'}}><Text style={{textAlign:'center', color:'white',backgroundColor:'rgba( 142, 8, 8 ,1)',width:150, height:50,paddingTop:20,}}>Choisir</Text></TouchableOpacity>
@@ -224,7 +226,7 @@ animationType='slide'
 </Modal>
 </View>
    
-    <View style={{alignItems:'center'}}>
+    <View style={{alignItems:'center',justifyContent:'flex-end', flex:2}}>
 
         <BoutonValider onPress={EnvoiMatchDB}/>
     </View>
@@ -239,10 +241,9 @@ const styles = StyleSheet.create({
 
      formulairematch :{
         backgroundColor:'rgba(197, 44, 35,1)',
-        flex:1,
-        width:350,
-        height:500,
-        alignSelf:'center',
+        flex:3,
+        
+        marginHorizontal:20,
         marginTop:20,
         borderRadius: 20,
         shadowColor:'black',
