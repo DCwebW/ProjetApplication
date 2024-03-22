@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View,ScrollView,TextInput,Pressable } from 'react-native'
 import React ,{useState} from 'react'
 import BoutonRetour from '../navigation/BoutonRetour'
-import Map from '../Maps/ChoixAdresse'
+import AdresseMap from '../Maps/ChoixAdresse';
 import { AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker'
 import { db,storage } from '../../ConfigFirebase'
@@ -164,7 +164,7 @@ console.log('Envoi réussi sur CloudStorage')
       
     <View style={{height:400, backgroundColor:'rgba(197, 44, 35,1)', marginTop:50}}>
       <Text style={{marginLeft:20,marginBottom:20 ,color:'white'}}>Localisation du terrain :</Text>
-      <Map onAdresseLocaliseeChange={handleAdresseLocaliseeChange} adresse={address} onPositionChange={handlePosition} /></View>
+      <AdresseMap onAdresseLocaliseeChange={handleAdresseLocaliseeChange} adresse={address} onPositionChange={handlePosition} /></View>
       {/* Ici est rappelé la fonction de rappel mise en prop dans le composant Map */}
       <View style={{flexDirection:'row', marginTop:30,width:250, }}>
         <View style={{justifyContent:'center',}}>

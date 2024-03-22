@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -6,7 +6,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 const Connexionauto = () => {
   const auth = getAuth();
   const navigation = useNavigation();
-  const [user, setUser] = useState(null);
+
 
   useEffect(() => {
     const checkUserLogin = async () => {

@@ -1,29 +1,39 @@
 import { StyleSheet, Text, View, ScrollView,TextInput,Pressable,Modal,TouchableOpacity, } from 'react-native'
-import React, {useEffect,useState}from 'react'
+import React, { useEffect, useState } from 'react'
 import BoutonRetour from '../navigation/BoutonRetour'
 import Avatar from '../drawer/ImagePicker'
 import { updateDoc, query,where,doc,collection, getDocs,deleteDoc} from 'firebase/firestore'
-import { getAuth, onAuthStateChanged,deleteUser, reauthenticateWithCredential, AuthCredential,EmailAuthProvider } from 'firebase/auth';
-import { db } from '../../ConfigFirebase'
+import { getAuth, onAuthStateChanged,deleteUser, reauthenticateWithCredential,EmailAuthProvider } from 'firebase/auth';
+import { db,storage } from '../../ConfigFirebase'
 import { useNavigation,CommonActions } from '@react-navigation/native'
-import { FIREBASE_AUTH } from '../../ConfigFirebase'
-import { getStorage, ref, uploadBytes,getDownloadURL } from "firebase/storage";
-import { storage } from '../../ConfigFirebase';
+import { ref, uploadBytes,getDownloadURL } from "firebase/storage";
 
 
 
 const auth = getAuth()
 
 const ChangerInfos = ({route}) => {
-  const {nom , prénom,image}= route.params
+
+  const {nom , prénom}= route.params
   const [currentUser, setCurrentUser] = useState(null);
-  const [firstname, setFirstName]=useState('')
+  const [firstname, setFirstName]=useState('') // valeur initiale vide pour firstname , ignorer erreur SonarLint 
   const [name, setName]= useState('')
   const [open, setOpen] = useState(false)
   const [openDelete, setOpenDelete]= useState(false)
   const [password,setPassword]= useState('') 
   const navigation = useNavigation()
   const [imageprofil , setImageProfil]= useState(null)
+
+  
+ChangerInfos.propTypes = {
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      nom: PropTypes.string.isRequired,
+      prénom: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
+}; // Ici ce code valide les props , il vérifie si ils ont bien le type et la forme voulus,il améliore aussi les performances 
 
   const nomProfil = JSON.stringify(nom)
   const prénomProfil = JSON.stringify(prénom)
@@ -74,63 +84,55 @@ const uploadImageAsync = async (uri) => {
     }
   };
 
-  const updateData= async()=>{
-    if (currentUser){
- try{
-      
-      if (!firstname && !name && !imageprofil) {
-        console.log('Aucune nouvelle information fournie.');
-        return;
-      } // Cette condition vérifie que l'au moins un des champs a été fourni en nouvelles informations 
-      // Si elle n'est pas respectée la mise à jour des données située dans le code en bas n'est pas effectuée
-
-      if (imageprofil){
-      await uploadImageAsync(imageprofil)  
+  const uploadImageAndUpdateData = async (imageprofil) => {
+    try {
+      if (imageprofil) {
+        const downloadURL = await uploadImageAsync(imageprofil);
+        return { imageprofil: downloadURL };
       }
-      
-      const Reference= collection(db, 'clients')
-      // Référence à la base de données , et la collection clients
-
-      const querySnapshot = await getDocs(query(Reference, where ('uid', '==', currentUser.uid)))
-      // Ici on récupère le document spécifique à l'utilisateur connecté 
-
-      if(!querySnapshot.empty){
-        const docID = querySnapshot.docs[0].id
-        // On récupère l'id du document 
-        const NewData={}
-        if(firstname!== undefined && firstname !== ''){
-
-          NewData.firstname = firstname
-        }
-        if(name!== undefined && name !== ''){
-
-          NewData.name = name
-        }
-        if(imageprofil!== undefined && imageprofil !== ''){
-
-          NewData.imageprofil = imageprofil
-        } 
-        // Ici une vérification est faite pour qu'une donnée ne soit mise à jour que si le champ est fourni   
-        const specificDocRef = doc(db, 'clients',docID)
-      // on fait une référence au document qui sera mis à jour avec son ID
-        await updateDoc(specificDocRef,NewData)
-        // On fait finalement la mise à jour avec la référence et les nouvelles données 
-        console.log('Données mises à jour pour le document spécifique avec l\'ID :', docID)
-      }
-      else{
-        console.error('Document spécifique introuvable pour l\'utilisateur avec l\'ID :', currentUser.uid)
-      }
-    
-    }catch(error){
-
-      console.error('Erreur lors de la mise à jour des données :', error.message);
+      return {};
+    } catch (error) {
+      console.error('Erreur lors du téléchargement de l\'image :', error.message);
+      return {};
     }
-  }
-  else{
-    console.error('Utilisateur non défini')
-  }
-
+  };
+  
+  const updateData = async () => {
+    if (currentUser) {
+      try {
+        if (!firstname && !name && !imageprofil) {
+          console.log('Aucune nouvelle information fournie.');
+          return;
+        }
+  
+        const newData = await uploadImageAndUpdateData(imageprofil);
+  
+        const Reference = collection(db, 'clients');
+        const querySnapshot = await getDocs(query(Reference, where('uid', '==', currentUser.uid)));
+  
+        if (!querySnapshot.empty) {
+          const docID = querySnapshot.docs[0].id;
+          const specificDocRef = doc(db, 'clients', docID);
+  
+          if (firstname !== undefined && firstname !== '') {
+            newData.firstname = firstname;
+          }
+          if (name !== undefined && name !== '') {
+            newData.name = name;
+          }
+  
+          await updateDoc(specificDocRef, newData);
+          console.log('Données mises à jour pour le document spécifique avec l\'ID :', docID);
+        } else {
+          console.error('Document spécifique introuvable pour l\'utilisateur avec l\'ID :', currentUser.uid);
+        }
+      } catch (error) {
+        console.error('Erreur lors de la mise à jour des données :', error.message);
+      }
+    } else {
+      console.error('Utilisateur non défini');
     }
+  };
    
 
   const verifyPassword = async () => {

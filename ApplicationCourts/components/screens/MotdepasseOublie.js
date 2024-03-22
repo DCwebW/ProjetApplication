@@ -1,9 +1,7 @@
 import { View, Text,StyleSheet,Pressable,TextInput,Alert,ScrollView } from 'react-native'
-import React from 'react'
-import { useRoute } from '@react-navigation/native'
 import { FIREBASE_AUTH } from '../../ConfigFirebase'
 import { getAuth,sendPasswordResetEmail,onAuthStateChanged, } from 'firebase/auth'
-import { useState,useEffect } from 'react'
+import React, { useState,useEffect } from 'react'
 
 const MotdepasseOublie = () => {
 
@@ -20,7 +18,7 @@ useEffect(() => {
   const changeMotdePasse = async()=>{
  try {
 
-  if (!/^\S+@\S+\.\S+$/.test(email)) { // expression régulière pour savoir si l'email est au bon format 
+  if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) { // expression régulière pour savoir si l'email est au bon format 
     Alert.alert('Adresse e-mail non valide', 'Veuillez saisir une adresse e-mail valide.');
     return;
   } 

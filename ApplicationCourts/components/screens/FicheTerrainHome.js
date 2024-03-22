@@ -1,12 +1,12 @@
 import { View, Text ,Image,FlatList,useWindowDimensions, TouchableOpacity,StyleSheet} from 'react-native'
 
-import { AntDesign,Entypo } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons'
 import BoutonRetour from '../navigation/BoutonRetour'
 import { QueryDocumentSnapshot, doc, getDocs,collection, QuerySnapshot, addDoc, updateDoc,where, query } from "firebase/firestore"
 import { db } from '../../ConfigFirebase'
 import React, { useState, useEffect} from 'react'
 import { onAuthStateChanged,getAuth } from 'firebase/auth'
-import Animated from 'react-native-reanimated'
+
 
 
 const auth = getAuth();
@@ -163,7 +163,7 @@ const FicheTerrainHome = ({route}) => {
         </View>
         <View style={{marginTop:20,}}>
           
-          <Animated.Image source={{uri: item.images}} style={{width,height:300,marginTop:10}} />
+          <Image source={{uri: item.images}} style={{width,height:300,marginTop:10}} />
   
           <View style={{flexDirection:'row', flex:1}}>
          <View style={{flex:1}}>

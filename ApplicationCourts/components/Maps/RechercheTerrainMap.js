@@ -5,7 +5,7 @@ import * as Location from 'expo-location';
 import TerrainsEnregistrésMarqueurs from './TerrainsEnregistrésMarqueurs';
 
 
-export default function Map() {
+export default function RechercheMap() {
   const [currentLocation, setCurrentLocation] = useState(null);
 
   useEffect(() => {

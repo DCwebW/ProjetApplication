@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View,FlatList,Image,useWindowDimensions, TouchableOpacity,Modal } from 'react-native'
+import { StyleSheet, Text, View,FlatList,Image, TouchableOpacity,Modal } from 'react-native'
 import React, { useEffect ,useState} from 'react'
-import { updateDoc, query,where,doc,collection, getDocs,deleteDoc, QuerySnapshot} from 'firebase/firestore'
+import {  query,where,collection, getDocs, } from 'firebase/firestore'
 import { db } from '../../ConfigFirebase'
 import { onAuthStateChanged,getAuth } from 'firebase/auth'
-import BoutonRetour from '../navigation/BoutonRetour'
+
 import { useNavigation } from '@react-navigation/native'
-import Animated from 'react-native-reanimated'
+
 
 const auth = getAuth()
 
@@ -16,7 +16,7 @@ const TerrainsFavoris = () => {
   const [donneesTF,setDonneesTF]=useState([])
 const [user,setUser]=useState(null)
 const [openVerification , SetopenVerification] = useState(false)
-const {width} = useWindowDimensions()
+
 const [selectedTerrain, setSelectedTerrain] = useState(null);
   
   useEffect(()=>{
@@ -91,7 +91,7 @@ const ChoixTerrain =()=>{
     <TouchableOpacity onPress={()=>handleVerification(item)}>
       <View style={styles.itemContainer}>
         
-        <Animated.Image source={{ uri: item.images }} style={[styles.image, {width:385}]}
+        <Image source={{ uri: item.images }} style={[styles.image, {width:385}]}
         
         
         />

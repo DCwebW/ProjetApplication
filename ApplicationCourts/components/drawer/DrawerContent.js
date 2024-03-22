@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import {  Text } from 'react-native'
 import React from 'react'
 import {
     DrawerContentScrollView,
@@ -6,8 +6,12 @@ import {
     DrawerItem
   } from '@react-navigation/drawer';
   import { FIREBASE_AUTH } from '../../ConfigFirebase'
-  import MonCompte from './MonCompteInfos';
-  import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+
+const Deconnexion = () =>{
+  return (<Text style={{color:'rgba(197, 44, 35,1)'}}>Deconnexion</Text>)
+}
 
 const CustomDrawerContent = (props,) => {
 const SignOut =async({navigation})=>{
@@ -19,9 +23,11 @@ const SignOut =async({navigation})=>{
 }catch(error){
   console.error('Déconnexion échouée')
 }}
-    const Deconnexion =()=>{
-        return <Text style={{color:'rgba(197, 44, 35,1)'}}>Deconnexion</Text>
-    }
+
+
+
+
+   
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />

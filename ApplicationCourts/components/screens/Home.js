@@ -1,16 +1,12 @@
-import { View, Text, Button,ScrollView,StyleSheet,StatusBar } from 'react-native'
+import { View, Text, ScrollView,StyleSheet } from 'react-native'
 import React from 'react'
-import { FIREBASE_AUTH } from '../../ConfigFirebase'
-import BottomTabNavigator from '../navigation/BottomTabNavigation'
-import { QueryDocumentSnapshot, doc, getDocs,collection, QuerySnapshot, addDoc, updateDoc,where, query } from "firebase/firestore"
-import { db } from '../../ConfigFirebase'
-import { getAuth,onAuthStateChanged } from 'firebase/auth'
+
 import TerrainsFavoris from '../PageAccueil/TerrainsFavoris'
 import MatchsOrganises from '../PageAccueil/MatchsOrganises'
 import ConseilsSport from './ConseilsSport'
 
 
-const Home = ({navigation}) => {
+const Home = () => {
   return (
     <ScrollView style={{ flex:1 , margin: 10,marginTop:0,height:1200}} >
 

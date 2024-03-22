@@ -4,7 +4,7 @@ import MapView, { Marker, Circle, Callout } from 'react-native-maps';
 import * as Location from 'expo-location';
 
 
-export default function Map({ onAdresseLocaliseeChange, adresse,onPositionChange }) {
+export default function AdresseMap({ onAdresseLocaliseeChange, adresse,onPositionChange }) {
   // En prop de la fonction Map , nous avons mis une fonction de rappel (callback function) qui permettra au composant enfant 
   // de communiquer avec le composant parent pour indiquer des changements  
   const [currentLocation, setCurrentLocation] = useState(null);

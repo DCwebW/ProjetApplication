@@ -1,9 +1,9 @@
-import { FlatList, StyleSheet, Text, TouchableOpacity, View,Image } from 'react-native'
+import {  StyleSheet, Text,  View,Image } from 'react-native'
 import React,{ useEffect ,useState} from 'react'
-import { updateDoc, query,where,doc,collection, getDocs,deleteDoc, QuerySnapshot} from 'firebase/firestore'
+import { query,where,collection, getDocs,} from 'firebase/firestore'
 import { db } from '../../ConfigFirebase'
 import { onAuthStateChanged,getAuth } from 'firebase/auth'
-import { useNavigation } from '@react-navigation/native'
+
 
 import BoutonRetour from '../navigation/BoutonRetour'
 const FicheMatch = ({route}) => {
@@ -14,7 +14,7 @@ const FicheMatch = ({route}) => {
 
     const [user,SetUser]=useState(null)
     const [matchs,SetMatchs]=useState([])
-const navigation = useNavigation()
+
 
     useEffect(()=>{
         const unsubscribe = onAuthStateChanged(auth,(user)=>{
@@ -58,14 +58,12 @@ const navigation = useNavigation()
 <BoutonRetour/>
 
         </View>
-{matchs && matchs.map((item)=>{
+{ matchs.map((item)=>{
 if (matchid === item.id) {
 
 return(
 <View key = {item.id} style={{marginTop:150,}}>
-<Image source={require('../../assets/png/depositphotos_331770894-stock-photo-professional-basketball-court-arena-background.jpg')} style={styles.imagematch}
-                id='transition'
-                /> 
+<Image source={require('../../assets/png/depositphotos_331770894-stock-photo-professional-basketball-court-arena-background.jpg')} style={styles.imagematch} /> 
         <Text> Match n°{item.id}</Text>     
          <Text> {item.date}</Text>
          <Text>{item.heure}</Text>

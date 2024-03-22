@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native'
 const auth = getAuth()
 const MatchsOrganises = () => {
     const [user,SetUser]=useState(null)
-    const [matchs,SetMatchs]=useState()
+    const [matchs,SetMatchs]=useState([])
 const navigation = useNavigation()
 
     useEffect(()=>{
@@ -34,7 +34,7 @@ const navigation = useNavigation()
               console.log('Données matchs récoltés')
             }
         }catch(error){
-            console.log('Données des matchs non récoltés')
+            console.log('Données des matchs non récoltés',error)
         }
         }
     loadUserData()
@@ -52,7 +52,7 @@ const navigation = useNavigation()
             <View>
                 <View style={styles.imagematchView}>
                 <Image source={require('../../assets/png/depositphotos_331770894-stock-photo-professional-basketball-court-arena-background.jpg')} style={styles.imagematch}
-                id='transition'
+                
                 />     
                 </View>
                <View style={styles.informationsmatch} >

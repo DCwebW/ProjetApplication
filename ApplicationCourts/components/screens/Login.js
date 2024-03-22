@@ -1,37 +1,21 @@
-import { ActivityIndicator, SafeAreaView, View, Text, StyleSheet, TextInput, Button, KeyboardAvoidingView,Image,Pressable } from 'react-native'
-import React from 'react'
-import { useState,useEffect } from 'react'
+import { ActivityIndicator, SafeAreaView, View, Text, StyleSheet, TextInput, KeyboardAvoidingView,Image,Pressable } from 'react-native'
+import React, { useState } from 'react'
 import { FIREBASE_AUTH } from '../../ConfigFirebase'
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth, getIdTokenResult, getIdToken,  browserLocalPersistence,} from 'firebase/auth'
-import { useFonts } from 'expo-font'
+import { signInWithEmailAndPassword, getAuth, } from 'firebase/auth'
+import { useNavigation } from '@react-navigation/native'
 
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import MotdepasseOublie from './MotdepasseOublie'
+
 
 
 const auth = FIREBASE_AUTH || getAuth()
  
-
- 
-
-const Login = ({navigation}) => {  
+const Login = () => {  
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
-    const [user, setUser] = useState(null)
-    
-
-
-// const [fontsLoaded] = useFonts({
-//     'PolicePrincipale'
-//   });
-  
-
-  
-   
-
-    
+    const navigation = useNavigation()
+     
     const SignIn= async()=>{
       setLoading(true);
       try{
@@ -54,7 +38,7 @@ const Login = ({navigation}) => {
     }
    
     
-{
+
     
     return (
         <SafeAreaView style={styles.container}>
@@ -90,7 +74,7 @@ const Login = ({navigation}) => {
             </KeyboardAvoidingView>
             </SafeAreaView>
     )
-}}
+}
 
 export default Login
 

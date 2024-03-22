@@ -6,7 +6,7 @@ import DatePicker from 'react-native-modern-datepicker'
 import {getToday, getFormatedDate} from 'react-native-modern-datepicker'
 import BoutonValider from '../BoutonValider'
 import { TimerPickerModal } from "react-native-timer-picker";
-import RadioButtons from '../RadioButtonsGroup/RadioButtons'
+
 import { useNavigation } from '@react-navigation/native'
 import { getAuth,onAuthStateChanged } from 'firebase/auth';
 import { addDoc, collection } from 'firebase/firestore';
@@ -90,7 +90,7 @@ if (user){
 
 
     function ChoixTerrainFavori(){
-      navigation.navigate('TerrainsFavorisSelection'),
+      navigation.navigate('TerrainsFavorisSelection')
       handleOpenTerrain()
 
     }

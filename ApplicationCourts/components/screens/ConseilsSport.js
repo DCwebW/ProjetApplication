@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View,ScrollView,useWindowDimensions } from 'react-native'
+import { StyleSheet, Text, View,ScrollView } from 'react-native'
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 
 const ConseilsSport = () => {
-    const {width} = useWindowDimensions()
+   
 
     const Conseils = [{
         id: "1",
@@ -27,7 +27,7 @@ const ConseilsSport = () => {
     if(item.id ==="1"){
 return(
     
-<View id='1' style={styles.conseilView}>
+<View key={item.id} style={styles.conseilView}>
 <LinearGradient
 
  colors={['rgba(197, 44, 35,1)','orange']}
@@ -39,7 +39,7 @@ return(
 
 else{
 return(
-    <View id='1' style={styles.conseilView}>
+    <View key={item.id} style={styles.conseilView}>
 
 <LinearGradient
 

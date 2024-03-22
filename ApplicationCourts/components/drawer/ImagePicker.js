@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import {View,StyleSheet,Image,TouchableOpacity,Text,Alert,Pressable} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import {View,StyleSheet,Image,TouchableOpacity,Alert} from 'react-native';
+import { Ionicons,Entypo } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { Entypo } from '@expo/vector-icons';
 
-import { updateDoc, query,where,doc,collection, getDocs} from 'firebase/firestore'
-import { onAuthStateChanged,getAuth } from 'firebase/auth';
-import { db } from '../../ConfigFirebase'
+
+import { getAuth } from 'firebase/auth';
+
 
 const auth = getAuth()
 
@@ -14,28 +13,21 @@ export default function Avatar({results}) {
 
 
   const [image, setImage] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-    });
-    return () => unsubscribe();
-  }, [])
 
 
-const showImagePickerOptions = () => {
+
+const showImagePickerOptions = async () => {
   Alert.alert(
     'Choisissez une option 📸',
     'Voulez-vous choisir une image de votre bibliothèque ou prendre une nouvelle photo?',
     [
       {
         text: 'Choisir de la bibliothèque',
-        onPress: pickImage,
+        onPress: await pickImage(),
       },
       {
         text: 'Prendre une photo',
-        onPress: takePhoto,
+        onPress: await  takePhoto(),
       },
       {
         text: 'Annuler',
@@ -84,25 +76,7 @@ const pickImage = async () => {
 
 
 
-const UpdateFirestoreDatabase = async(imageUrl)=>{
-  try{
-const Reference= collection(db, 'clients')
-      const querySnapshot = await getDocs(query(Reference, where ('uid', '==', currentUser.uid)))
-      if(!querySnapshot.empty){
-        const docID = querySnapshot.docs[0].id
-        const NewData={
 
-          imageprofil:imageUrl
-        }
-        const specificDocRef = doc(db, 'clients',docID)
-        await updateDoc(specificDocRef,NewData)
-        console.log('Profil mis à jour avec ID =' ,currentUser.uid)
-      }
-
-  }catch(error){
-    console.error("Erreur lors de la mise à jour de la base de données:", error)
-  }
-}
 
 
   return (

@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import {View,StyleSheet,Image,TouchableOpacity,Text,Alert,Pressable,FlatList} from 'react-native';
+import React, { useState,  } from 'react';
+import {View,StyleSheet,Image,TouchableOpacity,Alert} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { getStorage, ref, uploadBytes,getDownloadURL } from "firebase/storage";
-import { storage } from '../../ConfigFirebase';
-import { onAuthStateChanged,getAuth } from 'firebase/auth';
-import md5 from 'md5';
+import { getAuth } from 'firebase/auth';
+
 
 
 const auth = getAuth()
@@ -14,18 +12,7 @@ export default function Imagesterrain({imagesterrains}) {
 
 
   const [image, setImage] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-    });
-    return () => unsubscribe();
-  }, [])
-
-
-
-
+  
 
 
   const pickImage = async () => {
@@ -42,7 +29,7 @@ export default function Imagesterrain({imagesterrains}) {
       // const selectedImages = result.assets.map((asset) => asset.uri)
       // setImages((prevImages)=>[...prevImages,...result.assets]); Ceci est à utiliser si la sélection est multiple 
       setImage(result.assets[0].uri)
-      // imagesterrains((prevImages) => [...prevImages, ...result.assets]);
+     
       imagesterrains(result.assets[0].uri)
     }
   
@@ -62,27 +49,25 @@ export default function Imagesterrain({imagesterrains}) {
     if (!result.canceled) {
       
       
-    //  const uploadURL= await uploadImageAsync(result.assets[0].uri)
-    //  setImages((prevImages) => [...prevImages, ...result.assets]);
-    //  imagesterrains((prevImages) => [...prevImages, ...selectedImages]);
+   
     setImage(result.assets[0].uri)
     imagesterrains(result.assets[0].uri)
     }
   };
 
 
-const showImagePickerOptions = () => {
+const showImagePickerOptions = async () => {
   Alert.alert(
     'Choisissez une option 📸',
     'Voulez-vous choisir une image de votre bibliothèque ou prendre une nouvelle photo?',
     [
       {
         text: 'Choisir de la bibliothèque',
-        onPress: pickImage,
+        onPress: await pickImage(),
       },
       {
         text: 'Prendre une photo',
-        onPress: takePhoto,
+        onPress: await takePhoto(),
       },
       {
         text: 'Annuler',
@@ -93,19 +78,7 @@ const showImagePickerOptions = () => {
   );
 };
 
-const renderItem = ({ item }) => {
-  if (item.uri) {
-    return (
-      <Image source={{ uri: item.uri }} style={{ width: 200, height: 250,marginHorizontal:10 }} />
-    );
-  } else {
-    return (
-      <View style={{ width: 60, height: 40, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ color: 'white' }}>Chargement...</Text>
-      </View>
-    );
-  }
-};
+
 
 //  const keyExtractor = (item) => (item.uri ? md5(item.uri) : Math.random().toString(36).substring(7)); // Utilisez md5 ou une autre méthode de hachage
   return (
