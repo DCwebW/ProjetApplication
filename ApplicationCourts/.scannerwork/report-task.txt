@@ -1,0 +1,6 @@
+projectKey=Courts
+serverUrl=http://localhost:58304
+serverVersion=10.4.1.88267
+dashboardUrl=http://localhost:58304/dashboard?id=Courts
+ceTaskId=06bfdfd4-17ae-4e32-91ec-97683e132471
+ceTaskUrl=http://localhost:58304/api/ce/task?id=06bfdfd4-17ae-4e32-91ec-97683e132471

@@ -217,7 +217,7 @@ try {
         <Text style={{margin:20}}>Nom :{nomProfil}</Text>
         <TextInput placeholder='Changer Nom' style={{backgroundColor:'white', width: 220,height:30,marginLeft:50}}onChangeText={(text)=>setName(text)}></TextInput>
      </View>
-      <Pressable onPress={()=> updateData()}><View style={styles.boutonvalider} ><Text style={{color:'white'}}>Valider</Text></View></Pressable>
+      <Pressable onPress={()=> updateData()} testID="validerButton"><View style={styles.boutonvalider} ><Text style={{color:'white'}}>Valider</Text></View></Pressable>
       <Pressable onPress={handleOnPress}><View style={styles.suppression}><Text style={{color:'white'}}>Supprimer le Compte </Text></View></Pressable>
 
       <Modal 

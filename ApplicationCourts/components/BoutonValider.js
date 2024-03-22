@@ -1,5 +1,9 @@
-import { StyleSheet, Text, View,Pressable } from 'react-native'
+import { StyleSheet, Text, Pressable } from 'react-native'
 import React from 'react'
+
+
+
+
 
 const BoutonValider = ({onPress}) => {
   return (
@@ -7,7 +11,9 @@ const BoutonValider = ({onPress}) => {
       <Pressable style={styles.boutonvalider} onPress={onPress} ><Text style={styles.textboutonvalider}> Valider</Text></Pressable>
     )
 }
-
+BoutonValider.propTypes ={
+  onPress: propTypes.bool
+}
 export default BoutonValider
 
 const styles = StyleSheet.create(  {
