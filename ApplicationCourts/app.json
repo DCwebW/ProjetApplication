@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "essai",
-    "slug": "essai",
+    "slug": "applicationcourts",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,7 +17,6 @@
             "photosPermission": "The app accesses your photos to let you share them with your friends."
           }
         ]
-        
       ]
     },
     "assetBundlePatterns": [
@@ -25,10 +24,9 @@
     ],
     "ios": {
       "supportsTablet": true,
-      
+      "bundleIdentifier": "com.dcwebw.essai"
     },
     "android": {
-      
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -37,6 +35,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d9038241-dbd4-4344-af14-d641b9471a19"
+      }
+    },
+    "owner": "dcwebw"
   }
 }

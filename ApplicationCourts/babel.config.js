@@ -10,6 +10,11 @@ module.exports = function(api) {
   ];
 
   const plugins = [
+
+   ["module-resolver", {
+      "alias": {
+        "expo-linear-gradient": "./node_modules/expo-linear-gradient/build/LinearGradient"
+      }}] 
     // Ajoutez ici les plugins supplémentaires nécessaires
   ];
 

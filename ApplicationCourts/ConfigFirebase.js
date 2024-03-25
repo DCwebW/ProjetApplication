@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app';
 import { getAuth} from 'firebase/auth';
 import {getFirestore} from 'firebase/firestore'
 import { getStorage } from "firebase/storage"
@@ -10,7 +10,7 @@ import { getStorage } from "firebase/storage"
 
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyCTWHZgy8_08up98-7xNkCjJfLNboshC5Y",
   authDomain: "loginfirebase-222bd.firebaseapp.com",
   projectId: "loginfirebase-222bd",

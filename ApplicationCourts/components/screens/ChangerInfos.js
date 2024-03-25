@@ -114,12 +114,11 @@ const uploadImageAsync = async (uri) => {
           const docID = querySnapshot.docs[0].id;
           const specificDocRef = doc(db, 'clients', docID);
   
-          if (firstname !== undefined && firstname !== '') {
+          if (firstname !== undefined && firstname !== '' && name !== undefined && name!== '') {
             newData.firstname = firstname;
-          }
-          if (name !== undefined && name !== '') {
             newData.name = name;
           }
+          
   
           await updateDoc(specificDocRef, newData);
           console.log('Données mises à jour pour le document spécifique avec l\'ID :', docID);
