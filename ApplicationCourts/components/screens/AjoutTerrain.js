@@ -96,13 +96,7 @@ console.log('Envoi réussi sur CloudStorage')
 
       }
  console.log('Terrain Enregistré')
- navigation.dispatch(
-  CommonActions.reset({
-    index:0,
-    routes:[{name:'Accueil'}]
-  })
-
- )
+ navigation.navigate('TerrainValidation')
  
     }catch(error){
 

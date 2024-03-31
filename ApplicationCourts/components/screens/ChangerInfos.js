@@ -7,6 +7,7 @@ import { getAuth, onAuthStateChanged,deleteUser, reauthenticateWithCredential,Em
 import { db,storage } from '../../ConfigFirebase'
 import { useNavigation,CommonActions } from '@react-navigation/native'
 import { ref, uploadBytes,getDownloadURL } from "firebase/storage";
+import PropTypes from 'prop-types';
 
 
 
@@ -25,7 +26,7 @@ const ChangerInfos = ({route}) => {
   const [imageprofil , setImageProfil]= useState(null)
 
   
-ChangerInfos.propTypes = {
+ChangerInfos.PropTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
       nom: PropTypes.string.isRequired,

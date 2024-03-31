@@ -1,5 +1,5 @@
-import { View, Text, ScrollView,StyleSheet } from 'react-native'
-import React from 'react'
+import { View, Text, ScrollView,StyleSheet,Modal,Pressable } from 'react-native'
+import React,{useEffect,useState} from 'react'
 
 import TerrainsFavoris from '../PageAccueil/TerrainsFavoris'
 import MatchsOrganises from '../PageAccueil/MatchsOrganises'
@@ -7,25 +7,20 @@ import ConseilsSport from './ConseilsSport'
 
 
 const Home = () => {
+
   return (
-    <ScrollView style={{ flex:1 , margin: 10,marginTop:0,height:1200}} >
-
-<View style={{flex:1,marginTop:20}}>
-  
-  <Text style={styles.texttitre}> Terrains Favoris</Text></View>
-      
-      <View style={{flex:1,marginTop:20}}>
-
-      <TerrainsFavoris/>
+    <ScrollView style={styles.scrollView}>
+      <View style={styles.section}>
+        <Text style={styles.texttitre}> Terrains Favoris</Text>
+        <TerrainsFavoris />
       </View>
-      <View style={{flex:1}}><Text style={styles.texttitre}>
-          Matchs Organisés
-        </Text></View>
-      <View style={{flex:1, marginTop:20}}><MatchsOrganises/></View>
-      
-      <View style={{flex:1, marginTop:50,}}><ConseilsSport/></View>
-      
-      
+      <View style={styles.section}>
+        <Text style={styles.texttitre}>Matchs Organisés</Text>
+        <MatchsOrganises />
+      </View>
+      <View style={[styles.section, { marginBottom: 50 }]}>
+        <ConseilsSport />
+      </View>
       
     </ScrollView>
     
@@ -40,8 +35,9 @@ const styles = StyleSheet.create({
     
   },
   scrollView: {
-    backgroundColor: 'pink',
-    marginHorizontal: 20,
+    flex: 1,
+    margin: 10,
+    marginTop: 0,
   },
   text: {
     fontSize: 42,
@@ -51,5 +47,30 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color:'rgba(197, 44, 35,1)'
 
-  }
+  },
+  section:{
+    marginTop:20,
+    marginBottom:20
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalText: {
+    fontSize: 20,
+    color: 'white',
+  },
+  modalButton: {
+    backgroundColor: '#1976D2',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginTop: 20,
+  },
+  modalButtonText: {
+    fontSize: 18,
+    color: 'white',
+  },
 });

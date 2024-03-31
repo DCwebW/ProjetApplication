@@ -1,7 +1,6 @@
 import { View, Text, TouchableOpacity,StyleSheet,Image,FlatList} from 'react-native'
 import React,{useEffect,useState} from 'react'
 import BoutonRetour from '../navigation/BoutonRetour'
-import { SvgUri } from 'react-native-svg'
 import { db } from '../../ConfigFirebase'
 import { updateDoc, query,where,doc,collection, getDocs,deleteDoc} from 'firebase/firestore'
 

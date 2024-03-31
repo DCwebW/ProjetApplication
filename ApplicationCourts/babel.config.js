@@ -10,7 +10,7 @@ module.exports = function(api) {
   ];
 
   const plugins = [
-
+    'react-native-reanimated/plugin',
    ["module-resolver", {
       "alias": {
         "expo-linear-gradient": "./node_modules/expo-linear-gradient/build/LinearGradient"

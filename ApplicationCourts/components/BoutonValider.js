@@ -1,6 +1,6 @@
 import { StyleSheet, Text, Pressable } from 'react-native'
 import React from 'react'
-
+import PropTypes from 'prop-types';
 
 
 
@@ -11,8 +11,8 @@ const BoutonValider = ({onPress}) => {
       <Pressable style={styles.boutonvalider} onPress={onPress} ><Text style={styles.textboutonvalider}> Valider</Text></Pressable>
     )
 }
-BoutonValider.propTypes ={
-  onPress: propTypes.bool
+BoutonValider.PropTypes ={
+  onPress: PropTypes.bool
 }
 export default BoutonValider
 

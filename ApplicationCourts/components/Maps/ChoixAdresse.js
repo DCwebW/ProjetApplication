@@ -27,7 +27,7 @@ export default function AdresseMap({ onAdresseLocaliseeChange, adresse,onPositio
         setAddress(`${reversegeocodedLocation[0].name}, ${reversegeocodedLocation[0].city}`);
         // Ici dans le setAddress, on utilise la syntaxe d'interpolation ${} pour afficher 
         // la valeur obtenue dans reversegeocodedLocation[0]
-        onAdresseLocaliseeChange(address) // Ici il s'agit de la fonction de rappel mise en props du composant Map
+        onAdresseLocaliseeChange(`${reversegeocodedLocation[0].name},${reversegeocodedLocation[0].city}`) // Ici il s'agit de la fonction de rappel mise en props du composant Map
         console.log('Adresse trouvée :', `${reversegeocodedLocation[0].name}, ${reversegeocodedLocation[0].city}`)
         console.log(reversegeocodedLocation);
         // 

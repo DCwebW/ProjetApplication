@@ -21,7 +21,7 @@ const ChoixDate = () => {
       <SafeAreaView style={styles.container}>
         <TouchableOpacity onPress={handleOnPress}> <Text>Choisir</Text></TouchableOpacity>
         <Text>{date}</Text>
-      <Modal 
+      {/* <Modal 
       animationType='slide'
       transparent={true}
       visible={open}
@@ -38,7 +38,7 @@ const ChoixDate = () => {
       </View>
       </View>
       
-      </Modal>
+      </Modal> */}
       </SafeAreaView>
     );
   }
