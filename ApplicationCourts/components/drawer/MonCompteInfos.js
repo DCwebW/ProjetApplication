@@ -139,7 +139,7 @@ justifyContent:'center'
 fontSize:20
   },
   imageprofil:{
-    borderRadius:100,
+    borderRadius:15,
     width: 80, height: 80,
   }
 })

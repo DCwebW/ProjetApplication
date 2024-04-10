@@ -65,9 +65,9 @@ const Login = () => {
    
    <>
    <View style={{height:20}}></View>
-   <Pressable   onPress={SignIn} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:"20" ,marginTop:20}}><Text style={{color:'white',fontSize:25}}>Connexion</Text></Pressable>
-   <Pressable  onPress={()=>navigation.navigate('Inscription')} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:"20",marginTop:10}}><Text style={{color:'white',fontSize:25}}>S'inscrire</Text></Pressable>
-   <Pressable  onPress={()=>navigation.navigate('Reinitialisation Mot de passe')} style={{ alignItems:"center", borderRadius:"20" ,marginTop:10}}><Text style={{color:'rgba(197, 44, 35,1)', fontSize:20,}}>Mot de passe oublié</Text></Pressable>
+   <Pressable   onPress={SignIn} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:20 ,marginTop:20}}><Text style={{color:'white',fontSize:25}}>Connexion</Text></Pressable>
+   <Pressable  onPress={()=>navigation.navigate('Inscription')} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:20,marginTop:10}}><Text style={{color:'white',fontSize:25}}>S'inscrire</Text></Pressable>
+   <Pressable  onPress={()=>navigation.navigate('Reinitialisation Mot de passe')} style={{ alignItems:"center", borderRadius:20 ,marginTop:10}}><Text style={{color:'rgba(197, 44, 35,1)', fontSize:20,}}>Mot de passe oublié</Text></Pressable>
    
           </> )} 
             </View> 

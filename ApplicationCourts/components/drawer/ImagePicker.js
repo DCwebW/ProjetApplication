@@ -85,7 +85,7 @@ const pickImage = async () => {
 
       {!image && (<View>
         
-          <View style={{ borderRadius: 300, overflow: 'hidden', position:'absolute',alignItems:'center' }}>
+          <View style={{ borderRadius: 15, overflow: 'hidden', position:'absolute',alignItems:'center' }}>
             <Ionicons name="image" size={150} color="grey" />
           </View>
         <TouchableOpacity onPress={showImagePickerOptions}>
@@ -99,7 +99,7 @@ const pickImage = async () => {
 
       {image && (
         <View>
-          <View style={{ borderRadius: 300, overflow: 'hidden', position:'absolute',alignItems:'center' }}>
+          <View style={{ borderRadius: 15, overflow: 'hidden', position:'absolute',alignItems:'center' }}>
           <Image source={{ uri: image }} style={styles.image} />
           </View>
         <TouchableOpacity onPress={showImagePickerOptions}>
@@ -130,6 +130,6 @@ const styles = StyleSheet.create({
   image: {
     width: 150,
     height: 150,
-    borderRadius: 75,
+    borderRadius:20 ,
   },
 });
