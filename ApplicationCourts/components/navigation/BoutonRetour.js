@@ -6,7 +6,9 @@ const BoutonRetour = () => {
   const navigation = useNavigation()
   return (
     <View style={{flex:1 }}>
-      <Pressable style={styles.boutonretour} onPress={navigation.goBack}><Text style={styles.textboutonretour}> Retour</Text></Pressable>
+      <Pressable  
+      testID='boutonRetour'
+      style={styles.boutonretour} onPress={navigation.goBack}><Text style={styles.textboutonretour}> Retour</Text></Pressable>
     </View>
   )
 }

@@ -6,7 +6,8 @@ module.exports = function(api) {
       targets: { node: 'current' }, // spécifie les versions de Node.js à prendre en charge
     }],
     '@babel/preset-react', // permet de transformer le JSX
-    'module:metro-react-native-babel-preset', // permet de transformer le code pour React Native
+    'module:metro-react-native-babel-preset', 
+    '@babel/preset-typescript'// permet de transformer le code pour React Native
   ];
 
   const plugins = [
