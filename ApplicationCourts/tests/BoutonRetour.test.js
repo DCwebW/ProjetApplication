@@ -1,5 +1,4 @@
 import React ,{Pressable}from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
 import renderer from 'react-test-renderer'
 import { useNavigation } from '@react-navigation/native';
 import BoutonRetour from '../components/navigation/BoutonRetour';

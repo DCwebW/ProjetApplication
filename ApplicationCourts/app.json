@@ -4,7 +4,7 @@
     "slug": "applicationcourts",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "ProjetApplication2/ApplicationCourts/assets/png/logo-color2.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",

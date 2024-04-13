@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View,ScrollView } from 'react-native'
 import React from 'react'
-import { LinearGradient } from 'expo-linear-gradient';
+// import { LinearGradient } from 'expo-linear-gradient';
 
 const ConseilsSport = () => {
    
@@ -22,17 +22,17 @@ const ConseilsSport = () => {
 
   return (
     <ScrollView horizontal>
-    <View style={{flexDirection:'row'}}>
+    <View style={{flexDirection:'row'}} >
 {Conseils.map((item)=>{
     if(item.id ==="1"){
 return(
     
 <View key={item.id} style={styles.conseilView}>
-<LinearGradient
+{/* <LinearGradient
 
  colors={['rgba(197, 44, 35,1)','orange']}
  start={{x:0.6,y:0}}
- style={styles.background}/>
+ style={styles.background}/> */}
 <Text id={item.id}>{item.conseil}</Text>
 </View>
 )}
@@ -41,11 +41,11 @@ else{
 return(
     <View key={item.id} style={styles.conseilView}>
 
-<LinearGradient
+{/* <LinearGradient
 
  colors={['rgba(14,130,201,1)','orange']}
  start={{x:0.6,y:0}}
- style={styles.background}/>
+ style={styles.background}/> */}
 <Text id={item.id}>{item.conseil}</Text>
 </View>)
 

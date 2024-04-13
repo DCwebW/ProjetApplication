@@ -5,3 +5,5 @@ test('signInWithEmail returns the user', async () => {
   const user = await firebase.signInWithEmailAndPassword('test@example.com', 'password');
   expect(user).toEqual('mocked-user');
 });
+
+
