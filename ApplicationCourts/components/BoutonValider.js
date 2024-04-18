@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 //Uncommentaire pour SonarQUbe
 // Un deuxième essai 
+// dernier essai
 
 const BoutonValider = ({onPress}) => {
   return (
