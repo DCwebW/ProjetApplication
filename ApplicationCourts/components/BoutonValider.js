@@ -3,7 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types';
 
 
-
+//Uncommentaire pour SonarQUbe
 
 const BoutonValider = ({onPress}) => {
   return (
