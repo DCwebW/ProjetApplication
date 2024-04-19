@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-
+// Commentaire de test
 const Connexionauto = () => {
   const auth = getAuth();
   const navigation = useNavigation();
