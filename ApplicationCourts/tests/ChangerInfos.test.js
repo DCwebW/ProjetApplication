@@ -2,8 +2,7 @@ import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import ChangerInfos from '../components/screens/ChangerInfos';
 
-// Voici un commentaire pour essayer Jenkins
-// Voici un deuxième commentaire 
+
 // Mock pour simuler les dépendances (firebase, navigation, etc.)
 jest.mock('firebase/firestore', () => ({
   // Définir les mocks pour Firestore si nécessaire
