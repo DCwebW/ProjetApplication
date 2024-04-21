@@ -30,6 +30,19 @@ const Inscription = () => {
         return;
       }
     
+      const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+      if (!emailRegex.test(email)) {
+        Alert.alert("Adresse e-mail invalide");
+        setLoading(false);
+        return;
+      }
+
+      const passwordRegex = /^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])(?=.*[a-zA-Z0-9]).{6,}$/;
+  if (!passwordRegex.test(password)) {
+    Alert.alert("Le mot de passe doit contenir au moins 6 caractères et au moins un caractère spécial.");
+    setLoading(false);
+    return;
+  }
       if (password !== cpassword) {
         Alert.alert("Les mots de passe ne correspondent pas");
         setLoading(false);
