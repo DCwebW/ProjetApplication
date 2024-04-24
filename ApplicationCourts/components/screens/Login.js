@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { FIREBASE_AUTH } from '../../ConfigFirebase'
 import { signInWithEmailAndPassword, getAuth, } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
+import { signInWithCustomToken } from 'firebase/auth'
 
 
 
@@ -37,7 +38,7 @@ const Login = () => {
       }
     }
    
-    
+   
 
     
     return (

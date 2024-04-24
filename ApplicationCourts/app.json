@@ -4,7 +4,7 @@
     "slug": "applicationcourts",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "ProjetApplication2/ApplicationCourts/assets/png/logo-color2.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -30,6 +30,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyA-wdF0bMjvD0WYKIvF-GD72FszBQnAMzQ"
+        }
       },
       "package": "com.dcwebw.essai"
     },

@@ -2,10 +2,10 @@ import { View, Text,StyleSheet,SafeAreaView,ScrollView,TextInput,Image,Pressable
 import React, { useState }from 'react'
 import { createUserWithEmailAndPassword, getAuth} from 'firebase/auth'
 import { Picker } from '@react-native-picker/picker'
-import { GoogleAuthProvider,FacebookAuthProvider,TwitterAuthProvider,linkWithRedirect, } from 'firebase/auth'
+import ConnexionViaGoogle from './ConnexionViaGoogle'
 import { collection,addDoc,setDoc, doc, DocumentReference, } from 'firebase/firestore'
 import { db } from '../../ConfigFirebase'
-
+import * as FileSystem from 'expo-file-system'
 const auth = getAuth();
 
  
@@ -18,7 +18,20 @@ const Inscription = () => {
     const [loading,setLoading]=useState(false)
     
 
-
+    const saveUserDataToJson = async (userData) => {
+      try {
+        // Convertir l'objet userData en chaîne JSON
+        const jsonUserData = JSON.stringify(userData);
+    
+        // Utiliser les API natives de React Native pour écrire le fichier
+        await FileSystem.writeAsStringAsync(FileSystem.documentDirectory + 'userData.json', jsonUserData);
+    
+        console.log('Données utilisateur enregistrées avec succès');
+      } catch (error) {
+        console.error('Erreur lors de l\'enregistrement des données utilisateur : ', error);
+      }
+    };
+    
 
     const SignUp = async () => {
       setLoading(true);
@@ -62,7 +75,14 @@ const Inscription = () => {
           email: email
         })
         console.log("Document written with ID: ", userUid)
+        await saveUserDataToJson({
+          uid: userUid,
+          name: name,
+          firstname: firstname,
+          email: email
+        });
     
+        console.log('Document écrit avec ID : ', userUid);
       } catch (error) {
         console.log(error);
         alert('Sign up failed :' + error.message)
@@ -83,10 +103,12 @@ return(
            <View style={styles.inscription}>
             <View style={styles.informations}>
 
-          <TextInput 
+          <TextInput
+           
           placeholder='Nom' 
           style={styles.inputinformations}
-          onChangeText={(text)=>setName(text)}></TextInput>    
+          onChangeText={(text)=>setName(text)}></TextInput> 
+             
           <TextInput 
           placeholder='Prénom' 
           style={styles.inputinformations}
@@ -123,6 +145,7 @@ return(
             SignUp} style={styles.boutonvalider}><Text style={{color:'white',fontFamily:'PolicePrincipale'}}>Valider</Text></Pressable>
            
             </View>
+            <ConnexionViaGoogle/>
             </ScrollView>
             
 
@@ -163,7 +186,8 @@ const styles = StyleSheet.create({
         minWidth: 300,
         minHeight:40,
         color:'black',
-        margin:10
+        margin:10,
+        maxWidth:350
       },  
     inputinformations: {
         
@@ -174,7 +198,8 @@ const styles = StyleSheet.create({
       minWidth: 160,
       minHeight:40,
       color:'black',
-      margin:10
+      margin:10,
+      maxWidth:160
       },  
 
 
