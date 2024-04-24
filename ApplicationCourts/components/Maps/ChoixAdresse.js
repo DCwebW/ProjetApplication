@@ -11,7 +11,7 @@ export default function AdresseMap({ onAdresseLocaliseeChange, adresse,onPositio
   const [markerPosition, setMarkerPosition] = useState({ latitude: 0, longitude: 0 });
   const [isMarkerSelected, setMarkerSelected] = useState(false);
   const [address, setAddress]= useState('')
-
+  const [stop,setStop] = useState(false)
  
 
 
@@ -42,7 +42,6 @@ export default function AdresseMap({ onAdresseLocaliseeChange, adresse,onPositio
     }
   };
   useEffect(() => {
-    onAdresseLocaliseeChange(address)
     const watchLocation = async () => {
       try {
         let { status } = await Location.requestForegroundPermissionsAsync();
@@ -74,9 +73,14 @@ export default function AdresseMap({ onAdresseLocaliseeChange, adresse,onPositio
       }
     };
   
-    watchLocation(); // Appel de la fonction au montage du composant
-  }, [isMarkerSelected ]);
-  ;
+    if (!stop) {
+      watchLocation(); // Appel de la fonction au montage du composant
+    }
+  
+    return () => {
+      setStop(true); // Arrêter la surveillance de la position
+    };
+  }, [stop, isMarkerSelected]);
   
 
   return (

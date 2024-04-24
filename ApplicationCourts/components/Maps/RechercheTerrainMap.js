@@ -7,6 +7,7 @@ import TerrainsEnregistrésMarqueurs from './TerrainsEnregistrésMarqueurs';
 export default function RechercheMap() {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [loading, setLoading] = useState(true); // État pour indiquer le chargement
+  const [stop, setStop] = useState(0); // État pour indiquer le chargement
 
   useEffect(() => {
     const getCurrentLocation = async () => {
@@ -21,13 +22,15 @@ export default function RechercheMap() {
         console.log('Current location:', location);
         setCurrentLocation(location.coords); // Mettre à jour l'état avec la position actuelle
         setLoading(false); // Mettre à jour l'état de chargement une fois que la localisation est obtenue
+        setStop(1)
       } catch (error) {
         console.error('Error getting location:', error);
         setLoading(false); // Mettre à jour l'état de chargement en cas d'erreur
       }
     };
-
-    getCurrentLocation();
+    if (stop == 0) {
+      getCurrentLocation();
+    }
   }, []);
 
   return (
@@ -55,7 +58,7 @@ export default function RechercheMap() {
                 }}
                 title={'Ma position'}
                 description={'Premier Terrain !'}
-                >
+              >
                 <Callout>
                   <Text>Voici un Premier Callout</Text>
                 </Callout>
@@ -68,7 +71,7 @@ export default function RechercheMap() {
                 radius={1000} // en mètres
                 fillColor="rgba(27, 237, 105, 0.5)"
               />
-              <TerrainsEnregistrésMarqueurs/>
+              <TerrainsEnregistrésMarqueurs />
             </MapView>
           )
         )}
