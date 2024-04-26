@@ -1,4 +1,4 @@
-import { View, Text,StyleSheet,SafeAreaView,ScrollView,TextInput,Image,Pressable,Alert} from 'react-native'
+import { View, Text,StyleSheet,SafeAreaView,ScrollView,TextInput,Image,Pressable,Alert, Platform} from 'react-native'
 import React, { useState }from 'react'
 import { createUserWithEmailAndPassword, getAuth} from 'firebase/auth'
 import { Picker } from '@react-native-picker/picker'
@@ -6,6 +6,7 @@ import ConnexionViaGoogle from './ConnexionViaGoogle'
 import { collection,addDoc,setDoc, doc, DocumentReference, } from 'firebase/firestore'
 import { db } from '../../ConfigFirebase'
 import * as FileSystem from 'expo-file-system'
+
 const auth = getAuth();
 
  
@@ -18,19 +19,7 @@ const Inscription = () => {
     const [loading,setLoading]=useState(false)
     
 
-    const saveUserDataToJson = async (userData) => {
-      try {
-        // Convertir l'objet userData en chaîne JSON
-        const jsonUserData = JSON.stringify(userData);
     
-        // Utiliser les API natives de React Native pour écrire le fichier
-        await FileSystem.writeAsStringAsync(FileSystem.documentDirectory + 'userData.json', jsonUserData);
-    
-        console.log('Données utilisateur enregistrées avec succès');
-      } catch (error) {
-        console.error('Erreur lors de l\'enregistrement des données utilisateur : ', error);
-      }
-    };
     
 
     const SignUp = async () => {
@@ -75,14 +64,8 @@ const Inscription = () => {
           email: email
         })
         console.log("Document written with ID: ", userUid)
-        await saveUserDataToJson({
-          uid: userUid,
-          name: name,
-          firstname: firstname,
-          email: email
-        });
-    
-        console.log('Document écrit avec ID : ', userUid);
+        
+        
       } catch (error) {
         console.log(error);
         alert('Sign up failed :' + error.message)

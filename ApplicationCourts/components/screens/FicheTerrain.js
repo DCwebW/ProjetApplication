@@ -6,6 +6,7 @@ import { QueryDocumentSnapshot, doc, getDocs,collection, QuerySnapshot, addDoc, 
 import { db } from '../../ConfigFirebase'
 import React, { useState, useEffect} from 'react'
 import { onAuthStateChanged,getAuth } from 'firebase/auth'
+import SignalementPresence from '../SignalementPresence'
 
 
 
@@ -228,7 +229,9 @@ return () => {
           <Text>Mis en favori</Text>
         </View>
       )}
-      </View></View>
+      </View>
+      <SignalementPresence nameTerrain={item.name} idTerrain={id}/>
+      </View>
     )
 
   }

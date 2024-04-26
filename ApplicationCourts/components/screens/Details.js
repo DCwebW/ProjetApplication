@@ -1,58 +1,105 @@
-import { View, Text, TouchableOpacity,StyleSheet,Image,FlatList} from 'react-native'
-import React,{useEffect,useState} from 'react'
-import BoutonRetour from '../navigation/BoutonRetour'
-import { db } from '../../ConfigFirebase'
-import { updateDoc, query,where,doc,collection, getDocs,deleteDoc} from 'firebase/firestore'
-
+import { useState, useEffect, useRef } from 'react';
+import { Text, View, Button, Platform } from 'react-native';
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
 const Details = () => {
- const [donnees,setDonnees] = useState([])
- const [display,setDisplay] = useState(false)
-
-const docRef = collection(db, "terrainsfavoris")
-getDocs(docRef)
-.then((querySnapshot)=>{
-
-  const data = querySnapshot.docs.map((doc)=>({
- id: doc.id,
- ...doc.data()
- 
-  }))
-
-  setDonnees(data)
-})
-.catch(err=>{
-  console.log(err.message)
-})
+  Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 
-const renderItem=({item}) => {
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
 
-  if(display=== true) return (
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
-    <View>
-      <View><Text>{item.Utilisateur}</Text></View>
-      <View><Text>{item.Terrain}</Text></View>
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+ return (
+
+  <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-around',
+      }}>
+      <Text>Your expo push token: {expoPushToken}</Text>
+      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Title: {notification && notification.request.content.title} </Text>
+        <Text>Body: {notification && notification.request.content.body}</Text>
+        <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
+      </View>
+      <Button
+        title="Press to schedule a notification"
+        onPress={async () => {
+          await schedulePushNotification();
+        }}
+      />
     </View>
-  )
+  );
+  
 }
-  return (
-    <View style={{justifyContent:'center', alignItems:'center',flex:1}}>
-    
-    <TouchableOpacity onPress={()=>setDisplay(!display)}>
-      <View >
-        <Text style={{backgroundColor:'orange', height:35}}>Test base de données , collection: terrains favoris</Text></View>
-    </TouchableOpacity>
-      
-      <FlatList
-      data={donnees}
-      renderItem={renderItem}
-      keyExtractor={item=>item.id.toString()}
-      >
+async function schedulePushNotification() {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "You've got mail! 📬",
+      body: 'Here is the notification body',
+      data: { data: 'goes here' },
+    },
+    trigger: { seconds: 2 },
+  });
+}
 
-      </FlatList>
-      
-    </View>
-  )
+async function registerForPushNotificationsAsync() {
+  let token;
+
+  if (Platform.OS === 'android') {
+    await Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  if (Device.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    // Learn more about projectId:
+    // https://docs.expo.dev/push-notifications/push-notifications-setup/#configure-projectid
+    token = (await Notifications.getExpoPushTokenAsync({ projectId: 'd9038241-dbd4-4344-af14-d641b9471a19' })).data;
+    console.log(token);
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+
+  return token;
 }
 
 export default Details
