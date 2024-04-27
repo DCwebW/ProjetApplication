@@ -12,7 +12,7 @@ jobs:
     steps:
     
     - uses: actions/checkout@v4
-    - run : cd ApplicationCourts
+    - run : cd /ProjetApplication/ApplicationCourts
     - uses: actions/setup-node@v3
       
     - run: ls -la
