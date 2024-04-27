@@ -10,8 +10,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - run : cd ApplicationCourts
+    
     - uses: actions/checkout@v4
+    - run : cd ApplicationCourts
     - uses: actions/setup-node@v3
       
     - run: ls -la
