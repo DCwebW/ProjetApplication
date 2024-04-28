@@ -7,15 +7,18 @@ module.exports = function(api) {
     }],
     '@babel/preset-react', // permet de transformer le JSX
     'module:metro-react-native-babel-preset', 
-    '@babel/preset-typescript'// permet de transformer le code pour React Native
+    '@babel/preset-typescript'
   ];
 
   const plugins = [
     'react-native-reanimated/plugin',
-   ["module-resolver", {
+    ['@babel/plugin-transform-class-properties', { loose: true }],
+    ['@babel/plugin-transform-private-methods', { loose: true }],
+    ["module-resolver", {
       "alias": {
         "expo-linear-gradient": "./node_modules/expo-linear-gradient/build/LinearGradient"
-      }}] 
+      }
+    }] 
     // Ajoutez ici les plugins supplémentaires nécessaires
   ];
 
@@ -24,4 +27,3 @@ module.exports = function(api) {
     plugins,
   };
 };
-

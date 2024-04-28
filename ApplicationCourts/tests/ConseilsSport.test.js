@@ -1,9 +1,10 @@
 import ConseilsSport from "../components/screens/ConseilsSport";
-import renderer from 'react-test-renderer'
+import { render } from "@testing-library/react-native";
 
 describe('Contient des conseils', ()=>{
 it("has 5 children", ()=>{
-    const tree = renderer.create(<ConseilsSport/>).toJSON()
+
+    const tree = render(<ConseilsSport/>).toJSON()
     expect(tree.children.length).toBe(1)
 })
 
@@ -14,7 +15,7 @@ it("has 5 children", ()=>{
 describe('ConseilsSport component', () => {
     // Ici describe, donne le contexte du test 
     it("renders each conseil correctly", () => {
-      const component = renderer.create(<ConseilsSport />); // Ici on crée une instance du composant <ConseilsSport/>
+      const component = render(<ConseilsSport />); // Ici on crée une instance du composant <ConseilsSport/>
       const tree = component.toJSON();
   
       // Vérifier si tree est défini et non nul
