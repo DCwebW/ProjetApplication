@@ -1,11 +1,10 @@
 import { View, Text,StyleSheet,Pressable,TextInput,Alert,ScrollView } from 'react-native'
-import { FIREBASE_AUTH } from '../../ConfigFirebase'
 import { getAuth,sendPasswordResetEmail,onAuthStateChanged, } from 'firebase/auth'
 import React, { useState,useEffect } from 'react'
 
 const MotdepasseOublie = () => {
 
-  const auth = FIREBASE_AUTH || getAuth()
+  const auth =  getAuth()
 
   const [currentUser, setCurrentUser] = useState(null);
   const [email, setEmail] = useState('')

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
-
+import { API_KEY } from 'react-native-dotenv';
 import Login from './components/screens/Login';
 import MotdepasseOublie from './components/screens/MotdepasseOublie';
 import Inscription from './components/screens/Inscription';
@@ -31,7 +31,7 @@ export default function App() {
     };
   },[])
   
-    
+  // commentaire pour Github Actions   
 
 
   return (

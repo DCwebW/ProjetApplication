@@ -5,7 +5,7 @@ import { Picker } from '@react-native-picker/picker'
 import ConnexionViaGoogle from './ConnexionViaGoogle'
 import { collection,addDoc,setDoc, doc, DocumentReference, } from 'firebase/firestore'
 import { db } from '../../ConfigFirebase'
-import * as FileSystem from 'expo-file-system'
+
 
 const auth = getAuth();
 
@@ -128,7 +128,7 @@ return(
             SignUp} style={styles.boutonvalider}><Text style={{color:'white',fontFamily:'PolicePrincipale'}}>Valider</Text></Pressable>
            
             </View>
-            <ConnexionViaGoogle/>
+            
             </ScrollView>
             
 

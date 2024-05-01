@@ -2,10 +2,16 @@
 
 
 
+
+
 const firebaseMock = {
     signInWithEmailAndPassword: jest.fn().mockResolvedValue('mocked-user'),
-    createUserWithEmailAndPassword: jest.fn().mockResolvedValue('mocked-createduser')
+    createUserWithEmailAndPassword: jest.fn().mockResolvedValue('mocked-createduser'),
     // Ajoutez d'autres fonctions Firebase simulées ici
+    getDocs: jest.fn().mockResolvedValue('fetched-data'),
+    collection: jest.fn().mockReturnThis(),
+    initializeApp: jest.fn().mockReturnThis()
+    
   };
   
   export default firebaseMock;

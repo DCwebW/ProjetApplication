@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text,SafeAreaView,Button } from 'react-native';
+import { StyleSheet, View, Text,SafeAreaView,Button,Platform } from 'react-native';
 import MapView, { Marker, Circle, Callout } from 'react-native-maps';
 import * as Location from 'expo-location';
 
@@ -89,7 +89,7 @@ export default function AdresseMap({ onAdresseLocaliseeChange, adresse,onPositio
       
       <View style={styles.card}>
         <MapView
-        
+         provider='google'
           style={styles.map}
           initialRegion={{
             latitude: currentLocation?.latitude ?? 48.85679108910881,
@@ -97,8 +97,7 @@ export default function AdresseMap({ onAdresseLocaliseeChange, adresse,onPositio
             latitudeDelta: 0.0922,
             longitudeDelta: 0.05,
           }}
-          mapType='standard'
-          userInterfaceStyle='dark'
+          mapType={Platform.OS == "android" ? "none" : "standard"}
           onLongPress={(event) => {
             const newMarkerPosition = {
               latitude: event.nativeEvent.coordinate.latitude,
@@ -112,6 +111,7 @@ export default function AdresseMap({ onAdresseLocaliseeChange, adresse,onPositio
           >
           {currentLocation && (
             <Marker
+            
               coordinate={{
                 latitude: markerPosition.latitude || currentLocation.latitude,
               longitude: markerPosition.longitude || currentLocation.longitude,

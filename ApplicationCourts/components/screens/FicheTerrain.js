@@ -7,6 +7,7 @@ import { db } from '../../ConfigFirebase'
 import React, { useState, useEffect} from 'react'
 import { onAuthStateChanged,getAuth } from 'firebase/auth'
 import SignalementPresence from '../SignalementPresence'
+import TerrainsEnregistrésMarqueurs from '../Maps/TerrainsEnregistrésMarqueurs'
 
 
 
@@ -29,7 +30,7 @@ const FicheTerrain = ({route}) => {
   };
 
   const { name , image,id} = route.params;
-  const nomTerrain = JSON.stringify(name)
+  
 
 
 
@@ -81,6 +82,7 @@ return () => {
 
   },[])
   useEffect(() => {
+    
     const checkTerrainPresent = async () => {
       const TerrainPresentQuery = query(collection(db, 'terrainsfavoris'), where('terrains', 'array-contains', id));
       // Ici array-contains est utilisé pour savoir si l'id du terrain est contenu dans le champ terrains de la base de données
@@ -94,6 +96,7 @@ return () => {
       ;
       
     };
+    
 
     checkTerrainPresent();
   }, [id]);
@@ -145,6 +148,7 @@ return () => {
       console.log('Echec : Terrain non ajouté', error);
     }
   };
+ 
 
   const removeFavori = async () => {
     const userId = user.uid;
@@ -256,6 +260,7 @@ return () => {
 }
 
 export default FicheTerrain
+export {getDocs}
 
 const styles = StyleSheet.create({
   container: {

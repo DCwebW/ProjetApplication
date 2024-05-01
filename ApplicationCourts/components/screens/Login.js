@@ -1,6 +1,5 @@
 import { ActivityIndicator, SafeAreaView, View, Text, StyleSheet, TextInput, KeyboardAvoidingView,Image,Pressable } from 'react-native'
 import React, { useState } from 'react'
-import { FIREBASE_AUTH } from '../../ConfigFirebase'
 import { signInWithEmailAndPassword, getAuth, } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
 import { signInWithCustomToken } from 'firebase/auth'
@@ -8,7 +7,7 @@ import { signInWithCustomToken } from 'firebase/auth'
 
 
 
-const auth = FIREBASE_AUTH || getAuth()
+const auth =  getAuth()
  
 const Login = () => {  
 
@@ -46,6 +45,7 @@ const Login = () => {
           <KeyboardAvoidingView behavior='padding'>
             <View style={styles.viewlogo}>
                <Image style={styles.logo}source={require('../../assets/png/logo-no-background.png')}/> 
+               <Text>Ou est mon Image </Text>
               </View>
            <View style={{flex:1}}><TextInput value={email} 
             style={styles.input} 

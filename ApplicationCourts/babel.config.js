@@ -18,7 +18,8 @@ module.exports = function(api) {
       "alias": {
         "expo-linear-gradient": "./node_modules/expo-linear-gradient/build/LinearGradient"
       }
-    }] 
+    }],
+    ['module:react-native-dotenv'] 
     // Ajoutez ici les plugins supplémentaires nécessaires
   ];
 

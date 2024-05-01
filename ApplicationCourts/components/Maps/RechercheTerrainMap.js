@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
-import MapView, { Marker, Circle, Callout } from 'react-native-maps';
+import MapView, { Marker, Circle, Callout,PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Location from 'expo-location';
 import TerrainsEnregistrésMarqueurs from './TerrainsEnregistrésMarqueurs';
+import { API_KEY } from 'react-native-dotenv';
+
+
 
 export default function RechercheMap() {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [loading, setLoading] = useState(true); // État pour indiquer le chargement
   const [stop, setStop] = useState(0); // État pour indiquer le chargement
+  
 
   useEffect(() => {
     const getCurrentLocation = async () => {
@@ -49,6 +53,8 @@ export default function RechercheMap() {
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}
+              provider={PROVIDER_GOOGLE}
+              key={API_KEY}
               mapType='standard'
               userInterfaceStyle='dark'>
               <Marker

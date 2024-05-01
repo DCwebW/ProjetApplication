@@ -1,3 +1,4 @@
+
 {
   "expo": {
     "name": "essai",
@@ -40,7 +41,7 @@
       },
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyA-wdF0bMjvD0WYKIvF-GD72FszBQnAMzQ"
+          "apiKey": "${API_KEY}"
         }
       },
       "package": "com.dcwebw.essai"
