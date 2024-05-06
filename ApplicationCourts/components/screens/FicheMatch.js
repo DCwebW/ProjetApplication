@@ -1,7 +1,7 @@
 import {  StyleSheet, Text,  View,Image } from 'react-native'
 import React,{ useEffect ,useState} from 'react'
 import { query,where,collection, getDocs,} from 'firebase/firestore'
-import { db } from '../../ConfigFirebase'
+import { db } from '../../ConfigFirebase2'
 import { onAuthStateChanged,getAuth } from 'firebase/auth'
 
 

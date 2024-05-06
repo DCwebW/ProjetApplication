@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, Text, TouchableOpacity, View,Image } from 'react-native'
 import React,{ useEffect ,useState} from 'react'
 import { updateDoc, query,where,doc,collection, getDocs,deleteDoc, QuerySnapshot} from 'firebase/firestore'
-import { db } from '../../ConfigFirebase'
+import { db } from '../../ConfigFirebase2'
 import { onAuthStateChanged,getAuth } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
 

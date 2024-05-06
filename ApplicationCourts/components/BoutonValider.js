@@ -13,22 +13,22 @@ const BoutonValider = ({onPress}) => {
       <Pressable style={styles.boutonvalider} onPress={onPress} ><Text style={styles.textboutonvalider}> Valider</Text></Pressable>
     )
 }
-BoutonValider.PropTypes ={
-  onPress: PropTypes.bool
+BoutonValider.propTypes ={
+  onPress: PropTypes.func
 }
 export default BoutonValider
 
 const styles = StyleSheet.create(  {
     boutonvalider:{
 
-      backgroundColor:'rgba(197, 44, 35,1)',
-      width:100,
+      backgroundColor:'rgba( 142, 8, 8 ,1)',
+      width:150,
       height:40,
       alignItems:'center',
       justifyContent:'center',
       borderRadius:10,
-  
-      marginLeft:10
+      marginTop:10,
+      
     },
     textboutonvalider:{
       color:'white'

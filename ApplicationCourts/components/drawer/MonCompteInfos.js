@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View,FlatList,ScrollView, Pressable,Image } from 'react-native'
 import React from 'react'
 import { QueryDocumentSnapshot, doc, getDocs } from "firebase/firestore"
-import { db, } from '../../ConfigFirebase'
+import { db, } from '../../ConfigFirebase2'
 import { collection } from 'firebase/firestore'
 import { useState,useEffect } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';

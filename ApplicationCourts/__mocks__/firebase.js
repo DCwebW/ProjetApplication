@@ -10,7 +10,7 @@ const firebaseMock = {
     // Ajoutez d'autres fonctions Firebase simulées ici
     getDocs: jest.fn().mockResolvedValue('fetched-data'),
     collection: jest.fn().mockReturnThis(),
-    initializeApp: jest.fn().mockReturnThis()
+    
     
   };
   

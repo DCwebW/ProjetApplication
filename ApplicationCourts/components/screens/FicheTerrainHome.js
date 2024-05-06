@@ -3,7 +3,7 @@ import { View, Text ,Image,FlatList,useWindowDimensions, TouchableOpacity,StyleS
 import { AntDesign } from '@expo/vector-icons'
 import BoutonRetour from '../navigation/BoutonRetour'
 import { QueryDocumentSnapshot, doc, getDocs,collection, QuerySnapshot, addDoc, updateDoc,where, query } from "firebase/firestore"
-import { db } from '../../ConfigFirebase'
+import { db } from '../../ConfigFirebase2'
 import React, { useState, useEffect} from 'react'
 import { onAuthStateChanged,getAuth } from 'firebase/auth'
 

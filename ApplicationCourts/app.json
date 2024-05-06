@@ -41,7 +41,7 @@
       },
       "config": {
         "googleMaps": {
-          "apiKey": "${API_KEY}"
+          "apiKey": "AIzaSyA-wdF0bMjvD0WYKIvF-GD72FszBQnAMzQ"
         }
       },
       "package": "com.dcwebw.essai"

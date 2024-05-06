@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text,SafeAreaView,Button,Platform } from 'react-native';
-import MapView, { Marker, Circle, Callout } from 'react-native-maps';
+import MapView, { Marker, Circle,  } from 'react-native-maps';
 import * as Location from 'expo-location';
 
 
@@ -89,7 +89,7 @@ export default function AdresseMap({ onAdresseLocaliseeChange, adresse,onPositio
       
       <View style={styles.card}>
         <MapView
-         provider='google'
+        
           style={styles.map}
           initialRegion={{
             latitude: currentLocation?.latitude ?? 48.85679108910881,

@@ -5,7 +5,7 @@ import {
     DrawerItemList,
     DrawerItem
   } from '@react-navigation/drawer';
-  import { FIREBASE_AUTH } from '../../ConfigFirebase'
+  import { FIREBASE_AUTH } from '../../ConfigFirebase2'
 
 
 

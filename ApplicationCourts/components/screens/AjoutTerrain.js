@@ -2,14 +2,13 @@ import { StyleSheet, Text, View,ScrollView,TextInput,Pressable } from 'react-nat
 import React ,{useState} from 'react'
 import BoutonRetour from '../navigation/BoutonRetour'
 import AdresseMap from '../Maps/ChoixAdresse';
-import { AntDesign } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker'
-import { db,storage } from '../../ConfigFirebase'
-import { addDoc, query,where,doc,collection, getDocs} from 'firebase/firestore'
+
+import { db,storage } from '../../ConfigFirebase2'
+import { addDoc, collection,} from 'firebase/firestore'
 import { RadioButton } from 'react-native-paper';
 import Imagesterrain from '../ManipulationImages/ImagePicker2';
-import { getStorage, ref, uploadBytes,getDownloadURL } from "firebase/storage";
-import { useNavigation,CommonActions } from '@react-navigation/native';
+import {  ref, uploadBytes,getDownloadURL } from "firebase/storage";
+import { useNavigation } from '@react-navigation/native';
 
 
 

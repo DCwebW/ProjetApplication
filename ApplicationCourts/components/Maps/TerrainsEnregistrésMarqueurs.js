@@ -1,15 +1,9 @@
 import { StyleSheet, Text, View,Image, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { QueryDocumentSnapshot, doc, getDocs,collection, QuerySnapshot } from "firebase/firestore"
-import { db, } from '../../ConfigFirebase'
+import { db, } from '../../ConfigFirebase2'
 import { Marker,Callout } from 'react-native-maps'
 import { useNavigation } from '@react-navigation/native'
-
-
-
-
-
-
 
 
 
@@ -64,6 +58,7 @@ getDocs(docRef)
         <Text style={{fontSize:20}}>{marqueur.name} :</Text>
         <Image source={{uri : marqueur.images}} style={{width:200,height:100,marginLeft:20,marginTop:20}}/>
         <View style={{alignItems:'center'}}>
+            
             <TouchableOpacity onPress={()=> navigation.navigate('Fiche',{
                 
                 name : marqueur.name,
@@ -71,7 +66,8 @@ getDocs(docRef)
                 id: marqueur.id
              })}>
             <View style={{backgroundColor:'rgba(197, 44, 35,1)',width:150, marginTop:20, alignItems:'center',height:35,justifyContent:'center',borderRadius:10}}><Text style={{color:'white'}}>Voir fiche du terrain </Text></View>
-        </TouchableOpacity></View>
+        </TouchableOpacity>
+        </View>
         
        </Callout>
         </Marker>

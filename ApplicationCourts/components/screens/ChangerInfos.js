@@ -4,7 +4,7 @@ import BoutonRetour from '../navigation/BoutonRetour'
 import Avatar from '../drawer/ImagePicker'
 import { updateDoc, query,where,doc,collection, getDocs,deleteDoc} from 'firebase/firestore'
 import { getAuth, onAuthStateChanged,deleteUser, reauthenticateWithCredential,EmailAuthProvider } from 'firebase/auth';
-import { db,storage } from '../../ConfigFirebase'
+import { db,storage } from '../../ConfigFirebase2'
 import { useNavigation,CommonActions } from '@react-navigation/native'
 import { ref, uploadBytes,getDownloadURL } from "firebase/storage";
 import PropTypes from 'prop-types';

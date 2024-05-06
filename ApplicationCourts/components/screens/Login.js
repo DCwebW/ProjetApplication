@@ -2,15 +2,15 @@ import { ActivityIndicator, SafeAreaView, View, Text, StyleSheet, TextInput, Key
 import React, { useState } from 'react'
 import { signInWithEmailAndPassword, getAuth, } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
-import { signInWithCustomToken } from 'firebase/auth'
 
 
 
 
-const auth =  getAuth()
+
+
  
 const Login = () => {  
-
+const auth =  getAuth()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
@@ -45,7 +45,7 @@ const Login = () => {
           <KeyboardAvoidingView behavior='padding'>
             <View style={styles.viewlogo}>
                <Image style={styles.logo}source={require('../../assets/png/logo-no-background.png')}/> 
-               <Text>Ou est mon Image </Text>
+               
               </View>
            <View style={{flex:1}}><TextInput value={email} 
             style={styles.input} 

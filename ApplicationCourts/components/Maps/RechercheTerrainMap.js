@@ -3,7 +3,8 @@ import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import MapView, { Marker, Circle, Callout,PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Location from 'expo-location';
 import TerrainsEnregistrésMarqueurs from './TerrainsEnregistrésMarqueurs';
-import { API_KEY } from 'react-native-dotenv';
+import { app } from '../../ConfigFirebase2';
+
 
 
 
@@ -53,8 +54,8 @@ export default function RechercheMap() {
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}
-              provider={PROVIDER_GOOGLE}
-              key={API_KEY}
+              
+             
               mapType='standard'
               userInterfaceStyle='dark'>
               <Marker

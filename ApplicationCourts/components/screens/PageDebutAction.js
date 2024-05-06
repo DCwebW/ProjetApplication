@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View,ScrollView,Image,Pressable, Alert } from 'react-native'
+import { StyleSheet, Text, View,ScrollView,Pressable, } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import NavigationContainer from '@react-navigation/native'
+
+
 
 const PageDebutAction = () => {
   const navigation = useNavigation()
