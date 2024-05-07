@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View,FlatList,Image,useWindowDimensions, TouchableOpacity,Modal } from 'react-native'
 import React, { useEffect ,useState} from 'react'
-import { query,where,collection, getDocs,} from 'firebase/firestore'
+import { updateDoc, query,where,doc,collection, getDocs,deleteDoc, QuerySnapshot} from 'firebase/firestore'
 import { db } from '../../ConfigFirebase2'
 import { onAuthStateChanged,getAuth } from 'firebase/auth'
 import BoutonRetour from '../navigation/BoutonRetour'

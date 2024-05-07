@@ -7,15 +7,15 @@ import { db } from '../../ConfigFirebase2'
 import React, { useState, useEffect} from 'react'
 import { onAuthStateChanged,getAuth } from 'firebase/auth'
 import SignalementPresence from '../SignalementPresence'
+import TerrainsEnregistrésMarqueurs from '../Maps/TerrainsEnregistrésMarqueurs'
 
 
 
-
-
+const auth = getAuth();
 
 
 const FicheTerrain = ({route}) => {
-  const auth = getAuth();
+
   const [terrain,setTerrain]=useState()
   const [buttonpressed, setButtonPressed]=useState(false)
   const [showMessage, setShowMessage] = useState(false)
@@ -29,7 +29,7 @@ const FicheTerrain = ({route}) => {
     }, seconds * 1000); // Convertit les secondes en millisecondes
   };
 
-  const { name , id} = route.params;
+  const { name , image,id} = route.params;
   
 
 
@@ -260,7 +260,7 @@ return () => {
 }
 
 export default FicheTerrain
-
+export {getDocs}
 
 const styles = StyleSheet.create({
   container: {

@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View,ScrollView,TouchableOpacity,Modal } from 'react-native'
+import { StyleSheet, Text, View,Pressable,ScrollView,TouchableOpacity,Modal } from 'react-native'
 import React, { useEffect,useState } from 'react'
 import BoutonRetour from '../navigation/BoutonRetour'
 import { RadioButton } from 'react-native-paper';
-import DatePicker,{ getFormatedDate} from 'react-native-modern-datepicker'
+import DatePicker from 'react-native-modern-datepicker'
+import {getToday, getFormatedDate} from 'react-native-modern-datepicker'
 import BoutonValider from '../BoutonValider'
 import { TimerPickerModal } from "react-native-timer-picker";
+
 import { useNavigation } from '@react-navigation/native'
 import { getAuth,onAuthStateChanged } from 'firebase/auth';
 import { addDoc, collection } from 'firebase/firestore';
@@ -222,13 +224,12 @@ animationType='slide'
 
 
 </Modal>
-<View style={{alignItems:'center',justifyContent:'flex-end', flex:2}}>
+</View>
+   
+    <View style={{alignItems:'center',justifyContent:'flex-end', flex:2}}>
 
         <BoutonValider onPress={EnvoiMatchDB}/>
     </View>
-</View>
-   
-    
     
     </ScrollView>
   )

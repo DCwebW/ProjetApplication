@@ -1,14 +1,17 @@
-import { View, Text,StyleSheet,ScrollView,TextInput,Image,Pressable,Alert, } from 'react-native'
+import { View, Text,StyleSheet,SafeAreaView,ScrollView,TextInput,Image,Pressable,Alert, Platform} from 'react-native'
 import React, { useState }from 'react'
 import { createUserWithEmailAndPassword, getAuth} from 'firebase/auth'
-import { setDoc, doc, } from 'firebase/firestore'
+import { Picker } from '@react-native-picker/picker'
+import ConnexionViaGoogle from './ConnexionViaGoogle'
+import { collection,addDoc,setDoc, doc, DocumentReference, } from 'firebase/firestore'
 import { db } from '../../ConfigFirebase2'
 
 
-const auth = getAuth();
+
 
  
 const Inscription = () => {
+  const auth = getAuth();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [name,setName]= useState('')
