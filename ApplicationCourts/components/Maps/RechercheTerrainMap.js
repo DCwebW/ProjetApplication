@@ -6,7 +6,7 @@ import TerrainsEnregistrésMarqueurs from './TerrainsEnregistrésMarqueurs';
 
 
 
-
+// Un commentaire pour test statique 
 
 export default function RechercheMap() {
   const [currentLocation, setCurrentLocation] = useState(null);
