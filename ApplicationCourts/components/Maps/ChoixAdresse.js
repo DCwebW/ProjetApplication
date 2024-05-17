@@ -89,7 +89,6 @@ export default function AdresseMap({ onAdresseLocaliseeChange, adresse,onPositio
       
       <View style={styles.card}>
         <MapView
-         provider='google'
           style={styles.map}
           initialRegion={{
             latitude: currentLocation?.latitude ?? 48.85679108910881,
@@ -109,7 +108,7 @@ export default function AdresseMap({ onAdresseLocaliseeChange, adresse,onPositio
             ; // Appeler la fonction reversegeocode avec la nouvelle position du marqueur
           }}
           >
-          {currentLocation && (
+          {/* {currentLocation && (
             <Marker
             
               coordinate={{
@@ -137,7 +136,7 @@ export default function AdresseMap({ onAdresseLocaliseeChange, adresse,onPositio
             }}
             radius={1000} // en mètres
             fillColor="rgba(27, 237, 105,0.5)"
-          />
+          /> */}
         </MapView>
         
         

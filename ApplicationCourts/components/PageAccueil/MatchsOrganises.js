@@ -23,7 +23,9 @@ const navigation = useNavigation()
             const userId = user ? user.uid : null
             if (userId){
                 const matchsRef = collection (db, 'matchs')
+                
                 const matchsQuery= query(matchsRef, where('useruid','==',userId))
+
                 const matchsSnapshot = await getDocs(matchsQuery)
                 const matchsData = matchsSnapshot.docs.map((doc)=>({
                     id: doc.id,

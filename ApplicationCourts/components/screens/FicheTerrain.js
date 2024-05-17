@@ -1,11 +1,11 @@
-import { View, Text ,Image,FlatList,useWindowDimensions, TouchableOpacity,StyleSheet} from 'react-native'
+import { View, Text, Image, FlatList, useWindowDimensions, TouchableOpacity, StyleSheet } from 'react-native'
 
-import { AntDesign,Entypo } from '@expo/vector-icons'
+import { AntDesign, Entypo } from '@expo/vector-icons'
 import BoutonRetour from '../navigation/BoutonRetour'
-import { QueryDocumentSnapshot, doc, getDocs,collection, QuerySnapshot, addDoc, updateDoc,where, query } from "firebase/firestore"
+import { QueryDocumentSnapshot, doc, getDocs, collection, QuerySnapshot, addDoc, updateDoc, where, query } from "firebase/firestore"
 import { db } from '../../ConfigFirebase2'
-import React, { useState, useEffect} from 'react'
-import { onAuthStateChanged,getAuth } from 'firebase/auth'
+import React, { useState, useEffect } from 'react'
+import { onAuthStateChanged, getAuth } from 'firebase/auth'
 import SignalementPresence from '../SignalementPresence'
 import TerrainsEnregistrésMarqueurs from '../Maps/TerrainsEnregistrésMarqueurs'
 
@@ -14,13 +14,13 @@ import TerrainsEnregistrésMarqueurs from '../Maps/TerrainsEnregistrésMarqueurs
 const auth = getAuth();
 
 
-const FicheTerrain = ({route}) => {
+const FicheTerrain = ({ route }) => {
 
-  const [terrain,setTerrain]=useState()
-  const [buttonpressed, setButtonPressed]=useState(false)
+  const [terrain, setTerrain] = useState()
+  const [buttonpressed, setButtonPressed] = useState(false)
   const [showMessage, setShowMessage] = useState(false)
-  const [user,setUser]= useState(null)
-  const [terrainpresent,setTerrainPresent] = useState()
+  const [user, setUser] = useState(null)
+  const [terrainpresent, setTerrainPresent] = useState()
 
   const displayMessageForSeconds = (seconds) => {
     setShowMessage(true);
@@ -29,12 +29,12 @@ const FicheTerrain = ({route}) => {
     }, seconds * 1000); // Convertit les secondes en millisecondes
   };
 
-  const { name , image,id} = route.params;
-  
+  const { name, image, id } = route.params;
 
 
 
-  const {width} = useWindowDimensions()
+
+  const { width } = useWindowDimensions()
 
   const handleButtonPress = () => {
     setButtonPressed(!buttonpressed);
@@ -54,35 +54,35 @@ const FicheTerrain = ({route}) => {
   }, [showMessage]); // Déclencher cet effet chaque fois que showMessage change
 
   // Reste de votre code ...
-;
-  useEffect(()=>{
+  ;
+  useEffect(() => {
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log('user', user);
       setUser(user);
     });
-const docRef=collection(db,'terrains')
-getDocs(docRef)
-.then((QuerySnapshot)=>{
+    const docRef = collection(db, 'terrains')
+    getDocs(docRef)
+      .then((QuerySnapshot) => {
 
-  const data = QuerySnapshot.docs.map((doc)=>({
+        const data = QuerySnapshot.docs.map((doc) => ({
 
-    id: doc.id,
-    ...doc.data()
-  }))
+          id: doc.id,
+          ...doc.data()
+        }))
 
-  setTerrain(data)
-  
-})
-.catch(error=> {console.log('Erreur dans la récolte de données', error)})
+        setTerrain(data)
 
-return () => {
-  unsubscribe();
-};
+      })
+      .catch(error => { console.log('Erreur dans la récolte de données', error) })
 
-  },[])
+    return () => {
+      unsubscribe();
+    };
+
+  }, [])
   useEffect(() => {
-    
+
     const checkTerrainPresent = async () => {
       const TerrainPresentQuery = query(collection(db, 'terrainsfavoris'), where('terrains', 'array-contains', id));
       // Ici array-contains est utilisé pour savoir si l'id du terrain est contenu dans le champ terrains de la base de données
@@ -91,12 +91,12 @@ return () => {
       const isTerrainPresent = !snapshotTerrainPresent.empty;
       // cette constant renvoie un booléen
       setTerrainPresent(isTerrainPresent);
-       setButtonPressed(terrainpresent)
-      
-      ;
-      
+      setButtonPressed(terrainpresent)
+
+        ;
+
     };
-    
+
 
     checkTerrainPresent();
   }, [id]);
@@ -108,30 +108,34 @@ return () => {
 
   const ajoutFavori = async () => {
     const userId = user.uid;
+
+
     const terrainsfavorisRef = collection(db, "terrainsfavoris");
+
+    
     const terrainsQuery = query(terrainsfavorisRef, where('idUtilisateur', '==', userId));
-  
+
     try {
       const snapshot = await getDocs(terrainsQuery);
-  
+
       if (snapshot.empty) {
         const nouveauTerrainFavori = {
           idUtilisateur: userId,
-          terrains:[id] ,
+          terrains: [id],
         };
         await addDoc(terrainsfavorisRef, nouveauTerrainFavori);
-         // Utiliser terrainsfavorisRef ici
+        // Utiliser terrainsfavorisRef ici
 
-         setButtonPressed(!buttonpressed)
+        setButtonPressed(!buttonpressed)
         setShowMessage(!showMessage)
         console.log('Terrain mis en favori');
       } else {
         const docId = snapshot.docs[0].id;
         const terrainsfavorisData = snapshot.docs[0].data();
-  
+
         const updatedTerrains = [...(terrainsfavorisData.terrains || []), id];
-       // Ici un tableau est formé avec le champ terrains du document sur la base de données grace à '...'
-       // Si le champ est vide , il renvoie logique un tableau vide []
+        // Ici un tableau est formé avec le champ terrains du document sur la base de données grace à '...'
+        // Si le champ est vide , il renvoie logique un tableau vide []
         const newterrainsFavorisData = {
           terrains: updatedTerrains,
         }
@@ -141,18 +145,22 @@ return () => {
         setShowMessage(true)
         console.log('Terrain mis en favori');
       }
-  
+
       // Mettre à jour l'état pour afficher le message
       setShowMessage(true);
     } catch (error) {
       console.log('Echec : Terrain non ajouté', error);
     }
   };
- 
+
 
   const removeFavori = async () => {
     const userId = user.uid;
+
+
     const terrainsfavorisRef = collection(db, "terrainsfavoris");
+
+
     const terrainsQuery = query(terrainsfavorisRef, where('idUtilisateur', '==', userId));
 
     try {
@@ -163,7 +171,7 @@ return () => {
         const terrainsfavorisData = snapshot.docs[0].data();
 
         const updatedTerrains = (terrainsfavorisData.terrains || []).filter(t => t !== id);
-         // Ici la méthode filter crée un tableau et la methode renverra true pour tous les éléments n'étant pas égal à l'id
+        // Ici la méthode filter crée un tableau et la methode renverra true pour tous les éléments n'étant pas égal à l'id
         const newterrainsFavorisData = {
           terrains: updatedTerrains,
         };
@@ -180,87 +188,68 @@ return () => {
     }
   };
 
-  
-  
 
- 
 
-  const renderItem =  ({item})=>{ 
 
-    if(name === item.name) return(
+
+
+  const renderItem = ({ item }) => {
+
+    if (name === item.name) return (
       <View>
-      <View>
-
-       <BoutonRetour/> 
-      </View>
-
-      <View style={{marginTop:20}}>
-      <Text style={{textAlign:'center', fontSize:25,color:'rgba(197, 44, 35,1)'}}> {item.name}</Text>  
-      </View>
-      <View style={{marginTop:20,}}>
-        
-        <Image source={{uri: item.images}} style={{width,height:300,marginTop:10}} />
-
-        <View style={{flexDirection:'row', flex:1}}>
-       <View style={{flex:1}}>
-        
-        <Text>{item.adresse}</Text>
-        <Text>Type de filet : {item.typefilet}</Text>
-        <Text> {id}</Text>
-        
+        <View>
+          <BoutonRetour />
         </View>
-
-        <View style={{flex:1,alignItems:'flex-end'}}>
-
-     
-      <TouchableOpacity
-      
-      onPress={handleButtonPress}>
-
-       
-        {  buttonpressed ? 
-        <AntDesign name='heart' color={'rgba(197, 44, 35,1)'} size={50}/>
-        :
-         <AntDesign name='hearto' size={50}/> 
-      }
-      </TouchableOpacity>
-      
-     </View>
-     
+        <View style={{ marginTop: 20 }}>
+          <Text style={{ textAlign: 'center', fontSize: 25, color: 'rgba(197, 44, 35,1)' }}> {item.name}</Text>
         </View>
-{showMessage && (
-        <View style={styles.messageContainer}>
-          <Text>Mis en favori</Text>
+        <View style={{ marginTop: 20, }}>
+          <Image source={{ uri: item.images }} style={{ width, height: 300, marginTop: 10 }} />
+          <View style={{ flexDirection: 'row', flex: 1 }}>
+            <View style={{ flex: 1 }}>
+              <Text>{item.adresse}</Text>
+              <Text>Type de filet : {item.typefilet}</Text>
+              <Text> {id}</Text>
+            </View>
+            <View style={{ flex: 1, alignItems: 'flex-end' }}>
+
+
+              <TouchableOpacity
+                onPress={handleButtonPress}>
+                {buttonpressed ?
+                  <AntDesign name='heart' color={'rgba(197, 44, 35,1)'} size={50} />
+                  :
+                  <AntDesign name='hearto' size={50} />
+                }
+              </TouchableOpacity>
+            </View>
+          </View>
+          {showMessage && (
+            <View style={styles.messageContainer}>
+              <Text>Mis en favori</Text>
+            </View>
+          )}
         </View>
-      )}
-      </View>
-      <SignalementPresence nameTerrain={item.name} idTerrain={id}/>
+        <SignalementPresence nameTerrain={item.name} idTerrain={id} />
       </View>
     )
 
   }
-
-
   return (
-    <View >
-      
-     <FlatList
-     
-     data={terrain}
-     renderItem={renderItem}
-     keyExtractor={item=>item.id.toString()}
-     >
-
-     </FlatList>
-
-     
+    <View>
+      <FlatList
+        data={terrain}
+        renderItem={renderItem}
+        keyExtractor={item => item.id.toString()}
+      >
+      </FlatList>
     </View>
-    
+
   )
 }
 
 export default FicheTerrain
-export {getDocs}
+export { getDocs }
 
 const styles = StyleSheet.create({
   container: {
@@ -275,11 +264,11 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     elevation: 5,
-    marginBottom:60,
-    zIndex:1,
-    height:40,
-    marginTop:260,
-    marginLeft:300
-    
+    marginBottom: 60,
+    zIndex: 1,
+    height: 40,
+    marginTop: 260,
+    marginLeft: 300
+
   },
 });

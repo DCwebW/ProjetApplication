@@ -109,6 +109,7 @@ const uploadImageAsync = async (uri) => {
         const newData = await uploadImageAndUpdateData(imageprofil);
   
         const Reference = collection(db, 'clients');
+        
         const querySnapshot = await getDocs(query(Reference, where('uid', '==', currentUser.uid)));
   
         if (!querySnapshot.empty) {

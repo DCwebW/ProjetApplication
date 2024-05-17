@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
-import MapView, { Marker, Circle, Callout } from 'react-native-maps';
+import MapView,{Marker,Callout,Circle} from 'react-native-maps';
 import * as Location from 'expo-location';
 import TerrainsEnregistrésMarqueurs from './TerrainsEnregistrésMarqueurs';
 
@@ -58,7 +58,7 @@ export default function RechercheMap() {
              
               mapType='standard'
               userInterfaceStyle='dark'>
-              <Marker
+             {/* <Marker
                 coordinate={{
                   latitude: currentLocation.latitude,
                   longitude: currentLocation.longitude,
@@ -69,16 +69,22 @@ export default function RechercheMap() {
                 <Callout>
                   <Text>Voici un Premier Callout</Text>
                 </Callout>
-              </Marker>
-              <Circle
+              </Marker> */}
+              {/* <Circle
                 center={{
                   latitude: currentLocation.latitude,
                   longitude: currentLocation.longitude,
                 }}
                 radius={1000} // en mètres
                 fillColor="rgba(27, 237, 105, 0.5)"
-              />
-              <TerrainsEnregistrésMarqueurs />
+              /> */}
+              {/* <TerrainsEnregistrésMarqueurs /> */}
+              <Marker
+            coordinate={{
+              latitude: 48.84658254053895, 
+              longitude: 2.347556991502351,
+            }}
+          />
             </MapView>
           )
         )}
