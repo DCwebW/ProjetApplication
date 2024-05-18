@@ -56,7 +56,7 @@ export default function RechercheMap() {
               }}
               mapType='standard'
               userInterfaceStyle='dark'>
-             {/* <Marker
+             <Marker
                 coordinate={{
                   latitude: currentLocation.latitude,
                   longitude: currentLocation.longitude,
@@ -76,7 +76,7 @@ export default function RechercheMap() {
                 radius={1000} // en mètres
                 fillColor="rgba(27, 237, 105, 0.5)"
               /> 
-               <TerrainsEnregistrésMarqueurs /> */}
+               <TerrainsEnregistrésMarqueurs />
             </MapView>
           )
         )}
