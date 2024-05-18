@@ -54,8 +54,6 @@ export default function RechercheMap() {
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}
-              
-             
               mapType='standard'
               userInterfaceStyle='dark'>
              {/* <Marker
@@ -69,22 +67,16 @@ export default function RechercheMap() {
                 <Callout>
                   <Text>Voici un Premier Callout</Text>
                 </Callout>
-              </Marker> */}
-              {/* <Circle
+              </Marker>
+              <Circle
                 center={{
                   latitude: currentLocation.latitude,
                   longitude: currentLocation.longitude,
                 }}
                 radius={1000} // en mètres
                 fillColor="rgba(27, 237, 105, 0.5)"
-              /> */}
-              {/* <TerrainsEnregistrésMarqueurs /> */}
-              <Marker
-            coordinate={{
-              latitude: 48.84658254053895, 
-              longitude: 2.347556991502351,
-            }}
-          />
+              /> 
+               <TerrainsEnregistrésMarqueurs /> */}
             </MapView>
           )
         )}
