@@ -96,7 +96,8 @@ export default function AdresseMap({ onAdresseLocaliseeChange, adresse,onPositio
             latitudeDelta: 0.0922,
             longitudeDelta: 0.05,
           }}
-          mapType={Platform.OS == "android" ? "none" : "standard"}
+          mapType='standard'
+          userInterfaceStyle='dark'
           onLongPress={(event) => {
             const newMarkerPosition = {
               latitude: event.nativeEvent.coordinate.latitude,
@@ -108,7 +109,7 @@ export default function AdresseMap({ onAdresseLocaliseeChange, adresse,onPositio
             ; // Appeler la fonction reversegeocode avec la nouvelle position du marqueur
           }}
           >
-          {/* {currentLocation && (
+          {currentLocation && (
             <Marker
             
               coordinate={{
@@ -136,7 +137,7 @@ export default function AdresseMap({ onAdresseLocaliseeChange, adresse,onPositio
             }}
             radius={1000} // en mètres
             fillColor="rgba(27, 237, 105,0.5)"
-          /> */}
+          />
         </MapView>
         
         

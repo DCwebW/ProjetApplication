@@ -10,37 +10,44 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff",
-      "plugins": [
-        [
-          "expo-image-picker",
-          {
-            "photosPermission": "The app accesses your photos to let you share them with your friends."
-          }
-        ],
-        [
-          "expo-notifications",
-          {
-            "icon":"./assets/png/logo-no-background.png",
-            "color": "black"
-          }
-        ]
-      ]
+      "backgroundColor": "#ffffff"
     },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/png/logo-no-background.png",
+          "color": "black"
+        }
+      ]
+    ],
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.dcwebw.essai"
+      "bundleIdentifier": "com.dcwebw.essai",
+      "config": {
+        "googleMapsApiKey": "AIzaSyAXbU0K6AqYgyom0g9Y1ZoT8TvV_0CZYmQ"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-     
-      "package": "com.dcwebw.essai"
+      "package": "com.dcwebw.essai",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAXbU0K6AqYgyom0g9Y1ZoT8TvV_0CZYmQ"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
