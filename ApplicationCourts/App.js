@@ -8,6 +8,7 @@ import MotdepasseOublie from './components/screens/MotdepasseOublie';
 import Inscription from './components/screens/Inscription';
 import DrawerNavigator from './components/navigation/DrawerNavigator';
 import { StyleSheet } from 'react-native';
+import PolitiqueRGPD from './components/screens/PolitiqueRGPD';
 
 
 
@@ -51,6 +52,8 @@ export default function App() {
             <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
             <Stack.Screen name='Reinitialisation Mot de passe' component={MotdepasseOublie}  />
             <Stack.Screen name='Inscription' component={Inscription} />
+            <Stack.Screen name='Politique de Confidentialité' component={PolitiqueRGPD}/>
+            
             
           </>
         )}

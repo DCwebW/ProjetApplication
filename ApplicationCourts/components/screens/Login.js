@@ -1,4 +1,4 @@
-import { ActivityIndicator, SafeAreaView, View, Text, StyleSheet, TextInput, KeyboardAvoidingView,Image,Pressable } from 'react-native'
+import { ActivityIndicator, SafeAreaView, View, Text, StyleSheet, TextInput, KeyboardAvoidingView,Image,Pressable,TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { signInWithEmailAndPassword, getAuth, } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
@@ -69,7 +69,7 @@ const auth =  getAuth()
    <Pressable   onPress={SignIn} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:20 ,marginTop:20}}><Text style={{color:'white',fontSize:25}}>Connexion</Text></Pressable>
    <Pressable  onPress={()=>navigation.navigate('Inscription')} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:20,marginTop:10}}><Text style={{color:'white',fontSize:25}}>S'inscrire</Text></Pressable>
    <Pressable  onPress={()=>navigation.navigate('Reinitialisation Mot de passe')} style={{ alignItems:"center", borderRadius:20 ,marginTop:10}}><Text style={{color:'rgba(197, 44, 35,1)', fontSize:20,}}>Mot de passe oublié</Text></Pressable>
-   
+   <TouchableOpacity onPress={()=> navigation.navigate('Politique de Confidentialité')} style={{alignItems:'center'}}><Text style={{ alignItems:"center", borderRadius:20 ,marginTop:10,color:'rgba(197, 44, 35,1)', fontSize:20,}}>Politique de Confidentialité</Text></TouchableOpacity>
           </> )} 
             </View> 
             </KeyboardAvoidingView>
