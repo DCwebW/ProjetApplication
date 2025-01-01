@@ -77,6 +77,7 @@ export default function RechercheMap() {
                 fillColor="rgba(27, 237, 105, 0.5)"
               /> 
                <TerrainsEnregistrésMarqueurs />
+               
             </MapView>
           )
         )}
