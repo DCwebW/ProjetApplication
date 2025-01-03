@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity,Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { QueryDocumentSnapshot, doc, getDocs, collection, QuerySnapshot } from "firebase/firestore"
 import { db, } from '../../ConfigFirebase2'
@@ -60,18 +60,34 @@ const TerrainsEnregistrésMarqueurs = () => {
 
             >
                 <CustomMarker />
-                <Callout style={{ width: 300, height: 200 }}>
+                <Callout style={{ width: 300, height:200}}Press={()=> navigation.navigate('Fiche', {
+
+name: marqueur.name,
+image: marqueur.images,
+id: marqueur.id
+})}>
                     <Text style={{ fontSize: 20 }}>{marqueur.name} :</Text>
                     <Image source={{ uri: marqueur.images }} style={{ width: 200, height: 100, marginLeft: 20, marginTop: 20 }} />
                     <View style={{ alignItems: 'center' }}>
-                        <TouchableOpacity onPress={() => navigation.navigate('Fiche', {
+                        <TouchableOpacity onPress={() => 
+                         navigation.navigate('Fiche', {
 
                             name: marqueur.name,
                             image: marqueur.images,
                             id: marqueur.id
-                        })}>
-                            <View style={{ backgroundColor: 'rgba(197, 44, 35,1)', width: 150, marginTop: 20, alignItems: 'center', height: 35, justifyContent: 'center', borderRadius: 10 }}><Text style={{ color: 'white' }}>Voir fiche du terrain </Text></View>
-                        </TouchableOpacity></View>
+                        })
+                        
+                        }>
+                            <View style={{ backgroundColor: 'rgba(197, 44, 35,1)', width: 150, marginTop: 20, alignItems: 'center', height: 35, justifyContent: 'center', borderRadius: 10 }}>
+                                <Text style={{ color: 'white' }}>Voir fiche du terrain </Text></View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                        
+                        onPress={()=> console.log('Bouton Appuyé')}>
+                            
+
+                        </TouchableOpacity>
+                        </View>
 
                 </Callout>
             </Marker>

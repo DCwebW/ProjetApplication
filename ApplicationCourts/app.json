@@ -1,4 +1,3 @@
-
 {
   "expo": {
     "name": "essai",
@@ -12,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    
-      "newArchEnabled": true,
-   
+    "newArchEnabled": true,
     "plugins": [
       [
         "expo-image-picker",
@@ -28,7 +25,11 @@
           "icon": "./assets/png/logo-no-background.png",
           "color": "black"
         }
-      ]
+      ],
+    [ "expo-font",
+      {
+        "fonts": ["node_modules/@expo-google-fonts/inter/Inter_900Black.ttf"]
+      }]
     ],
     "assetBundlePatterns": [
       "**/*"

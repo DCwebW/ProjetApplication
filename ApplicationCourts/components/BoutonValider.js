@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Pressable } from 'react-native'
+import { StyleSheet, Text, Pressable,Platform } from 'react-native'
 import React from 'react'
 import PropTypes from 'prop-types';
 
@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 const BoutonValider = ({onPress}) => {
   return (
     
-      <Pressable style={styles.boutonvalider} onPress={onPress} ><Text style={styles.textboutonvalider}> Valider</Text></Pressable>
+      <Pressable style={styles.boutonvalider} onPress={onPress} ><Text style={styles.fontStyle}> Valider</Text></Pressable>
     )
 }
 BoutonValider.PropTypes ={
@@ -32,6 +32,11 @@ const styles = StyleSheet.create(  {
     },
     textboutonvalider:{
       color:'white'
-    }
+    },
+    
+    fontStyle:{fontFamily: Platform.select({
+      android: 'Inter_900Black',
+      ios: 'Inter-Black',
   
-  })
+  })}
+})
