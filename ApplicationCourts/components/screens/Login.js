@@ -1,5 +1,6 @@
-import { ActivityIndicator, SafeAreaView, View, Text, StyleSheet, TextInput, KeyboardAvoidingView,Image,Pressable,TouchableOpacity } from 'react-native'
+import { ActivityIndicator, SafeAreaView, View, Text, StyleSheet, KeyboardAvoidingView,Image,Pressable,TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
+import { Button,TextInput } from 'react-native-paper'
 import { signInWithEmailAndPassword, getAuth, } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
 
@@ -10,10 +11,14 @@ import { useNavigation } from '@react-navigation/native'
 
  
 const Login = () => {  
+
+  
+
 const auth =  getAuth()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
+    const [securedPassword, setSecuredPassword]= useState(true)
     const navigation = useNavigation()
      
     const SignIn= async()=>{
@@ -47,16 +52,27 @@ const auth =  getAuth()
                <Image style={styles.logo}source={require('../../assets/png/logo-no-background.png')}/> 
                
               </View>
-           <View style={{flex:1}}><TextInput value={email} 
-            style={styles.input} 
-            placeholder='Entrez votre Email' 
-            autoCapitalize='none' 
-            onChangeText={(text) => setEmail(text)}></TextInput>
+           <View style={{flex:1}}>
 
-            <TextInput secureTextEntry={true} 
+           <TextInput
+      label="Email"
+      value={email}
+      placeholder='Entrez votre Email'
+      onChangeText={(text)=>setEmail(text)}
+      contentStyle={{backgroundColor:'rgba(197, 44, 35,0.1)'}}
+      selectionColor='rgba(197, 44, 35,1)'
+    />
+
+
+            
+
+            <TextInput secureTextEntry={securedPassword} 
+            label="Mot de Passe"
+            right={<TextInput.Icon icon="eye" onPress={()=>setSecuredPassword(!securedPassword)}/>}
             value={password} style={styles.input} 
             placeholder='Entrez votre Mot de Passe' 
-            autoCapitalize='none' 
+            selectionColor='rgba(197, 44, 35,1)'
+            contentStyle={{backgroundColor:'rgba(197, 44, 35,0.1)'}}
             onChangeText={(text) => setPassword(text)}>
             </TextInput>
            
@@ -66,8 +82,16 @@ const auth =  getAuth()
    
    <>
    <View style={{height:20}}></View>
-   <Pressable   onPress={SignIn} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:20 ,marginTop:20}}><Text style={{color:'white',fontSize:25}}>Connexion</Text></Pressable>
-   <Pressable  onPress={()=>navigation.navigate('Inscription')} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:20,marginTop:10}}><Text style={{color:'white',fontSize:25}}>S'inscrire</Text></Pressable>
+
+
+   < Button  onPress={SignIn} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:20 ,marginTop:20}}>
+   <Text style={{color:'white',fontSize:20}}>Connexion</Text>
+   
+   </Button>
+
+
+
+   <Button  onPress={()=>navigation.navigate('Inscription')} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:20,marginTop:10}}><Text style={{color:'white',fontSize:20}}>S'inscrire</Text></Button>
    <Pressable  onPress={()=>navigation.navigate('Reinitialisation Mot de passe')} style={{ alignItems:"center", borderRadius:20 ,marginTop:10}}><Text style={{color:'rgba(197, 44, 35,1)', fontSize:20,}}>Mot de passe oublié</Text></Pressable>
    <TouchableOpacity onPress={()=> navigation.navigate('Politique de Confidentialité')} style={{alignItems:'center'}}><Text style={{ alignItems:"center", borderRadius:20 ,marginTop:10,color:'rgba(197, 44, 35,1)', fontSize:20,}}>Politique de Confidentialité</Text></TouchableOpacity>
           </> )} 

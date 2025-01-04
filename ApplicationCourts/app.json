@@ -4,10 +4,10 @@
     "slug": "applicationcourts",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/png/logo-color.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/png/logo-color.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -29,7 +29,19 @@
     [ "expo-font",
       {
         "fonts": ["node_modules/@expo-google-fonts/inter/Inter_900Black.ttf"]
-      }]
+      }],
+      // [
+      //   "expo-splash-screen",
+      //   {
+      //     "backgroundColor": "#4a56e1",
+      //     "image": "",
+      //     "dark": {
+      //       "image": "C:/xampp/htdocs/Formation/ProjetApplication2/ApplicationCourts/assets/png/icons8-basketball-48.png",
+      //       "backgroundColor": "#4a56e1"
+      //     },
+      //     "imageWidth": 200
+      //   }
+      // ]
     ],
     "assetBundlePatterns": [
       "**/*"

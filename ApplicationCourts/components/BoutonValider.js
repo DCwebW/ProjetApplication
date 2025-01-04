@@ -7,15 +7,14 @@ import PropTypes from 'prop-types';
 // Un deuxième essai 
 // Troisième Essai
 
+
 const BoutonValider = ({onPress}) => {
   return (
     
       <Pressable style={styles.boutonvalider} onPress={onPress} ><Text style={styles.fontStyle}> Valider</Text></Pressable>
     )
 }
-BoutonValider.PropTypes ={
-  onPress: PropTypes.bool
-}
+
 export default BoutonValider
 
 const styles = StyleSheet.create(  {

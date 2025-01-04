@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View,Pressable,ScrollView,TouchableOpacity,Modal } from 'react-native'
 import React, { useEffect,useState } from 'react'
 import BoutonRetour from '../navigation/BoutonRetour'
-import { RadioButton } from 'react-native-paper';
+import RadioButtonsTypeMatch from '../RadioButtonsGroup/RadioButtonsTypeMatch'
 import DatePicker from 'react-native-modern-datepicker'
 import {getToday, getFormatedDate} from 'react-native-modern-datepicker'
 import BoutonValider from '../BoutonValider'
@@ -9,8 +9,8 @@ import { TimerPickerModal } from "react-native-timer-picker";
 
 import { useNavigation } from '@react-navigation/native'
 import { getAuth,onAuthStateChanged } from 'firebase/auth';
-import { addDoc, collection } from 'firebase/firestore';
-import { db } from '../../ConfigFirebase2';
+
+import EnvoiMatchDB from '../../ModelView/EnvoiMatchDB';
 
 
 
@@ -44,33 +44,19 @@ useEffect(()=>{
   return ()=> unsubscribe()
 
 },[])
-    
+   
+const userID = user ? user.uid : null;
 
-  const EnvoiMatchDB= async () =>
-{
-if (user){
 
-  try{
-    if(checked && date && terrainchoisi && hour){
 
-      await addDoc(collection(db,'matchs'),{
-    useruid : user.uid,
-    date: date,
-    heure : hour,
-    terrain : terrainchoisi,
-    typematch: checked,
-      }) 
-      console.log('Match mis en place')
-    }
 
-  }catch(error){
-    console.log('Echec envoi du match', error)
-  }
+  
+
+
+
+const handleSubmit =() => {
+  EnvoiMatchDB({user,userID,date,hour,terrainchoisi,checked})
 }
-
-}
-
-
 
     function handleHour(){
         setOpenHour(!openhour)
@@ -106,38 +92,8 @@ if (user){
     <View style={styles.formulairematch}>
         
         <Text style={{marginTop:20,marginLeft:20,color:'white'}}>Type de Match:</Text>
-        <View style={{ marginTop:20, width:255,borderRadius:40,alignSelf:'center'}}>
-            
-        
-        <View style={{flexDirection:'row', alignItems:'center', justifyContent:'space-around'}}>
-      <View style={{backgroundColor:'white',borderRadius:20}}>
-      <RadioButton
-        value="2vs2"
-        status={ checked === '2vs2' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('2vs2')}
-        
-      /></View>
-      <Text>2vs2</Text>
-      <View style={{backgroundColor:'white',borderRadius:20}}>
-      <RadioButton
-        value="3vs3"
-        status={ checked === '3vs3' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('3vs3')}
-        
-      /></View>
-      <Text>3vs3</Text>
-      <View style={{backgroundColor:'white',borderRadius:20,}}>
-      <RadioButton
-        value="5vs5"
-        status={ checked === '5vs5' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('5vs5')}
-        
-      /></View>
-
-      <Text>5vs5</Text>
-      </View>
-      <TouchableOpacity onPress={()=> setChecked('first')} style={{alignItems:'center',marginTop:20}}><Text style={{textAlign:'center', color:'white',backgroundColor:'rgba( 142, 8, 8 ,1)',width:150, height:50,paddingTop:20,}}>Annuler</Text></TouchableOpacity>
-   </View>
+        <RadioButtonsTypeMatch setChecked={setChecked} checked={checked}/>
+       
    <Text style={{marginTop:20,marginLeft:20,color:'white'}}>Date:</Text> 
    <TouchableOpacity onPress={handleOnPress} style={{alignItems:'center'}}><Text style={{textAlign:'center', color:'white',backgroundColor:'rgba( 142, 8, 8 ,1)',width:150, height:50,paddingTop:20,}}>Choisir</Text></TouchableOpacity>
    <View style={{alignItems:'center'}}>
@@ -228,7 +184,7 @@ animationType='slide'
    
     <View style={{alignItems:'center',justifyContent:'flex-end', flex:2}}>
 
-        <BoutonValider onPress={EnvoiMatchDB}/>
+        <BoutonValider onPress={handleSubmit}/>
     </View>
     
     </ScrollView>
