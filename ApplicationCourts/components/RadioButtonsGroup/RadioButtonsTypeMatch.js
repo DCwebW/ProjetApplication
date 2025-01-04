@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
-import { RadioButton } from 'react-native-paper';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { RadioButton,Button } from 'react-native-paper';
 
 const RadioButtonsTypeMatch = ({ setChecked, checked }) => {
   return (
@@ -31,25 +31,36 @@ const RadioButtonsTypeMatch = ({ setChecked, checked }) => {
         </View>
         <Text>5vs5</Text>
       </View>
-      <TouchableOpacity
+      <View style={{alignItems:'center'}}>
+      <Button
         onPress={() => setChecked('first')}
-        style={{ alignItems: 'center', marginTop: 20 }}
+        style={styles.boutonChoixElements}
       >
         <Text
           style={{
             textAlign: 'center',
             color: 'white',
-            backgroundColor: 'rgba( 142, 8, 8 ,1)',
-            width: 150,
-            height: 50,
-            paddingTop: 20,
+            
           }}
         >
           Annuler
         </Text>
-      </TouchableOpacity>
+      </Button>
+      </View>
     </View>
   );
 };
 
 export default RadioButtonsTypeMatch;
+
+const styles = StyleSheet.create({
+
+  boutonChoixElements:{
+    backgroundColor: 'rgba( 142, 8, 8 ,1)',
+     width: 100, 
+     height: 50,
+     alignItems: 'center',
+     marginTop:20,
+     alignContent:'center'
+  }
+})

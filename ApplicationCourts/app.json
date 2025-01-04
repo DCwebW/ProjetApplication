@@ -6,11 +6,11 @@
     "orientation": "portrait",
     "icon": "./assets/png/logo-color.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/png/logo-color.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+    // "splash": {
+    //   "image": "./assets/png/logo-color.png",
+    //   "resizeMode": "cover",
+    //   "backgroundColor": "#ffffff"
+    // },
     "newArchEnabled": true,
     "plugins": [
       [
@@ -30,18 +30,18 @@
       {
         "fonts": ["node_modules/@expo-google-fonts/inter/Inter_900Black.ttf"]
       }],
-      // [
-      //   "expo-splash-screen",
-      //   {
-      //     "backgroundColor": "#4a56e1",
-      //     "image": "",
-      //     "dark": {
-      //       "image": "C:/xampp/htdocs/Formation/ProjetApplication2/ApplicationCourts/assets/png/icons8-basketball-48.png",
-      //       "backgroundColor": "#4a56e1"
-      //     },
-      //     "imageWidth": 200
-      //   }
-      // ]
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#4a56e1",
+          "image": "",
+          "dark": {
+            "image": "C:/xampp/htdocs/Formation/ProjetApplication2/ApplicationCourts/assets/png/icons8-basketball-48.png",
+            "backgroundColor": "#4a56e1"
+          },
+          "imageWidth": 200
+        }
+      ]
     ],
     "assetBundlePatterns": [
       "**/*"
