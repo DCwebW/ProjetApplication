@@ -2,13 +2,15 @@ import { useEffect, useState,  } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
-
+import AppLoading from 'expo-app-loading'; // Pour attendre que les polices soient chargées
+import { useFonts } from 'expo-font';
 import Login from './components/screens/Login';
 import MotdepasseOublie from './components/screens/MotdepasseOublie';
 import Inscription from './components/screens/Inscription';
 import DrawerNavigator from './components/navigation/DrawerNavigator';
 import { StyleSheet } from 'react-native';
 import PolitiqueRGPD from './components/screens/PolitiqueRGPD';
+import { FontProvider } from './components/ThemeContext/FontContext';
 
 
 
@@ -22,6 +24,9 @@ export default function App() {
   const [user, setUser] = useState(null);
   
   
+  const [fontsLoaded] = useFonts({
+    'Kanit-Light': require('./assets/fonts/Kanit-Light.ttf')
+  })
   
   useEffect(() => {
    
@@ -38,8 +43,12 @@ export default function App() {
   
   // commentaire pour Github Actions   
 
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
+    <FontProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName={user ? 'Home' : 'Login'} 
         screenOptions={{
@@ -66,6 +75,7 @@ export default function App() {
       {/* Ajout du composant Connexionauto */}
       {/* <Connexionauto /> */}
     </NavigationContainer>
+    </FontProvider>
   );
 }
 

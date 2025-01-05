@@ -1,6 +1,10 @@
 module.exports = function(api) {
   api.cache(true);
 
+
+
+
+
   const presets = [
     '@babel/preset-react', // Permet de transformer le JSX
     '@babel/preset-typescript', // Permet de transformer le TypeScript
@@ -18,6 +22,7 @@ module.exports = function(api) {
   ];
 
   return {
+
     presets,
     plugins,
     overrides: [

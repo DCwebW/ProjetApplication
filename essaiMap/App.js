@@ -61,7 +61,7 @@ export default function Map() {
   return (
     
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Ma Carte de Géolocalisation 🗺️</Text>
+      <CustomText<Text style={styles.title}>Ma Carte de Géolocalisation 🗺️</CustomText>
       <View style={styles.card}>
         <MapView
           style={styles.map}
@@ -109,7 +109,7 @@ export default function Map() {
             fillColor="rgba(27, 237, 105,0.5)"
           />
         </MapView>
-        <Text>Adresse localisée : {address}</Text>
+        <CustomText<Text>Adresse localisée : {address}</CustomText>
         {/* <Button title='Localiser adresse'onPress={reversegeocode(markerPosition)}></Button> */}
       </View>
     </SafeAreaView>
