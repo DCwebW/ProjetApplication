@@ -1,9 +1,10 @@
 import { View, Text, ScrollView,StyleSheet,Modal,Pressable } from 'react-native'
 import React,{useEffect,useState} from 'react'
-
 import TerrainsFavoris from '../PageAccueil/TerrainsFavoris'
 import MatchsOrganises from '../PageAccueil/MatchsOrganises'
 import ConseilsSport from './ConseilsSport'
+import CustomText from '../ThemeContext/CustomText'
+
 
 
 const Home = () => {
@@ -11,11 +12,11 @@ const Home = () => {
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.section}>
-        <Text style={styles.texttitre}> Terrains Favoris</Text>
+        <CustomText style={styles.texttitre}> Terrains Favoris</CustomText>
         <TerrainsFavoris />
       </View>
       <View style={styles.section}>
-        <Text style={styles.texttitre}>Matchs Organisés</Text>
+        <CustomText style={styles.texttitre}>Matchs Organisés</CustomText>
         <MatchsOrganises />
       </View>
       <View style={[styles.section, { marginBottom: 50 }]}>

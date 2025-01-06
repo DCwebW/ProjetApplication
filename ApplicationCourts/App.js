@@ -13,10 +13,6 @@ import PolitiqueRGPD from './components/screens/PolitiqueRGPD';
 import { FontProvider } from './components/ThemeContext/FontContext';
 
 
-
-
-
-
 const Stack = createNativeStackNavigator();
 const auth = getAuth();
 
@@ -29,7 +25,6 @@ export default function App() {
   })
   
   useEffect(() => {
-   
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log('user', user);
       setUser(user);
@@ -65,9 +60,7 @@ export default function App() {
             <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
             <Stack.Screen name='Reinitialisation Mot de passe' component={MotdepasseOublie}  />
             <Stack.Screen name='Inscription' component={Inscription} />
-            <Stack.Screen name='Politique de Confidentialité' component={PolitiqueRGPD}/>
-            
-            
+            <Stack.Screen name='Politique de Confidentialité' component={PolitiqueRGPD}/> 
           </>
         )}
       </Stack.Navigator>

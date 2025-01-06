@@ -7,9 +7,9 @@ const CustomText = ({style, children, ...props}) => {
   const { fonts } = useContext(FontContext);
 
 return (
-  <CustomText<Text style={[{ fontFamily: fonts.regular }, style]} {...props}>
+  <Text style={[{ fontFamily: fonts.regular }, style]} {...props}>
     {children}
-  </CustomText>
+  </Text>
 );
 
 }

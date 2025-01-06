@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View,FlatList,Image, TouchableOpacity,Modal } from 'react-native'
+import { StyleSheet, View,FlatList,Image, TouchableOpacity,Modal } from 'react-native'
 import React, { useEffect ,useState} from 'react'
 import {  query,where,collection, getDocs, } from 'firebase/firestore'
 import { db } from '../../ConfigFirebase2'
 import { onAuthStateChanged,getAuth } from 'firebase/auth'
-
 import { useNavigation } from '@react-navigation/native'
+import CustomText from '../ThemeContext/CustomText'
 
 
 const auth = getAuth()
@@ -92,12 +92,10 @@ const ChoixTerrain =()=>{
       <View style={styles.itemContainer}>
         
         <Image source={{ uri: item.images }} style={[styles.image, {width:385}]}
-        
-        
         />
         
         <View style={styles.textContainer}>
-          <Text style={styles.text}>{item.name}</Text>
+          <CustomText style={styles.text}>{item.name}</CustomText>
         </View>
       </View></TouchableOpacity>
       <Modal 
@@ -112,12 +110,12 @@ const ChoixTerrain =()=>{
     
        <TouchableOpacity style={{alignItems:'center'}} >
         <View style={{backgroundColor:'rgba( 142, 8, 8 ,1)',width:250, height:50,paddingTop:20,borderRadius:15,marginTop:20}}> 
-        <Text style={{textAlign:'center', color:'white',}}>Sélection du {selectedTerrain?.name}</Text>
+        <CustomText style={{textAlign:'center', color:'white',}}>Sélection du {selectedTerrain?.name}</CustomText>
          </View>
         </TouchableOpacity>
         <View style={{marginTop:20}}>
-      <TouchableOpacity onPress={ChoixTerrain}><Text>Confirmer</Text></TouchableOpacity> 
-     <TouchableOpacity onPress={closeModal}><Text>Annuler</Text></TouchableOpacity> 
+      <TouchableOpacity onPress={ChoixTerrain}><CustomText>Confirmer</CustomText></TouchableOpacity> 
+     <TouchableOpacity onPress={closeModal}><CustomText>Annuler</CustomText></TouchableOpacity> 
      
     </View>
     </View>

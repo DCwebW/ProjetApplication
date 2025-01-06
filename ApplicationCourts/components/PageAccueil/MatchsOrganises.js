@@ -1,9 +1,10 @@
-import { FlatList, StyleSheet, Text, TouchableOpacity, View,Image } from 'react-native'
+import { FlatList, StyleSheet,TouchableOpacity, View,Image } from 'react-native'
 import React,{ useEffect ,useState} from 'react'
-import { updateDoc, query,where,doc,collection, getDocs,deleteDoc, QuerySnapshot} from 'firebase/firestore'
+import { query,where,collection, getDocs} from 'firebase/firestore'
 import { db } from '../../ConfigFirebase2'
 import { onAuthStateChanged,getAuth } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
+import CustomText from '../ThemeContext/CustomText'
 
 const auth = getAuth()
 const MatchsOrganises = () => {
@@ -58,9 +59,9 @@ const navigation = useNavigation()
                 />     
                 </View>
                <View style={styles.informationsmatch} >
-                <Text style={styles.informationsmatchtext}>{item.date}</Text>
-                <Text style={styles.informationsmatchtext}>{item.heure}</Text>
-                <Text style={styles.informationsmatchtext}>{item.terrain}</Text>
+                <CustomText style={styles.informationsmatchtext}>{item.date}</CustomText>
+                <CustomText style={styles.informationsmatchtext}>{item.heure}</CustomText>
+                <CustomText style={styles.informationsmatchtext}>{item.terrain}</CustomText>
                 </View>
             </View>
         </TouchableOpacity>

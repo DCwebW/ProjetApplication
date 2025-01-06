@@ -1,18 +1,11 @@
-import { ActivityIndicator, SafeAreaView, View, Text, StyleSheet, KeyboardAvoidingView,Image,Pressable,TouchableOpacity } from 'react-native'
+import { ActivityIndicator, SafeAreaView, View, StyleSheet, KeyboardAvoidingView,Image,Pressable,TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { Button,TextInput } from 'react-native-paper'
 import { signInWithEmailAndPassword, getAuth, } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
-
-
-
-
-
-
+import CustomText from '../ThemeContext/CustomText'
  
 const Login = () => {  
-
-  
 
 const auth =  getAuth()
     const [email, setEmail] = useState('')
@@ -85,15 +78,15 @@ const auth =  getAuth()
 
 
    < Button  onPress={SignIn} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:20 ,marginTop:20}}>
-   <Text style={{color:'white',fontSize:20}}>Connexion</Text>
+   <CustomText style={{color:'white',fontSize:20}}>Connexion</CustomText>
    
    </Button>
 
 
 
-   <Button  onPress={()=>navigation.navigate('Inscription')} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:20,marginTop:10}}><Text style={{color:'white',fontSize:20}}>S'inscrire</Text></Button>
-   <Pressable  onPress={()=>navigation.navigate('Reinitialisation Mot de passe')} style={{ alignItems:"center", borderRadius:20 ,marginTop:10}}><Text style={{color:'rgba(197, 44, 35,1)', fontSize:20,}}>Mot de passe oublié</Text></Pressable>
-   <TouchableOpacity onPress={()=> navigation.navigate('Politique de Confidentialité')} style={{alignItems:'center'}}><Text style={{ alignItems:"center", borderRadius:20 ,marginTop:10,color:'rgba(197, 44, 35,1)', fontSize:20,}}>Politique de Confidentialité</Text></TouchableOpacity>
+   <Button  onPress={()=>navigation.navigate('Inscription')} style={{backgroundColor:'rgba(197, 44, 35,1)', alignItems:"center", borderRadius:20,marginTop:10}}><CustomText style={{color:'white',fontSize:20}}>S'inscrire</CustomText></Button>
+   <Pressable  onPress={()=>navigation.navigate('Reinitialisation Mot de passe')} style={{ alignItems:"center", borderRadius:20 ,marginTop:10}}><CustomText style={{color:'rgba(197, 44, 35,1)', fontSize:20,}}>Mot de passe oublié</CustomText></Pressable>
+   <TouchableOpacity onPress={()=> navigation.navigate('Politique de Confidentialité')} style={{alignItems:'center'}}><CustomText style={{ alignItems:"center", borderRadius:20 ,marginTop:10,color:'rgba(197, 44, 35,1)', fontSize:20,}}>Politique de Confidentialité</CustomText></TouchableOpacity>
           </> )} 
             </View> 
             </KeyboardAvoidingView>
