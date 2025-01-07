@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import MapView,{Marker,Callout,Circle} from 'react-native-maps';
 import * as Location from 'expo-location';
 import TerrainsEnregistrésMarqueurs from './TerrainsEnregistrésMarqueurs';
+import { Searchbar } from 'react-native-paper';
 
 
 
@@ -40,8 +41,11 @@ export default function RechercheMap() {
 
   return (
     <View style={styles.container}>
+      
       <Text style={styles.title}>Recherche de terrain</Text>
+      
       <View style={styles.card}>
+        <Searchbar mode='view' theme={{ colors: { primary: 'rgba(197, 44, 35,1)' } }} style={{backgroundColor:'rgba(197, 44, 35,0.1)'}}/>
         {loading ? ( // Afficher l'ActivityIndicator si loading est vrai
           <ActivityIndicator style={styles.loadingIndicator} size="large" color="#1976D2" />
         ) : (

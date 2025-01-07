@@ -9,7 +9,8 @@ import { addDoc, query,where,doc,collection, getDocs} from 'firebase/firestore'
 import { RadioButton } from 'react-native-paper';
 import Imagesterrain from '../ManipulationImages/ImagePicker2';
 import { getStorage, ref, uploadBytes,getDownloadURL } from "firebase/storage";
-import { useNavigation,CommonActions } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import CustomText from '../ThemeContext/CustomText';
 
 
 
@@ -111,18 +112,18 @@ console.log('Envoi réussi sur CloudStorage')
       <BoutonRetour/>
       
     </View>
-    <View><Text style={{color: 'rgba(197, 44, 35,1)', fontSize:25, textAlign:'center'}}> Ajouter un terrain</Text></View>
+    <View><CustomText style={{color: 'rgba(197, 44, 35,1)', fontSize:25, textAlign:'center'}}> Ajouter un terrain</CustomText></View>
     <View style={styles.formulaireterrain}>
     
     <View style={{marginTop:20,marginLeft:15,flexDirection:'row'}}>
-      <Text style={{marginLeft:10,marginBottom:20 ,color:'white'}}>Nom du terrain :</Text>
+      <CustomText style={{marginLeft:10,marginBottom:20 ,color:'white'}}>Nom du terrain :</CustomText>
 
     </View>
     <View style={{width:300, alignItems:'center'}}>
       <TextInput placeholder='Mettez le nom du terrain 'onChangeText={(text)=>setnomTerrain(text)} value={nomTerrain} style={{backgroundColor:'white', minWidth:340,minHeight:40,borderRadius:10,marginTop:20, marginLeft:70}}></TextInput>
     </View>
     <View style={{marginTop:20,marginLeft:15,flexDirection:'row'}}>
-      <Text style={{marginLeft:10,marginBottom:20 ,color:'white'}}>Type de filet :</Text>
+      <CustomText style={{marginLeft:10,marginBottom:20 ,color:'white'}}>Type de filet :</CustomText>
 
     </View>
 
@@ -157,12 +158,12 @@ console.log('Envoi réussi sur CloudStorage')
      
       
     <View style={{height:400, backgroundColor:'rgba(197, 44, 35,1)', marginTop:50}}>
-      <Text style={{marginLeft:20,marginBottom:20 ,color:'white'}}>Localisation du terrain :</Text>
+      <CustomText style={{marginLeft:20,marginBottom:20 ,color:'white'}}>Localisation du terrain :</CustomText>
       <AdresseMap onAdresseLocaliseeChange={handleAdresseLocaliseeChange} adresse={address} onPositionChange={handlePosition} /></View>
       {/* Ici est rappelé la fonction de rappel mise en prop dans le composant Map */}
       <View style={{flexDirection:'row', marginTop:30,width:250, }}>
         <View style={{justifyContent:'center',}}>
-          <Text>Photos :</Text>   
+          <CustomText>Photos :</CustomText>   
         </View>
        {/* <Imagesterrain/> */}
        <View style={{backgroundColor:'white',height:300,width:290, marginLeft:15,marginTop:30}}>
@@ -173,7 +174,7 @@ console.log('Envoi réussi sur CloudStorage')
       </View>
       <View style={styles.boutonvalider}>
       
-      <Pressable onPress={()=> EnvoiTerrain()}><Text style={{color:'white'}}>Valider </Text></Pressable></View>
+      <Pressable onPress={()=> EnvoiTerrain()}><CustomText style={{color:'white'}}>Valider </CustomText></Pressable></View>
     </View>
     
     

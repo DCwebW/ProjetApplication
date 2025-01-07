@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View,Pressable } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
+import CustomText from '../ThemeContext/CustomText'
 
 const BoutonRetour = () => {
   const navigation = useNavigation()
@@ -8,7 +9,7 @@ const BoutonRetour = () => {
     <View style={{flex:1 }}>
       <Pressable  
       testID='boutonRetour'
-      style={styles.boutonretour} onPress={navigation.goBack}><Text style={styles.textboutonretour}> Retour</Text></Pressable>
+      style={styles.boutonretour} onPress={navigation.goBack}><CustomText style={styles.textboutonretour}> Retour</CustomText></Pressable>
     </View>
   )
 }

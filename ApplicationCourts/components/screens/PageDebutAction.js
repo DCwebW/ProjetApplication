@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View,ScrollView,Image,Pressable, Alert } from 'react-native'
+import { StyleSheet,  View,ScrollView,Pressable } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import NavigationContainer from '@react-navigation/native'
+import CustomText from '../ThemeContext/CustomText'
+
+
 
 const PageDebutAction = () => {
   const navigation = useNavigation()
@@ -10,8 +11,8 @@ const PageDebutAction = () => {
     <ScrollView>
     
     <View style={styles.actions}>
-<Pressable onPress={()=>{navigation.navigate('AjoutMatch')}} style={({ pressed }) => (pressed ? styles.actionpressin : styles.action)}><Text style={styles.actiontext}>Ajout Match</Text></Pressable>
-<Pressable onPress={()=>{ navigation.navigate('AjoutTerrain')}} style={({ pressed }) => (pressed ? styles.actionpressin : styles.action)} ><Text style={styles.actiontext}>Ajout Terrain</Text></Pressable>
+<Pressable onPress={()=>{navigation.navigate('AjoutMatch')}} style={({ pressed }) => (pressed ? styles.actionpressin : styles.action)}><CustomText style={styles.actiontext}>Ajout Match</CustomText></Pressable>
+<Pressable onPress={()=>{ navigation.navigate('AjoutTerrain')}} style={({ pressed }) => (pressed ? styles.actionpressin : styles.action)} ><CustomText style={styles.actiontext}>Ajout Terrain</CustomText></Pressable>
     </View>
     </ScrollView>
   )

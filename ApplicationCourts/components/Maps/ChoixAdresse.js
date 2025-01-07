@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text,SafeAreaView,Button,Platform } from 'react-native';
 import MapView, { Marker, Circle, Callout } from 'react-native-maps';
 import * as Location from 'expo-location';
-
+import CustomText from '../ThemeContext/CustomText';
 
 export default function AdresseMap({ onAdresseLocaliseeChange, adresse,onPositionChange }) {
   // En prop de la fonction Map , nous avons mis une fonction de rappel (callback function) qui permettra au composant enfant 
@@ -142,13 +142,13 @@ export default function AdresseMap({ onAdresseLocaliseeChange, adresse,onPositio
         
         
       </View>
-      <View><Text style={{color:'white',fontSize:25}}>Adresse localisée : </Text>
+      <View><CustomText style={{color:'white',fontSize:25}}>Adresse localisée : </CustomText>
       
-      <Text style={{backgroundColor:'white',fontSize:20}}>{address}</Text>
+      <CustomText style={{backgroundColor:'white',fontSize:20}}>{address}</CustomText>
 
       { markerPosition.latitude ?
-       <Text style={{backgroundColor:'white',fontSize:20}}>{markerPosition.latitude} </Text>
-      : <Text style={{backgroundColor:'white',fontSize:20}}>{currentLocation?.latitude} </Text>
+       <CustomText style={{backgroundColor:'white',fontSize:20}}>{markerPosition.latitude} </CustomText>
+      : <CustomText style={{backgroundColor:'white',fontSize:20}}>{currentLocation?.latitude} </CustomText>
       }
       
       

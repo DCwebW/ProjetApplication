@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, ScrollView, TouchableOpacity, Modal } from 'react-native'
+import { StyleSheet, View,  ScrollView,   } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import BoutonRetour from '../navigation/BoutonRetour'
 import RadioButtonsTypeMatch from '../RadioButtonsGroup/RadioButtonsTypeMatch'
@@ -10,6 +10,7 @@ import ModalChoixTerrain from '../Modals/ModalChoixTerrain'
 import {getFormatedDate} from 'react-native-modern-datepicker'
 import { useNavigation } from '@react-navigation/native'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import CustomText from '../ThemeContext/CustomText'
 
 import EnvoiMatchDB from '../../ModelView/EnvoiMatchDB';
 
@@ -83,44 +84,47 @@ const today= new Date()
   return (
 
     <ScrollView style={{ flex: 1  }}>
-
-      <View style={{ flex: 1 ,}}>
+      <View style={{ flex: 1 , }}>
         <BoutonRetour />
       </View>
-      <View style={{ alignItems: 'center' }}><Text style={{ color: 'rgba( 142, 8, 8 ,1)', fontSize: 25 }}>Organiser un match</Text></View>
+      <View style={{ alignItems: 'center' }}><CustomText style={{ color: 'rgba( 142, 8, 8 ,1)', fontSize: 25 }}>Organiser un match</CustomText></View>
       <View style={styles.formulairematch}>
 
-        <Text style={{ marginTop: 20, marginLeft: 20, color: 'white' }}>Type de Match:</Text>
+        <CustomText style={{ marginTop: 20, marginLeft: 20, color: 'white' }}>Type de Match:</CustomText>
         <RadioButtonsTypeMatch setChecked={setChecked} checked={checked} />
 
         
         
         <View style={[styles.elementsMatch,{marginLeft:17}]}>
-          <Text style={{    }}>Date:</Text>
+          <CustomText>Date:</CustomText>
           <TextInput value={date} disabled={true} style={styles.inputsMatch}/>
 <Button onPress={handleOnPress} style={styles.boutonChoixElements} >
-          <Text style={{ textAlign: 'center', color: 'white' }}>
-          Choisir</Text></Button>
+          <CustomText style={{ textAlign: 'center', color: 'white' }}>
+          Choisir</CustomText></Button>
           
         </View>
         <ModalDatePicker openModalDatePicker={open} date={date} ChangeDate={handleChange} setOpenModalDatePicker={handleOnPress} />
 
         <View style={styles.elementsMatch}>
-        <Text style={{  color: 'white' }}>Heure:</Text>
+        <CustomText style={{  color: 'white' }}>Heure:</CustomText>
           <TextInput value={hour} disabled={true} style={styles.inputsMatch}/>
           <Button onPress={handleHour} style={styles.boutonChoixElements}>
-          <Text style={{ textAlign: 'center', color: 'white', }}>Choisir</Text></Button>
+          <CustomText style={{ textAlign: 'center', color: 'white', }}>Choisir</CustomText></Button>
         </View>
       
 <ModalTimePicker TimePickerouvert={openhour} OuvrirTimePicker={setOpenHour} choisirHeure={setHour} />
-        <View>
-          <Text style={{ marginTop: 20, marginLeft: 20, color: 'white' }}> Terrain : </Text>
+        <View style={{flexDirection:'row', marginTop:35}}>
+          <CustomText style={{ marginTop: 20, marginLeft: 5, color: 'white' }}> Terrain : </CustomText>
 
-        </View>
+        
         <View style={{ height: 50, backgroundColor: 'white', width: 200, alignSelf: 'center', justifyContent: 'center' }}>
-          <Text style={{ color: 'black', textAlign: 'center' }} > {terrainchoisi}</Text>
+          <CustomText style={{ color: 'black', textAlign: 'center' }} > {terrainchoisi}</CustomText>
         </View>
-        <TouchableOpacity onPress={handleOpenTerrain} style={{ alignItems: 'center' }}><Text style={{ textAlign: 'center', color: 'white', backgroundColor: 'rgba( 142, 8, 8 ,1)', width: 150, height: 50, paddingTop: 20, marginTop: 10 }}>Choisir</Text></TouchableOpacity>
+       </View>
+
+        <Button onPress={handleOpenTerrain} style={[styles.boutonChoixElements, {alignSelf:'center', marginTop:20, marginBottom:20}]}>
+          <CustomText style={{color:'white'}}>
+            Choisir</CustomText></Button>
         
         <ModalChoixTerrain choixTerrainouvert={openTerrain} ChoixTerrainFavori={ChoixTerrainFavori} ouvrirchoixTerrain={handleOpenTerrain}/>
 

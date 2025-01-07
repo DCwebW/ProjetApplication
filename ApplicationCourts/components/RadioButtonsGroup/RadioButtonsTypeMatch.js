@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { RadioButton,Button } from 'react-native-paper';
+import CustomText from '../ThemeContext/CustomText';
 
 const RadioButtonsTypeMatch = ({ setChecked, checked }) => {
   return (
@@ -13,7 +14,7 @@ const RadioButtonsTypeMatch = ({ setChecked, checked }) => {
             onPress={() => setChecked('2vs2')}
           />
         </View>
-        <Text>2vs2</Text>
+        <CustomText>2vs2</CustomText>
         <View style={{ backgroundColor: 'white', borderRadius: 20 }}>
           <RadioButton
             value="3vs3"
@@ -21,7 +22,7 @@ const RadioButtonsTypeMatch = ({ setChecked, checked }) => {
             onPress={() => setChecked('3vs3')}
           />
         </View>
-        <Text>3vs3</Text>
+        <CustomText>3vs3</CustomText>
         <View style={{ backgroundColor: 'white', borderRadius: 20 }}>
           <RadioButton
             value="5vs5"
@@ -29,14 +30,14 @@ const RadioButtonsTypeMatch = ({ setChecked, checked }) => {
             onPress={() => setChecked('5vs5')}
           />
         </View>
-        <Text>5vs5</Text>
+        <CustomText>5vs5</CustomText>
       </View>
       <View style={{alignItems:'center'}}>
       <Button
         onPress={() => setChecked('first')}
         style={styles.boutonChoixElements}
       >
-        <Text
+        <CustomText
           style={{
             textAlign: 'center',
             color: 'white',
@@ -44,7 +45,7 @@ const RadioButtonsTypeMatch = ({ setChecked, checked }) => {
           }}
         >
           Annuler
-        </Text>
+        </CustomText>
       </Button>
       </View>
     </View>
