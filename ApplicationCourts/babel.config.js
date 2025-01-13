@@ -8,7 +8,8 @@ module.exports = function(api) {
   const presets = [
     '@babel/preset-react', // Permet de transformer le JSX
     '@babel/preset-typescript', // Permet de transformer le TypeScript
-    'module:@react-native/babel-preset' // Utilisé par défaut pour les projets React Native
+    'module:@react-native/babel-preset', // Utilisé par défaut pour les projets React Native
+    '@babel/preset-env',
   ];
 
   const plugins = [
@@ -31,10 +32,50 @@ module.exports = function(api) {
         plugins: [
           ["@babel/plugin-transform-private-methods", { "loose": true }],
           ["@babel/plugin-transform-class-properties", { "loose": true }],
-          ['@babel/plugin-transform-private-property-in-object', { "loose": true }]
+          ['@babel/plugin-transform-private-property-in-object', { "loose": true }],
+          [
+            '@babel/plugin-transform-runtime',
+          ],
+        ],
+      },
+    ],
+  };
+};module.exports = function (api) {
+  api.cache(true);
+
+  const presets = [
+    '@babel/preset-react', // Permet de transformer le JSX
+    '@babel/preset-typescript', // Permet de transformer le TypeScript
+    'module:metro-react-native-babel-preset', // Utilisé par défaut pour les projets React Native
+    '@babel/preset-env',
+  ];
+
+  const plugins = [
+    [
+      'module-resolver',
+      {
+        alias: {
+          'expo-linear-gradient': './node_modules/expo-linear-gradient/build/LinearGradient',
+        },
+      },
+    ],
+    'react-native-reanimated/plugin', // Plugin pour react-native-reanimated
+  ];
+
+  return {
+    presets,
+    plugins,
+    overrides: [
+      {
+        plugins: [
+          ['@babel/plugin-transform-private-methods', { loose: true }],
+          ['@babel/plugin-transform-class-properties', { loose: true }],
+          ['@babel/plugin-transform-private-property-in-object', { loose: true }],
+          ['@babel/plugin-transform-runtime'], // Plugin pour transformer les modules ESM
         ],
       },
     ],
   };
 };
+
 
