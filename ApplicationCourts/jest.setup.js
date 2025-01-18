@@ -36,5 +36,5 @@ jest.mock('react-native-screens', () => {
 });
 
 // Assure-toi que les imports suivants viennent après les mocks
-// import { initializeApp } from "firebase/app";
-// import { firebaseConfig } from "./ConfigFirebase2";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "./ConfigFirebase2";
