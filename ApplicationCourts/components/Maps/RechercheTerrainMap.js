@@ -3,8 +3,8 @@ import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import MapView,{Marker,Callout,Circle} from 'react-native-maps';
 import * as Location from 'expo-location';
 import TerrainsEnregistrésMarqueurs from './TerrainsEnregistrésMarqueurs';
-import { Searchbar } from 'react-native-paper';
-
+import SearchBarComponent from '../../ModelView/searchBarComponent';
+import { db } from '../../ConfigFirebase2';
 
 
 // Un commentaire pour test statique 
@@ -13,6 +13,7 @@ export default function RechercheMap() {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [loading, setLoading] = useState(true); // État pour indiquer le chargement
   const [stop, setStop] = useState(0); // État pour indiquer le chargement
+  const [searchResults, setSearchResults] = useState([])
   
 
   useEffect(() => {
@@ -38,6 +39,9 @@ export default function RechercheMap() {
       getCurrentLocation();
     }
   }, []);
+  const handleSearchResults =(results)=>{
+    setSearchResults(results)
+  }
 
   return (
     <View style={styles.container}>
@@ -45,8 +49,8 @@ export default function RechercheMap() {
       <Text style={styles.title}>Recherche de terrain</Text>
       
       <View style={styles.card}>
-        <Searchbar mode='view' theme={{ colors: { primary: 'rgba(197, 44, 35,1)' } }} style={{backgroundColor:'rgba(197, 44, 35,0.1)'}}/>
-        {loading ? ( // Afficher l'ActivityIndicator si loading est vrai
+        <SearchBarComponent db={db} onSearchResults={handleSearchResults}/>
+        {/* {loading ? ( // Afficher l'ActivityIndicator si loading est vrai
           <ActivityIndicator style={styles.loadingIndicator} size="large" color="#1976D2" />
         ) : (
           currentLocation && (
@@ -84,7 +88,7 @@ export default function RechercheMap() {
                
             </MapView>
           )
-        )}
+        )} */}
       </View>
     </View>
   );
