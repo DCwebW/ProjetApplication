@@ -62,8 +62,7 @@ const SearchBarComponent = ({ db, onSearchResults }) => {
             />
             {searchQuery.length > 0 && (
                 <View
-                style={{backgroundColor:'orange'}}>
-                <FlatList
+                >                <FlatList
                     data={results}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={renderItem}
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
     resultItem: {
         padding: 10,
         height: 70,  // Augmentez la hauteur pour mieux voir les éléments
-        backgroundColor: 'rgba(197, 44, 35, 0.1)', // Fond rouge pâle
+        backgroundColor: 'rgba(197, 44, 35, 0.2)', // Fond rouge pâle
         marginBottom: 10, // Espace entre les éléments
         borderRadius: 8,  // Bordures arrondies pour un effet plus doux
         shadowColor: '#000', // Ombre pour ajouter de la profondeur
@@ -99,4 +98,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SearchBarComponent;
+export default SearchBarComponent

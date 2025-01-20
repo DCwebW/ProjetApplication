@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import MapView,{Marker,Callout,Circle} from 'react-native-maps';
 import * as Location from 'expo-location';
 import TerrainsEnregistrésMarqueurs from './TerrainsEnregistrésMarqueurs';
-import SearchBarComponent from '../../ModelView/searchBarComponent';
+import SearchBarComponent from '../../ModelView/SearchBarComponent'
 import { db } from '../../ConfigFirebase2';
 
 
@@ -50,7 +50,7 @@ export default function RechercheMap() {
       
       <View style={styles.card}>
         <SearchBarComponent db={db} onSearchResults={handleSearchResults}/>
-        {/* {loading ? ( // Afficher l'ActivityIndicator si loading est vrai
+        {loading ? ( // Afficher l'ActivityIndicator si loading est vrai
           <ActivityIndicator style={styles.loadingIndicator} size="large" color="#1976D2" />
         ) : (
           currentLocation && (
@@ -88,7 +88,7 @@ export default function RechercheMap() {
                
             </MapView>
           )
-        )} */}
+        )}
       </View>
     </View>
   );
