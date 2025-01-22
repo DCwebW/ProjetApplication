@@ -9,6 +9,7 @@ import { db } from '../../ConfigFirebase2';
 import fetchTerrains from '../../ModelView/fetchTerrains'; // Import de la fonction fetchTerrains
 import ajoutFavori from '../../ModelView/ajoutFavori';
 import removeFavori from '../../ModelView/removeFavori';
+import CustomText from '../ThemeContext/CustomText';
 
 const FicheTerrain = ({ route }) => {
   const [terrain, setTerrain] = useState();
@@ -65,13 +66,13 @@ const FicheTerrain = ({ route }) => {
       return (
         <View>
           <BoutonRetour />
-          <Text style={{ textAlign: 'center', fontSize: 25, color: 'rgba(197, 44, 35,1)' }}>{item.name}</Text>
+          <CustomText style={{ textAlign: 'center', fontSize: 25, color: 'rgba(197, 44, 35,1)' }}>{item.name}</CustomText>
           <Image source={{ uri: item.images }} style={{ width, height: 300, marginTop: 10 }} />
           <View style={{ flexDirection: 'row', flex: 1 }}>
             <View style={{ flex: 1 }}>
-              <Text>{item.adresse}</Text>
-              <Text>Type de filet : {item.typefilet}</Text>
-              <Text>{id}</Text>
+              <CustomText>{item.adresse}</CustomText>
+              <CustomText>Type de filet : {item.typefilet}</CustomText>
+              <CustomText>{id}</CustomText>
             </View>
             <View style={{ flex: 1, alignItems: 'flex-end' }}>
               <TouchableOpacity onPress={handleButtonPress}>
@@ -83,7 +84,7 @@ const FicheTerrain = ({ route }) => {
               </TouchableOpacity>
             </View>
           </View>
-          {showMessage && <View style={styles.messageContainer}><Text>Mis en favori</Text></View>}
+          {showMessage && <View style={styles.messageContainer}><CustomText>Mis en favori</CustomText></View>}
           <SignalementPresence nameTerrain={item.name} idTerrain={id} />
         </View>
       );
