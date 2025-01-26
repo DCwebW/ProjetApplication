@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import CustomText from './ThemeContext/CustomText';
 
 
 const SignalementPresence = ({ nameTerrain }) => {
@@ -51,7 +52,7 @@ const SignalementPresence = ({ nameTerrain }) => {
   return (
     <TouchableOpacity >
       <View style={styles.signalView}>
-        <Text>Signaler sa présence</Text>
+        <CustomText>Signaler sa présence</CustomText>
       </View>
     </TouchableOpacity>
   );

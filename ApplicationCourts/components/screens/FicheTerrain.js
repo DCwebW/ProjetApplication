@@ -10,6 +10,8 @@ import fetchTerrains from '../../ModelView/fetchTerrains'; // Import de la fonct
 import ajoutFavori from '../../ModelView/ajoutFavori';
 import removeFavori from '../../ModelView/removeFavori';
 import CustomText from '../ThemeContext/CustomText';
+import AbonnementTerrainButton from '../../ModelView/abonnementTerrainButton';
+
 
 const FicheTerrain = ({ route }) => {
   const [terrain, setTerrain] = useState();
@@ -86,6 +88,8 @@ const FicheTerrain = ({ route }) => {
           </View>
           {showMessage && <View style={styles.messageContainer}><CustomText>Mis en favori</CustomText></View>}
           <SignalementPresence nameTerrain={item.name} idTerrain={id} />
+
+          <AbonnementTerrainButton Id_terrain={id}/>
         </View>
       );
     }
