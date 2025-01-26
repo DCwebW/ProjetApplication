@@ -92,7 +92,8 @@ console.log('Envoi réussi sur CloudStorage')
         adresse : address,
         latitude: position.latitude,
         longitude: position.longitude,
-        images:imageURL
+        images:imageURL,
+        terrains_abonnements:''
       })
 
       }

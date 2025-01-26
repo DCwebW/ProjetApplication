@@ -43,7 +43,7 @@ const TerrainsEnregistrésMarqueurs = () => {
                 }}
             >
                 <CustomMarker />
-                {/* <Callout style={styles.callout}>
+                <Callout style={styles.callout}>
                     <View>
                         
                         <View style={styles.calloutButtons}>
@@ -67,7 +67,7 @@ const TerrainsEnregistrésMarqueurs = () => {
                             style={styles.calloutImage} 
                         />
                     </View>
-                </Callout> */}
+                </Callout>
                 
             </Marker>
         ))
