@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "loginfirebase-222bd"
-  }
+    "default": "loginfirebase-222bd",
+    "MainProject": "loginfirebase-222bd"
+  },
+  "targets": {},
+  "etags": {}
 }
