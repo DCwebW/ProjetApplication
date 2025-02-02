@@ -22,7 +22,7 @@ const auth = getAuth()
 
 
 const AjoutMatch = ({ route }) => {
-  const { terrainchoisi } = route.params ? route.params[0] ?? { terrainchoisi: 'Terrain non choisi' } : { terrainchoisi: 'Terrain non choisi' };
+  const { terrainchoisi, terrainchoisiId } = route.params ? route.params[0] ?? { terrainchoisi: 'Terrain non choisi' } : { terrainchoisi: 'Terrain non choisi' };
   // Ici l'opérateur de coalescence nulle "??" me permet que terrain choisi ne soit jamais undefined et prend la valeur définie après 
   const navigation = useNavigation()
   const [hour, setHour] = useState(null)
@@ -55,7 +55,7 @@ const today= new Date()
 
 
   const handleSubmit = () => {
-    EnvoiMatchDB({ user, userID, date, hour, terrainchoisi, checked })
+    EnvoiMatchDB({ user, userID, date, hour, terrainchoisi,terrainchoisiId, checked })
   }
 
   function handleHour() {
@@ -119,6 +119,7 @@ const today= new Date()
         
         <View style={{ height: 50, backgroundColor: 'white', width: 200, alignSelf: 'center', justifyContent: 'center' }}>
           <CustomText style={{ color: 'black', textAlign: 'center' }} > {terrainchoisi}</CustomText>
+          <CustomText style={{ color: 'black', textAlign: 'center' }} > {terrainchoisiId}</CustomText>
         </View>
        </View>
 

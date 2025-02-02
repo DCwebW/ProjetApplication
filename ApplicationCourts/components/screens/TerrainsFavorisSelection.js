@@ -105,7 +105,7 @@ SetopenVerification(false);
          </View>
         </TouchableOpacity>
         <View style={{marginTop:20}}>
-      <TouchableOpacity onPress={()=>navigation.navigate('AjoutMatch',[{terrainchoisi : selectedTerrain.name}])}><Text>Confirmer</Text></TouchableOpacity> 
+      <TouchableOpacity onPress={()=>navigation.navigate('AjoutMatch',[{terrainchoisi : selectedTerrain.name, terrainchoisiId:selectedTerrain.id}])}><Text>Confirmer</Text></TouchableOpacity> 
      <TouchableOpacity onPress={closeModal}><Text>Annuler</Text></TouchableOpacity> 
      
     </View>

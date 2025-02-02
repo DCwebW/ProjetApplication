@@ -23,7 +23,7 @@ exports.sendNotificationsOnMatchCreation = functions.firestore
     .onCreate(async (snap, context) => {
         // onCreate déclenche uniquement à la création d'un nouveau match
         const matchData = snap.data()
-        const terrainId = matchData.terrain
+        const terrainId = matchData.terrainId
 
         try {
             console.log(terrainId)
