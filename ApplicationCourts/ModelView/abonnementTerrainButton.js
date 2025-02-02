@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react'
 import { TouchableOpacity, View, StyleSheet } from 'react-native'
 import CustomText from '../components/ThemeContext/CustomText'
-import { updateDoc, doc, collection, where,getDocs, query,arrayUnion } from 'firebase/firestore'
+import { updateDoc, doc,arrayUnion } from 'firebase/firestore'
 import * as Notifications from 'expo-notifications'
 import { db } from '../ConfigFirebase2'
 import { getAuth, onAuthStateChanged} from 'firebase/auth';
