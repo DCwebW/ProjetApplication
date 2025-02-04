@@ -36,7 +36,7 @@
           "backgroundColor": "#4a56e1",
           "image": "",
           "dark": {
-            "image": "C:/xampp/htdocs/Formation/ProjetApplication2/ApplicationCourts/assets/png/icons8-basketball-48.png",
+            "image": "./assets/png/icons8-basketball-48.png",
             "backgroundColor": "#4a56e1"
           },
           "imageWidth": 200
