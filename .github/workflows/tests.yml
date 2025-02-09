@@ -1,0 +1,33 @@
+# Ce workflow exécutera des tests en utilisant node et publiera un package sur GitHub Packages lorsqu'une release est créée
+# Pour plus d'informations, voir: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+
+# Ce workflow exécutera des tests en utilisant node et tentera de construire l'APK avec eas-cli
+
+name: Tests Unitaires et Sonarqube 
+
+on:
+  push:
+    branches:
+      - master  # Remplacez par votre branche principale si nécessaire
+
+jobs:
+  build:
+    name: Build and analyze
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm install --force
+
+      - name: Run tests
+        run: npm test
+
+
