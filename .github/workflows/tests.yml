@@ -23,6 +23,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+          
+      - name: Dossier Application
+      - run : cd ApplicationCourts
 
       - name: Install dependencies
         run: npm install --force
